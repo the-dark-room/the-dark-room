@@ -445,12 +445,6 @@
                  "height":16,
                  "id":28,
                  "name":"",
-                 "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":false
-                        }],
                  "rotation":0,
                  "visible":true,
                  "width":16,
@@ -463,12 +457,6 @@
                  "height":16,
                  "id":29,
                  "name":"",
-                 "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":false
-                        }],
                  "rotation":0,
                  "visible":true,
                  "width":16,
@@ -481,12 +469,6 @@
                  "height":16,
                  "id":30,
                  "name":"",
-                 "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":false
-                        }],
                  "rotation":0,
                  "visible":true,
                  "width":16,
@@ -499,12 +481,6 @@
                  "height":16,
                  "id":31,
                  "name":"",
-                 "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":false
-                        }],
                  "rotation":0,
                  "visible":true,
                  "width":16,
@@ -517,12 +493,6 @@
                  "height":16,
                  "id":32,
                  "name":"",
-                 "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":false
-                        }],
                  "rotation":0,
                  "visible":true,
                  "width":16,
@@ -535,12 +505,6 @@
                  "height":16,
                  "id":33,
                  "name":"",
-                 "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":false
-                        }],
                  "rotation":0,
                  "visible":true,
                  "width":16,
@@ -553,12 +517,6 @@
                  "height":16,
                  "id":34,
                  "name":"",
-                 "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":false
-                        }],
                  "rotation":0,
                  "visible":true,
                  "width":16,
@@ -571,12 +529,6 @@
                  "height":16,
                  "id":35,
                  "name":"",
-                 "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":false
-                        }],
                  "rotation":0,
                  "visible":true,
                  "width":16,
@@ -589,12 +541,6 @@
                  "height":16,
                  "id":36,
                  "name":"",
-                 "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":false
-                        }],
                  "rotation":0,
                  "visible":true,
                  "width":16,
@@ -607,12 +553,6 @@
                  "height":16,
                  "id":37,
                  "name":"",
-                 "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":false
-                        }],
                  "rotation":0,
                  "visible":true,
                  "width":16,
@@ -625,12 +565,6 @@
                  "height":16,
                  "id":38,
                  "name":"",
-                 "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":false
-                        }],
                  "rotation":0,
                  "visible":true,
                  "width":16,
@@ -643,12 +577,6 @@
                  "height":16,
                  "id":39,
                  "name":"",
-                 "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":false
-                        }],
                  "rotation":0,
                  "visible":true,
                  "width":16,
@@ -661,12 +589,6 @@
                  "height":16,
                  "id":40,
                  "name":"",
-                 "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":false
-                        }],
                  "rotation":0,
                  "visible":true,
                  "width":16,
@@ -679,12 +601,6 @@
                  "height":16,
                  "id":41,
                  "name":"",
-                 "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":false
-                        }],
                  "rotation":0,
                  "visible":true,
                  "width":16,
@@ -697,12 +613,6 @@
                  "height":16,
                  "id":42,
                  "name":"",
-                 "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":false
-                        }],
                  "rotation":0,
                  "visible":true,
                  "width":16,
@@ -715,12 +625,6 @@
                  "height":16,
                  "id":43,
                  "name":"",
-                 "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":false
-                        }],
                  "rotation":0,
                  "visible":true,
                  "width":16,
@@ -733,12 +637,6 @@
                  "height":16,
                  "id":44,
                  "name":"",
-                 "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":false
-                        }],
                  "rotation":0,
                  "visible":true,
                  "width":16,
@@ -751,12 +649,6 @@
                  "height":16,
                  "id":45,
                  "name":"",
-                 "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":false
-                        }],
                  "rotation":0,
                  "visible":true,
                  "width":16,
@@ -769,12 +661,6 @@
                  "height":16,
                  "id":46,
                  "name":"",
-                 "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":false
-                        }],
                  "rotation":0,
                  "visible":true,
                  "width":16,
@@ -787,12 +673,6 @@
                  "height":16,
                  "id":47,
                  "name":"",
-                 "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":false
-                        }],
                  "rotation":0,
                  "visible":true,
                  "width":16,
@@ -805,12 +685,6 @@
                  "height":16,
                  "id":48,
                  "name":"",
-                 "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":false
-                        }],
                  "rotation":0,
                  "visible":true,
                  "width":16,
@@ -1117,7 +991,7 @@
         {
          "columns":48,
          "firstgid":6337,
-         "image":"watabou_pixel_dungeon_spritesheet.png",
+         "image":"..\/..\/..\/phaser.template\/dist\/tiles\/watabou_pixel_dungeon_spritesheet.png",
          "imageheight":748,
          "imagewidth":768,
          "margin":0,
@@ -1554,7 +1428,7 @@
         {
          "columns":10,
          "firstgid":8545,
-         "image":"dungeon_tiles.png",
+         "image":"..\/..\/..\/phaser.template\/dist\/tiles\/dungeon_tiles.png",
          "imageheight":256,
          "imagewidth":160,
          "margin":0,
