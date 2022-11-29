@@ -142,6 +142,11 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 
 	preUpdate(t: number, dt: number)
 	{
+
+		// smaller hitbox
+		// this.setSize(10, 12).setOffset(12,15)
+
+		
 		super.preUpdate(t, dt)
 
 		switch (this.healthState)
@@ -205,6 +210,8 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 
 			this.scaleX = -1
 			this.body.offset.x = 24
+			
+			this.setSize(10, 10).setOffset(21,16)
 		}
 		else if (rightDown)
 		{
@@ -213,6 +220,8 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 
 			this.scaleX = 1
 			this.body.offset.x = 8
+
+			this.setSize(10, 10).setOffset(11,16)
 		}
 		else if (upDown)
 		{
