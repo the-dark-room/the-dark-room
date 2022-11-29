@@ -3,6 +3,8 @@ import Phaser from 'phaser'
 import Preloader from './scenes/Preloader'
 import Game from './scenes/Game'
 import GameUI from './scenes/GameUI'
+import PhaserRaycaster from 'phaser-raycaster'
+
 
 export default new Phaser.Game({
 	type: Phaser.AUTO,
@@ -23,5 +25,15 @@ export default new Phaser.Game({
 	scale: {
 		mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
-	}
+	},
+	//enable Phaser-raycaster plugin
+	plugins: {
+		scene: [
+				{
+						key: 'PhaserRaycaster',
+						plugin: PhaserRaycaster,
+						mapping: 'raycasterPlugin'
+				}
+		]
+}
 })

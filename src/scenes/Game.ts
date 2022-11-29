@@ -23,18 +23,16 @@ export default class Game extends Phaser.Scene
 
 	private playerLizardsCollider?: Phaser.Physics.Arcade.Collider
 
-	constructor()
-	{
+	constructor() {
 		super('game')
 	}
 
-	preload()
-    {
+	preload() {
 		this.cursors = this.input.keyboard.createCursorKeys()
-    }
+	}
 
-	create()
-    {
+	create() {
+
 		this.scene.run('game-ui')
 
 		createCharacterAnims(this.anims)
@@ -112,6 +110,7 @@ export default class Game extends Phaser.Scene
 	{
 		this.knives.killAndHide(obj1)
 		this.lizards.killAndHide(obj2)
+		// this.lizards.remove(obj2) // removes the sprite from the group, rendering it harmless
 	}
 
 	private handlePlayerLizardCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject)
