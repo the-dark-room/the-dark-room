@@ -13,8 +13,7 @@ import Faune from '../characters/Faune'
 import { sceneEvents } from '../events/EventsCenter'
 import Chest from '../items/Chest'
 
-export default class Game extends Phaser.Scene
-{
+export default class Game extends Phaser.Scene {
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
 	private faune!: Faune
 
@@ -23,18 +22,16 @@ export default class Game extends Phaser.Scene
 
 	private playerLizardsCollider?: Phaser.Physics.Arcade.Collider
 
-	constructor()
-	{
+	constructor() {
 		super('game')
 	}
 
-	preload()
-    {
+	preload() {
 		this.cursors = this.input.keyboard.createCursorKeys()
-    }
+	}
 
-	create()
-    {
+	create() {
+
 		this.scene.run('game-ui')
 
 		createCharacterAnims(this.anims)
@@ -54,6 +51,10 @@ export default class Game extends Phaser.Scene
 
 		this.faune = this.add.faune(128, 128, 'faune')
 		this.faune.setKnives(this.knives)
+
+		// // smaller hitbox
+		// this.faune.setSize(10, 12).setOffset(12,15)
+		this.faune.setDepth(999)
 
 		const wallsLayer = map.createStaticLayer('Walls', tileset)
 
@@ -108,6 +109,7 @@ export default class Game extends Phaser.Scene
 	{
 		this.knives.killAndHide(obj1)
 		this.lizards.killAndHide(obj2)
+		// this.lizards.remove(obj2) // removes the sprite from the group, rendering it harmless
 	}
 
 	private handlePlayerLizardCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject)
@@ -129,10 +131,8 @@ export default class Game extends Phaser.Scene
 		}
 	}
 	
-	update(t: number, dt: number)
-	{
-		if (this.faune)
-		{
+	update(t: number, dt: number) {
+		if (this.faune) {
 			this.faune.update(this.cursors)
 		}
 	}

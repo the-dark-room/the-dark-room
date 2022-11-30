@@ -13,7 +13,9 @@ export default class Preloader extends Phaser.Scene
 		// this.load.tilemapTiledJSON('dungeon', 'tiles/dungeon-01.json')
 
 		this.load.image('tiles', 'tiles/watabou_pixel_dungeon_spritesheet.png')
+		this.load.image('menuTiles', 'tiles/tilesetformattedupdate1.png')
 		this.load.tilemapTiledJSON('dungeon', 'tiles/dungeon.json')
+		this.load.tilemapTiledJSON('menumap', 'tiles/menumap.json')
 
 		this.load.atlas('faune', 'character/fauna.png', 'character/fauna.json')
 		this.load.atlas('lizard', 'enemies/lizard.png', 'enemies/lizard.json')
@@ -23,10 +25,37 @@ export default class Preloader extends Phaser.Scene
 		this.load.image('ui-heart-full', 'ui/ui_heart_full.png')
 
 		this.load.image('knife', 'weapons/weapon_knife.png')
+
+		// create loading bar
+    let loadingBar = this.add.graphics({
+      fillStyle: {
+        color: 0xffffff // white
+      }
+    });
+
+    /*to simulate a heavy load */
+    // for(let i = 0; i < 100; i++) {
+    //   console.log("HEEELELEEO");
+    //   this.load.spritesheet('cat' + i, './assets/cat.png', {
+    //     frameHeight: 32,
+    //     frameWidth: 32
+    //   });
+    // }
+
+    this.load.on("progress", (percent: number) => {
+      loadingBar.fillRect(0, this.game.renderer.height / 2, this.game.renderer.width * percent, 50)
+      // console.log(percent);
+    })
+
+    
+    this.load.on("load", (file: Phaser.Loader.File) => {
+      // console.log(file.src);
+    })
 	}
 
 	create()
 	{
-		this.scene.start('game')
+		// this.scene.start('game')
+		this.scene.start('menu')
 	}
 }
