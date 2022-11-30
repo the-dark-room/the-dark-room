@@ -13,8 +13,7 @@ import Faune from '../characters/Faune'
 import { sceneEvents } from '../events/EventsCenter'
 import Chest from '../items/Chest'
 
-export default class Game extends Phaser.Scene
-{
+export default class Game extends Phaser.Scene {
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
 	private faune!: Faune
 
@@ -132,10 +131,8 @@ export default class Game extends Phaser.Scene
 		}
 	}
 	
-	update(t: number, dt: number)
-	{
-		if (this.faune)
-		{
+	update(t: number, dt: number) {
+		if (this.faune) {
 			this.faune.update(this.cursors)
 		}
 	}
