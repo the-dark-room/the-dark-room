@@ -36,12 +36,15 @@ export default class Menu extends Phaser.Scene {
     let playButton = this.add.text((this.game.renderer.width / 2) *.35, this.game.renderer.height * 0.20, 'Start Game', {fontSize: 30}).setDepth(1)
     let aboutButton = this.add.text((this.game.renderer.width / 2) *.55, this.game.renderer.height * 0.35, 'About Us', {fontSize: 20}).setDepth(1)
 
-    // create audio, disable pauseOnBlur
-    // this.sound.pauseOnBlur = false;
-    // this.sound.play(CST.AUDIO.TITLE, {
-    //   loop: true,
-    //   volume: 0.1
-    // })
+    // create audio, pauses when game not in focus
+    this.sound.pauseOnBlur = true;
+    const menuMusic = this.sound.add('menuMusic', {
+      loop: true,
+      volume: 0.1
+    })
+
+		// actually plays the audio (we do it like this so we can STOP it later)
+		menuMusic.play()
 
     // add the map and tileset
     const map = this.make.tilemap({ key: 'menumap' })
@@ -56,13 +59,19 @@ export default class Menu extends Phaser.Scene {
     aboutButton.setInteractive();
 
     playButton.on("pointerup", () => {
+			menuMusic.stop() // stop the MENU music so we can transition to another track
+			this.sound.play('click', {
+				volume: 0.4
+			})
       this.scene.start('game')
-      console.log('clickcy');
     })
 
     aboutButton.on("pointerup", () => {
       // this.scene.start('game')
-      alert(`There be pirates here`)
+			this.sound.play('click', {
+				volume: 0.4
+			})
+      alert(`Boo`)
     })
 
     // initialize the player
