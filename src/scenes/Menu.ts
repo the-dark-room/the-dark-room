@@ -58,9 +58,9 @@ export default class Menu extends Phaser.Scene {
     // this.faune.setDepth(999) // sets the z-index for the player sprite, (putting it above everything else)
     // // this.cameras.main.startFollow(this.faune, true)
     
-    // const wallsLayer = map.createStaticLayer('Walls', tileset)
-		// wallsLayer.setCollisionByProperty({ collides: true })
-    // this.physics.add.collider(this.faune, wallsLayer)
+    const wallsLayer = map.createStaticLayer('Walls', tileset)
+		wallsLayer.setCollisionByProperty({ collides: true })
+    this.physics.add.collider(this.faune, wallsLayer)
 
     
   }
