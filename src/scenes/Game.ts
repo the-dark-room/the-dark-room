@@ -1,139 +1,224 @@
-import Phaser from 'phaser'
+import Phaser from "phaser";
 
-import { debugDraw } from '../utils/debug'
-import { createLizardAnims } from '../anims/EnemyAnims'
-import { createCharacterAnims } from '../anims/CharacterAnims'
-import { createChestAnims } from '../anims/TreasureAnims'
+import { debugDraw } from "../utils/debug";
+import { createLizardAnims } from "../anims/EnemyAnims";
+import { createCharacterAnims } from "../anims/CharacterAnims";
+import { createChestAnims } from "../anims/TreasureAnims";
 
-import Lizard from '../enemies/Lizard'
+import Lizard from "../enemies/Lizard";
 
-import '../characters/Faune'
-import Faune from '../characters/Faune'
+import "../characters/Faune";
+import Faune from "../characters/Faune";
 
-import { sceneEvents } from '../events/EventsCenter'
-import Chest from '../items/Chest'
+import { sceneEvents } from "../events/EventsCenter";
+import Chest from "../items/Chest";
 
-export default class Game extends Phaser.Scene
-{
-	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
-	private faune!: Faune
+import PhaserRaycaster from "phaser-raycaster";
 
-	private knives!: Phaser.Physics.Arcade.Group
-	private lizards!: Phaser.Physics.Arcade.Group
+export default class Game extends Phaser.Scene {
+  // Raycaster
+  private raycasterPlugin!: PhaserRaycaster; // Not sure if this is how to add the plugin
+  private raycaster;
+  private ray;
+  private graphics;
 
-	private playerLizardsCollider?: Phaser.Physics.Arcade.Collider
+  private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
+  private faune!: Faune;
 
-	constructor()
-	{
-		super('game')
-	}
+  private knives!: Phaser.Physics.Arcade.Group;
+  private lizards!: Phaser.Physics.Arcade.Group;
 
-	preload()
-    {
-		this.cursors = this.input.keyboard.createCursorKeys()
+  private playerLizardsCollider?: Phaser.Physics.Arcade.Collider;
+
+  constructor() {
+    super("game");
+  }
+
+  preload() {
+    this.cursors = this.input.keyboard.createCursorKeys();
+  }
+
+  create() {
+    this.scene.run("game-ui");
+
+    // Raycaster
+    this.raycaster = this.raycasterPlugin.createRaycaster();
+    this.ray = this.raycaster.createRay({
+      origin: {
+        x: 400,
+        y: 300,
+      },
+    });
+
+    createCharacterAnims(this.anims);
+    createLizardAnims(this.anims);
+    createChestAnims(this.anims);
+
+    // adds the map and the tiles for it
+    const map = this.make.tilemap({ key: "dungeon" });
+    const tileset = map.addTilesetImage(
+      "watabou_pixel_dungeon_spritesheet",
+      "tiles"
+    );
+
+    map.createStaticLayer("background", tileset);
+
+    this.knives = this.physics.add.group({
+      classType: Phaser.Physics.Arcade.Image,
+      maxSize: 200,
+    });
+
+    this.faune = this.add.faune(128, 128, "faune");
+    this.faune.setKnives(this.knives);
+
+    const wallsLayer = map.createStaticLayer("Walls", tileset);
+
+    wallsLayer.setCollisionByProperty({ collides: true });
+
+    const chests = this.physics.add.staticGroup({
+      classType: Chest,
+    });
+    const chestsLayer = map.getObjectLayer("chests");
+    chestsLayer.objects.forEach((chestObj) => {
+      chests.get(
+        chestObj.x! + chestObj.width! * 0.5,
+        chestObj.y! - chestObj.height! * 0.5,
+        "treasure"
+      );
+    });
+
+    this.cameras.main.startFollow(this.faune, true);
+
+    this.lizards = this.physics.add.group({
+      classType: Lizard,
+      createCallback: (go) => {
+        const lizGo = go as Lizard;
+        lizGo.body.onCollide = true;
+      },
+    });
+
+    const lizardsLayer = map.getObjectLayer("Lizards");
+    lizardsLayer.objects.forEach((lizObj) => {
+      this.lizards.get(
+        lizObj.x! + lizObj.width! * 0.5,
+        lizObj.y! - lizObj.height! * 0.5,
+        "lizard"
+      );
+    });
+
+    // Raycaster
+    this.raycaster.mapGameObjects(wallsLayer);
+    let intersection = this.ray.cast();
+    this.graphics = this.add.graphics({
+      lineStyle: { width: 1, color: 0x00ff00 },
+      fillStyle: { color: 0xff00ff },
+    });
+    let line = new Phaser.Geom.Line(
+      this.ray.origin.x,
+      this.ray.origin.y,
+      intersection.x,
+      intersection.y
+    );
+    this.graphics.fillPoint(this.ray.origin.x, this.ray.origin.y, 3);
+    this.graphics.strokeLineShape(line);
+
+    this.physics.add.collider(this.faune, wallsLayer);
+    this.physics.add.collider(this.lizards, wallsLayer);
+
+    this.physics.add.collider(
+      this.faune,
+      chests,
+      this.handlePlayerChestCollision,
+      undefined,
+      this
+    );
+
+    this.physics.add.collider(
+      this.knives,
+      wallsLayer,
+      this.handleKnifeWallCollision,
+      undefined,
+      this
+    );
+    this.physics.add.collider(
+      this.knives,
+      this.lizards,
+      this.handleKnifeLizardCollision,
+      undefined,
+      this
+    );
+
+    this.playerLizardsCollider = this.physics.add.collider(
+      this.lizards,
+      this.faune,
+      this.handlePlayerLizardCollision,
+      undefined,
+      this
+    );
+  }
+
+  private handlePlayerChestCollision(
+    obj1: Phaser.GameObjects.GameObject,
+    obj2: Phaser.GameObjects.GameObject
+  ) {
+    const chest = obj2 as Chest;
+    this.faune.setChest(chest);
+  }
+
+  private handleKnifeWallCollision(
+    obj1: Phaser.GameObjects.GameObject,
+    obj2: Phaser.GameObjects.GameObject
+  ) {
+    this.knives.killAndHide(obj1);
+  }
+
+  private handleKnifeLizardCollision(
+    obj1: Phaser.GameObjects.GameObject,
+    obj2: Phaser.GameObjects.GameObject
+  ) {
+    this.knives.killAndHide(obj1);
+    this.lizards.killAndHide(obj2);
+  }
+
+  private handlePlayerLizardCollision(
+    obj1: Phaser.GameObjects.GameObject,
+    obj2: Phaser.GameObjects.GameObject
+  ) {
+    const lizard = obj2 as Lizard;
+
+    const dx = this.faune.x - lizard.x;
+    const dy = this.faune.y - lizard.y;
+
+    const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(200);
+
+    this.faune.handleDamage(dir);
+
+    sceneEvents.emit("player-health-changed", this.faune.health);
+
+    if (this.faune.health <= 0) {
+      this.playerLizardsCollider?.destroy();
+    }
+  }
+
+  update(t: number, dt: number) {
+    if (this.faune) {
+      this.faune.update(this.cursors);
     }
 
-	create()
-    {
-		this.scene.run('game-ui')
+    //rotate ray
+    this.ray.setAngle(this.ray.angle + 0.01);
+    //cast ray
+    let intersection = this.ray.cast();
 
-		createCharacterAnims(this.anims)
-		createLizardAnims(this.anims)
-		createChestAnims(this.anims)
-
-		// adds the map and the tiles for it
-		const map = this.make.tilemap({ key: 'dungeon' })
-		const tileset = map.addTilesetImage('watabou_pixel_dungeon_spritesheet', 'tiles')
-
-		map.createStaticLayer('background', tileset)
-
-		this.knives = this.physics.add.group({
-			classType: Phaser.Physics.Arcade.Image,
-			maxSize: 200
-		})
-
-		this.faune = this.add.faune(128, 128, 'faune')
-		this.faune.setKnives(this.knives)
-
-		const wallsLayer = map.createStaticLayer('Walls', tileset)
-
-		wallsLayer.setCollisionByProperty({ collides: true })
-
-		const chests = this.physics.add.staticGroup({
-			classType: Chest
-		})
-		const chestsLayer = map.getObjectLayer('chests')
-		chestsLayer.objects.forEach(chestObj => {
-			chests.get(chestObj.x! + chestObj.width! * 0.5, chestObj.y! - chestObj.height! * 0.5, 'treasure')
-		})
-
-		this.cameras.main.startFollow(this.faune, true)
-
-		this.lizards = this.physics.add.group({
-			classType: Lizard,
-			createCallback: (go) => {
-				const lizGo = go as Lizard
-				lizGo.body.onCollide = true
-			}
-		})
-
-		const lizardsLayer = map.getObjectLayer('Lizards')
-		lizardsLayer.objects.forEach(lizObj => {
-			this.lizards.get(lizObj.x! + lizObj.width! * 0.5, lizObj.y! - lizObj.height! * 0.5, 'lizard')
-		})
-
-		this.physics.add.collider(this.faune, wallsLayer)
-		this.physics.add.collider(this.lizards, wallsLayer)
-
-		this.physics.add.collider(this.faune, chests, this.handlePlayerChestCollision, undefined, this)
-
-		this.physics.add.collider(this.knives, wallsLayer, this.handleKnifeWallCollision, undefined, this)
-		this.physics.add.collider(this.knives, this.lizards, this.handleKnifeLizardCollision, undefined, this)
-
-		this.playerLizardsCollider = this.physics.add.collider(this.lizards, this.faune, this.handlePlayerLizardCollision, undefined, this)
-	}
-
-	private handlePlayerChestCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject)
-	{
-		const chest = obj2 as Chest
-		this.faune.setChest(chest)
-	}
-
-	private handleKnifeWallCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject)
-	{
-		this.knives.killAndHide(obj1)
-	}
-
-	private handleKnifeLizardCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject)
-	{
-		this.knives.killAndHide(obj1)
-		this.lizards.killAndHide(obj2)
-	}
-
-	private handlePlayerLizardCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject)
-	{
-		const lizard = obj2 as Lizard
-		
-		const dx = this.faune.x - lizard.x
-		const dy = this.faune.y - lizard.y
-
-		const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(200)
-
-		this.faune.handleDamage(dir)
-
-		sceneEvents.emit('player-health-changed', this.faune.health)
-
-		if (this.faune.health <= 0)
-		{
-			this.playerLizardsCollider?.destroy()
-		}
-	}
-	
-	update(t: number, dt: number)
-	{
-		if (this.faune)
-		{
-			this.faune.update(this.cursors)
-		}
-	}
+    //draw ray
+    this.graphics.clear();
+    let line = new Phaser.Geom.Line(
+      this.ray.origin.x,
+      this.ray.origin.y,
+      intersection.x,
+      intersection.y
+    );
+    this.graphics.fillPoint(this.ray.origin.x, this.ray.origin.y, 3);
+    this.graphics.strokeLineShape(line);
+  }
 }

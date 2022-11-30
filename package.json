@@ -23,7 +23,10 @@
 		"typescript": "^3.8.3"
 	},
 	"dependencies": {
-		"phaser": "^3.22.0"
+		"build": "^0.1.4",
+		"parcel-bundler": "^1.12.5",
+		"phaser": "^3.22.0",
+		"phaser-raycaster": "^0.10.5"
 	},
 	"parcelCleanPaths": [
 		"dist"
