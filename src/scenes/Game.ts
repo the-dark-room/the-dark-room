@@ -94,39 +94,45 @@ export default class Game extends Phaser.Scene {
 		this.playerLizardsCollider = this.physics.add.collider(this.lizards, this.faune, this.handlePlayerLizardCollision, undefined, this)
 	}
 
-	private handlePlayerChestCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject)
-	{
+	private handlePlayerChestCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
 		const chest = obj2 as Chest
 		this.faune.setChest(chest)
 	}
 
-	private handleKnifeWallCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject)
-	{
+	private handleKnifeWallCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
 		this.knives.killAndHide(obj1)
 	}
 
-	private handleKnifeLizardCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject)
-	{
+	private handleKnifeLizardCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
 		this.knives.killAndHide(obj1)
 		this.lizards.killAndHide(obj2)
 		// this.lizards.remove(obj2) // removes the sprite from the group, rendering it harmless
 	}
 
-	private handlePlayerLizardCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject)
-	{
+	private handlePlayerLizardCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
 		const lizard = obj2 as Lizard
-		
+
 		const dx = this.faune.x - lizard.x
 		const dy = this.faune.y - lizard.y
 
 		const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(200)
 
 		this.faune.handleDamage(dir)
+		// damage sound
+		this.sound.play('hurt-sound', {
+			volume: 0.2
+		})
 
 		sceneEvents.emit('player-health-changed', this.faune.health)
 
-		if (this.faune.health <= 0)
-		{
+		if (this.faune.health <= 0){
+			const deathSound = this.sound.add('game-over', {
+				volume: 2
+			})
+			setTimeout(() => {
+				deathSound.play()
+			}, 600)
+
 			this.playerLizardsCollider?.destroy()
 		}
 	}
