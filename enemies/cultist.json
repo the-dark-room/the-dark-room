@@ -1,0 +1,188 @@
+{
+	"textures": [
+		{
+			"image": "cultist.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 472,
+				"h": 106
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "cultist-0.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 59,
+						"h": 97
+					},
+					"spriteSourceSize": {
+						"x": 107,
+						"y": 71,
+						"w": 59,
+						"h": 97
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 59,
+						"h": 97
+					}
+				},
+				{
+					"filename": "cultist-1.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 58,
+						"h": 102
+					},
+					"spriteSourceSize": {
+						"x": 107,
+						"y": 66,
+						"w": 58,
+						"h": 102
+					},
+					"frame": {
+						"x": 59,
+						"y": 0,
+						"w": 58,
+						"h": 102
+					}
+				},
+				{
+					"filename": "cultist-2.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 58,
+						"h": 105
+					},
+					"spriteSourceSize": {
+						"x": 107,
+						"y": 63,
+						"w": 58,
+						"h": 105
+					},
+					"frame": {
+						"x": 118,
+						"y": 0,
+						"w": 58,
+						"h": 105
+					}
+				},
+				{
+					"filename": "cultist-3.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 58,
+						"h": 105
+					},
+					"spriteSourceSize": {
+						"x": 107,
+						"y": 63,
+						"w": 58,
+						"h": 105
+					},
+					"frame": {
+						"x": 177,
+						"y": 0,
+						"w": 58,
+						"h": 105
+					}
+				},
+				{
+					"filename": "cultist-4.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 59,
+						"h": 102
+					},
+					"spriteSourceSize": {
+						"x": 107,
+						"y": 66,
+						"w": 59,
+						"h": 102
+					},
+					"frame": {
+						"x": 236,
+						"y": 0,
+						"w": 59,
+						"h": 102
+					}
+				},
+				{
+					"filename": "cultist-5.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 57,
+						"h": 106
+					},
+					"spriteSourceSize": {
+						"x": 107,
+						"y": 62,
+						"w": 57,
+						"h": 106
+					},
+					"frame": {
+						"x": 295,
+						"y": 0,
+						"w": 57,
+						"h": 106
+					}
+				},
+				{
+					"filename": "cultist-6.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 56,
+						"h": 99
+					},
+					"spriteSourceSize": {
+						"x": 107,
+						"y": 69,
+						"w": 56,
+						"h": 99
+					},
+					"frame": {
+						"x": 354,
+						"y": 0,
+						"w": 56,
+						"h": 99
+					}
+				},
+				{
+					"filename": "cultist-7.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 58,
+						"h": 99
+					},
+					"spriteSourceSize": {
+						"x": 107,
+						"y": 69,
+						"w": 58,
+						"h": 99
+					},
+					"frame": {
+						"x": 413,
+						"y": 0,
+						"w": 58,
+						"h": 99
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:801246f719c9684de0809b52bf160e16:dbc6fb53075e40e16cbe5bf73132a3e5:b8deb386961dca37e6bf6520eeea939d$"
+	}
+}
