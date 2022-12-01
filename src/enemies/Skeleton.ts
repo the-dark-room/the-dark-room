@@ -61,7 +61,7 @@ export default class Skeleton extends Phaser.Physics.Arcade.Sprite
 	{
 		super.preUpdate(t, dt)
 
-		const speed = 15
+		const speed = 10
 
 		switch (this.direction)
 		{

@@ -61,7 +61,7 @@ export default class Cultist extends Phaser.Physics.Arcade.Sprite
 	{
 		super.preUpdate(t, dt)
 
-		const speed = 1
+		const speed = 5
 
 		switch (this.direction)
 		{

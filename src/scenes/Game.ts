@@ -8,6 +8,7 @@ import createFrogAnims from '../anims/FrogAnims'	//FROG
 import createSkeletonAnims from '../anims/SkeletonAnims'	//SKELETON
 import createBatAnims from '../anims/BatAnims'  //BAT
 import createCultistAnims from '../anims/CultistAnims'  //CULTIST
+import createChrispAnims from '../anims/ChrispAnims'  //CHRISP
 import { createCharacterAnims } from '../anims/CharacterAnims'
 import { createChestAnims } from '../anims/TreasureAnims'
 
@@ -18,6 +19,7 @@ import Frog from '../enemies/Frog'	//FROG
 import Skeleton from '../enemies/Skeleton'	//SKELETON
 import Bat from '../enemies/Bat'	//BAT
 import Cultist from '../enemies/Cultist'	//CULTIST
+import Chrisp from '../enemies/Chrisp'	//CHRISP
 
 import '../characters/Faune'
 import Faune from '../characters/Faune'
@@ -37,6 +39,7 @@ export default class Game extends Phaser.Scene {
 	private skeletons!: Phaser.Physics.Arcade.Group   //SKELETON
 	private bats!: Phaser.Physics.Arcade.Group   //BAT
 	private cultists!: Phaser.Physics.Arcade.Group   //CULTIST
+	private chrisps!: Phaser.Physics.Arcade.Group   //CHRISP
 
 	// private playerLizardsCollider?: Phaser.Physics.Arcade.Collider
 
@@ -66,6 +69,7 @@ export default class Game extends Phaser.Scene {
 		createSkeletonAnims(this.anims)	//SKELETON
 		createBatAnims(this.anims)  //BAT
 		createCultistAnims(this.anims)  //CULTIST
+		createChrispAnims(this.anims)  //CHRISP
 		createChestAnims(this.anims)
 
 		// adds the map and the tiles for it
@@ -124,25 +128,21 @@ export default class Game extends Phaser.Scene {
 			classType: Ghost
 		})
 		
-	
 
 		this.bods = this.physics.add.group({  //BOD
 			classType: Bod
 		})
 		
-	
 6
 		this.frogs = this.physics.add.group({  //FROG
 			classType: Frog
 		})
 		
-	
 
 		this.skeletons = this.physics.add.group({  //SKELETONS
 			classType: Skeleton
 		})
 		
-
 
 		this.bats = this.physics.add.group({  //BAT
 			classType: Bat
@@ -154,18 +154,23 @@ export default class Game extends Phaser.Scene {
 		})
 
 
-		for(let b = 0; b < 50; b++){
-			const x = Phaser.Math.Between(20, 980)
-			const y = Phaser.Math.Between(20, 980)
+		this.chrisps = this.physics.add.group({  //CHRISP
+			classType: Chrisp
+		})
+
+
+		for(let b = 0; b < 10; b++){
+			const x = Phaser.Math.Between(20, 200)
+			const y = Phaser.Math.Between(20, 200)
 			this.ghosts.get( x, y, 'ghost').setScale(0.6)
-			this.bods.get( x, y, 'bod').setScale(0.4)
+			this.bods.get( x, y, 'bod').setScale(0.5)
 			this.frogs.get( x, y, 'frog').setScale(0.8)
 			this.skeletons.get( x, y, 'skeleton')
 			this.bats.get( x, y, `bat-${b}`)
 			this.cultists.get( x, y, 'cultist').setScale(0.6)
+			
 		}
-		// console.log(this.physics)
-		// this.bats.get( 100, 100, 'bat')
+		this.chrisps.get(100, 100, 'chrisp').setScale(0.8)
 
 
 
@@ -182,6 +187,7 @@ export default class Game extends Phaser.Scene {
 		this.physics.add.collider(this.skeletons, wallsLayer)  //SKELETON
 		this.physics.add.collider(this.bats, wallsLayer)  //BAT
 		this.physics.add.collider(this.cultists, wallsLayer)  //CULTIST
+		this.physics.add.collider(this.chrisps, wallsLayer)  //CHRISP
 
 		this.physics.add.collider(this.faune, chests, this.handlePlayerChestCollision, undefined, this)
 
