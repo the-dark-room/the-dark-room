@@ -2,10 +2,12 @@ import Phaser from 'phaser'
 
 import { debugDraw } from '../utils/debug'
 import { createLizardAnims } from '../anims/EnemyAnims'
+import createGhostAnims from '../anims/GhostAnims'  //GHOST
 import { createCharacterAnims } from '../anims/CharacterAnims'
 import { createChestAnims } from '../anims/TreasureAnims'
 
 import Lizard from '../enemies/Lizard'
+import Ghost from '../enemies/Ghost'  //GHOST
 
 import '../characters/Faune'
 import Faune from '../characters/Faune'
@@ -19,6 +21,7 @@ export default class Game extends Phaser.Scene {
 
 	private knives!: Phaser.Physics.Arcade.Group
 	private lizards!: Phaser.Physics.Arcade.Group
+	private ghosts!: Phaser.Physics.Arcade.Group   //GHOST
 
 	private playerLizardsCollider?: Phaser.Physics.Arcade.Collider
 
@@ -36,13 +39,14 @@ export default class Game extends Phaser.Scene {
 
 		createCharacterAnims(this.anims)
 		createLizardAnims(this.anims)
+		createGhostAnims(this.anims)  //GHOST
 		createChestAnims(this.anims)
 
 		// adds the map and the tiles for it
 		const map = this.make.tilemap({ key: 'dungeon' })
 		const tileset = map.addTilesetImage('watabou_pixel_dungeon_spritesheet', 'tiles')
 
-		map.createStaticLayer('background', tileset)
+		map.createLayer('background', tileset)
 
 		this.knives = this.physics.add.group({
 			classType: Phaser.Physics.Arcade.Image,
@@ -56,7 +60,7 @@ export default class Game extends Phaser.Scene {
 		// this.faune.setSize(10, 12).setOffset(12,15)
 		this.faune.setDepth(999)
 
-		const wallsLayer = map.createStaticLayer('Walls', tileset)
+		const wallsLayer = map.createLayer('Walls', tileset)
 
 		wallsLayer.setCollisionByProperty({ collides: true })
 
@@ -83,8 +87,23 @@ export default class Game extends Phaser.Scene {
 			this.lizards.get(lizObj.x! + lizObj.width! * 0.5, lizObj.y! - lizObj.height! * 0.5, 'lizard')
 		})
 
+		this.ghosts = this.physics.add.group({  //GHOST
+			classType: Ghost,
+			createCallback: (go) => {
+				const ghostGo = go as Ghost
+				ghostGo.body.onCollide = true
+			}
+		})
+
+		// this.ghosts.get( 100, 100, 'ghost')
+		const enemyLayer = map.getObjectLayer('Lizards')
+		enemyLayer.objects.forEach(lizObj => {
+			this.ghosts.get(100,  100, 'ghost')
+		})
+
 		this.physics.add.collider(this.faune, wallsLayer)
 		this.physics.add.collider(this.lizards, wallsLayer)
+		this.physics.add.collider(this.ghosts, wallsLayer)  //GHOST
 
 		this.physics.add.collider(this.faune, chests, this.handlePlayerChestCollision, undefined, this)
 
@@ -106,7 +125,7 @@ export default class Game extends Phaser.Scene {
 	private handleKnifeLizardCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
 		this.knives.killAndHide(obj1)
 		this.lizards.killAndHide(obj2)
-		// this.lizards.remove(obj2) // removes the sprite from the group, rendering it harmless
+		this.lizards.remove(obj2) // removes the sprite from the group, rendering it harmless
 	}
 
 	private handlePlayerLizardCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
