@@ -50,7 +50,7 @@ export default class Menu extends Phaser.Scene {
     const map = this.make.tilemap({ key: 'menumap' })
     // const tileset = map.addTilesetImage('tilesetformattedupdate1', 'menuTiles')
     const tileset = map.addTilesetImage('watabou_pixel_dungeon_spritesheet', 'tiles')
-    map.createStaticLayer('background', tileset)
+    map.createLayer('background', tileset)
 
     
 
@@ -81,7 +81,7 @@ export default class Menu extends Phaser.Scene {
     this.faune.setKnives(this.knives)
     // this.cameras.main.startFollow(this.faune, true)
     
-    const wallsLayer = map.createStaticLayer('Walls', tileset)
+    const wallsLayer = map.createLayer('Walls', tileset)
 		wallsLayer.setCollisionByProperty({ collides: true })
     this.physics.add.collider(this.faune, wallsLayer)
 
