@@ -5,7 +5,7 @@ const createBatAnims = (anims: Phaser.Animations.AnimationManager) => {
 		key: 'bat-walk',
 		frames: anims.generateFrameNames('bat', { start: 0, end: 2, prefix: 'bat-', suffix: '.png' }),
 		repeat: -1,
-		frameRate: 5
+		frameRate: 20
 	})
 }
 

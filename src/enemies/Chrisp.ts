@@ -18,7 +18,7 @@ const randomDirection = (exclude: Direction) => {
 	return newDirection
 }
 
-export default class Lizard extends Phaser.Physics.Arcade.Sprite
+export default class Chrisp extends Phaser.Physics.Arcade.Sprite
 {
 	private direction = Direction.RIGHT
 	private moveEvent: Phaser.Time.TimerEvent
@@ -27,7 +27,7 @@ export default class Lizard extends Phaser.Physics.Arcade.Sprite
 	{
 		super(scene, x, y, texture, frame)
 
-		this.anims.play('lizard-idle')
+		this.anims.play('chrisp-walk')
 
 		scene.physics.world.on(Phaser.Physics.Arcade.Events.TILE_COLLIDE, this.handleTileCollision, this)
 
@@ -61,7 +61,7 @@ export default class Lizard extends Phaser.Physics.Arcade.Sprite
 	{
 		super.preUpdate(t, dt)
 
-		const speed = 50
+		const speed = 10
 
 		switch (this.direction)
 		{
