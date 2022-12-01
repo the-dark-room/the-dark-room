@@ -3,11 +3,13 @@ import Phaser from 'phaser'
 import { debugDraw } from '../utils/debug'
 import { createLizardAnims } from '../anims/EnemyAnims'
 import createGhostAnims from '../anims/GhostAnims'  //GHOST
+import createBodAnims from '../anims/BodAnims'  //BOD
 import { createCharacterAnims } from '../anims/CharacterAnims'
 import { createChestAnims } from '../anims/TreasureAnims'
 
 import Lizard from '../enemies/Lizard'
 import Ghost from '../enemies/Ghost'  //GHOST
+import Bod from '../enemies/Bod'
 
 import '../characters/Faune'
 import Faune from '../characters/Faune'
@@ -22,6 +24,7 @@ export default class Game extends Phaser.Scene {
 	private knives!: Phaser.Physics.Arcade.Group
 	private lizards!: Phaser.Physics.Arcade.Group
 	private ghosts!: Phaser.Physics.Arcade.Group   //GHOST
+	private bods!: Phaser.Physics.Arcade.Group   //BOD
 
 	private playerLizardsCollider?: Phaser.Physics.Arcade.Collider
 
@@ -40,6 +43,7 @@ export default class Game extends Phaser.Scene {
 		createCharacterAnims(this.anims)
 		createLizardAnims(this.anims)
 		createGhostAnims(this.anims)  //GHOST
+		createBodAnims(this.anims)  //BOD
 		createChestAnims(this.anims)
 
 		// adds the map and the tiles for it
@@ -82,10 +86,10 @@ export default class Game extends Phaser.Scene {
 			}
 		})
 
-		const lizardsLayer = map.getObjectLayer('Lizards')
-		lizardsLayer.objects.forEach(lizObj => {
-			this.lizards.get(lizObj.x! + lizObj.width! * 0.5, lizObj.y! - lizObj.height! * 0.5, 'lizard')
-		})
+		// const lizardsLayer = map.getObjectLayer('Lizards')
+		// lizardsLayer.objects.forEach(lizObj => {
+		// 	this.lizards.get(lizObj.x! + lizObj.width! * 0.5, lizObj.y! - lizObj.height! * 0.5, 'lizard')
+		// })
 
 		this.ghosts = this.physics.add.group({  //GHOST
 			classType: Ghost,
@@ -96,10 +100,24 @@ export default class Game extends Phaser.Scene {
 		})
 
 		// this.ghosts.get( 100, 100, 'ghost')
-		const enemyLayer = map.getObjectLayer('Lizards')
-		enemyLayer.objects.forEach(lizObj => {
+		const ghostLayer = map.getObjectLayer('Lizards')
+		ghostLayer.objects.forEach(ghostObj => {
 			this.ghosts.get(100,  100, 'ghost')
 		})
+
+		this.bods = this.physics.add.group({  //BOD
+			classType: Bod,
+			createCallback: (go) => {
+				const bodGo = go as Bod
+				bodGo.body.onCollide = true
+			}
+		})
+
+		this.bods.get( 100, 100, 'bod').setScale(0.5)
+		// const bodLayer = map.getObjectLayer('Lizards')
+		// bodLayer.objects.forEach(bodObj => {
+		// 	this.ghosts.get(100,  100, 'bod')
+		// })
 
 		this.physics.add.collider(this.faune, wallsLayer)
 		this.physics.add.collider(this.lizards, wallsLayer)
