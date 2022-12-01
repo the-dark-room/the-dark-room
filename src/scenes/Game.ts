@@ -162,7 +162,7 @@ export default class Game extends Phaser.Scene {
 			this.frogs.get( x, y, 'frog').setScale(0.8)
 			this.skeletons.get( x, y, 'skeleton')
 			this.bats.get( x, y, `bat-${b}`)
-			this.cultists.get( x, y, 'cultist').setScale(0.25)
+			this.cultists.get( x, y, 'cultist').setScale(0.6)
 		}
 		// console.log(this.physics)
 		// this.bats.get( 100, 100, 'bat')
