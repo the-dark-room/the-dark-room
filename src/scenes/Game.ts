@@ -7,6 +7,7 @@ import createBodAnims from '../anims/BodAnims'  //BOD
 import createFrogAnims from '../anims/FrogAnims'	//FROG
 import createSkeletonAnims from '../anims/SkeletonAnims'	//SKELETON
 import createBatAnims from '../anims/BatAnims'  //BAT
+import createCultistAnims from '../anims/CultistAnims'  //CULTIST
 import { createCharacterAnims } from '../anims/CharacterAnims'
 import { createChestAnims } from '../anims/TreasureAnims'
 
@@ -16,6 +17,7 @@ import Bod from '../enemies/Bod'	//BOD
 import Frog from '../enemies/Frog'	//FROG
 import Skeleton from '../enemies/Skeleton'	//SKELETON
 import Bat from '../enemies/Bat'	//BAT
+import Cultist from '../enemies/Cultist'	//CULTIST
 
 import '../characters/Faune'
 import Faune from '../characters/Faune'
@@ -34,6 +36,7 @@ export default class Game extends Phaser.Scene {
 	private frogs!: Phaser.Physics.Arcade.Group   //FROG
 	private skeletons!: Phaser.Physics.Arcade.Group   //SKELETON
 	private bats!: Phaser.Physics.Arcade.Group   //BAT
+	private cultists!: Phaser.Physics.Arcade.Group   //CULTIST
 
 	// private playerLizardsCollider?: Phaser.Physics.Arcade.Collider
 
@@ -62,6 +65,7 @@ export default class Game extends Phaser.Scene {
 		createFrogAnims(this.anims)	//FROG
 		createSkeletonAnims(this.anims)	//SKELETON
 		createBatAnims(this.anims)  //BAT
+		createCultistAnims(this.anims)  //CULTIST
 		createChestAnims(this.anims)
 
 		// adds the map and the tiles for it
@@ -143,6 +147,13 @@ export default class Game extends Phaser.Scene {
 		this.bats = this.physics.add.group({  //BAT
 			classType: Bat
 		})
+
+
+		this.cultists = this.physics.add.group({  //CULTIST
+			classType: Cultist
+		})
+
+
 		for(let b = 0; b < 50; b++){
 			const x = Phaser.Math.Between(20, 980)
 			const y = Phaser.Math.Between(20, 980)
@@ -151,6 +162,7 @@ export default class Game extends Phaser.Scene {
 			this.frogs.get( x, y, 'frog').setScale(0.8)
 			this.skeletons.get( x, y, 'skeleton')
 			this.bats.get( x, y, `bat-${b}`)
+			this.cultists.get( x, y, 'cultist').setScale(0.25)
 		}
 		// console.log(this.physics)
 		// this.bats.get( 100, 100, 'bat')
@@ -169,6 +181,7 @@ export default class Game extends Phaser.Scene {
 		this.physics.add.collider(this.frogs, wallsLayer)  //FROG
 		this.physics.add.collider(this.skeletons, wallsLayer)  //SKELETON
 		this.physics.add.collider(this.bats, wallsLayer)  //BAT
+		this.physics.add.collider(this.cultists, wallsLayer)  //CULTIST
 
 		this.physics.add.collider(this.faune, chests, this.handlePlayerChestCollision, undefined, this)
 
