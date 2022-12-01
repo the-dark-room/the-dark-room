@@ -21,6 +21,9 @@ export default class Game extends Phaser.Scene {
   private raycaster;
   private ray;
   private graphics;
+  private numberOfRays;
+  private lightAngle = Math.PI / 4;
+  private rayLength = 100;
 
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
   private faune!: Faune;
@@ -40,15 +43,6 @@ export default class Game extends Phaser.Scene {
 
   create() {
     this.scene.run("game-ui");
-
-    // Raycaster
-    this.raycaster = this.raycasterPlugin.createRaycaster();
-    this.ray = this.raycaster.createRay({
-      origin: {
-        x: 400,
-        y: 300,
-      },
-    });
 
     createCharacterAnims(this.anims);
     createLizardAnims(this.anims);
@@ -107,8 +101,16 @@ export default class Game extends Phaser.Scene {
     });
 
     // Raycaster
-    this.raycaster.mapGameObjects(wallsLayer);
-    let intersection = this.ray.cast();
+    this.raycaster = this.raycasterPlugin.createRaycaster();
+    this.ray = this.raycaster.createRay({
+      origin: {
+        x: this.faune.x,
+        y: this.faune.y,
+      },
+    });
+    // this.raycaster.mapGameObjects(wallsLayer);
+    // let intersection = this.ray.cast();
+    // this.ray.cast();
     this.graphics = this.add.graphics({
       lineStyle: { width: 1, color: 0x00ff00 },
       fillStyle: { color: 0xff00ff },
@@ -116,10 +118,12 @@ export default class Game extends Phaser.Scene {
     let line = new Phaser.Geom.Line(
       this.ray.origin.x,
       this.ray.origin.y,
-      intersection.x,
-      intersection.y
+      // intersection.x,
+      // intersection.y
+      0,
+      0
     );
-    this.graphics.fillPoint(this.ray.origin.x, this.ray.origin.y, 3);
+    // this.graphics.fillPoint(this.ray.origin.x, this.ray.origin.y, 3);
     this.graphics.strokeLineShape(line);
 
     this.physics.add.collider(this.faune, wallsLayer);
@@ -205,20 +209,22 @@ export default class Game extends Phaser.Scene {
       this.faune.update(this.cursors);
     }
 
-    //rotate ray
-    this.ray.setAngle(this.ray.angle + 0.01);
-    //cast ray
-    let intersection = this.ray.cast();
+    const mouseAngle = Math.atan2(
+      this.game.input.mousePointer.y - this.faune.y,
+      this.game.input.mousePointer.x - this.faune.x
+    );
 
-    //draw ray
+    this.ray.setAngle(mouseAngle);
+
     this.graphics.clear();
+
+    let intersection = this.ray.cast();
     let line = new Phaser.Geom.Line(
-      this.ray.origin.x,
-      this.ray.origin.y,
+      this.faune.x,
+      this.faune.y,
       intersection.x,
       intersection.y
     );
-    this.graphics.fillPoint(this.ray.origin.x, this.ray.origin.y, 3);
     this.graphics.strokeLineShape(line);
   }
 }
