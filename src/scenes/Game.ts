@@ -21,9 +21,10 @@ export default class Game extends Phaser.Scene {
   private raycaster;
   private ray;
   private graphics;
-  private numberOfRays;
+  private numberOfRays = 15;
   private lightAngle = Math.PI / 4;
   private rayLength = 100;
+  private intersections;
 
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
   private faune!: Faune;
@@ -101,30 +102,32 @@ export default class Game extends Phaser.Scene {
     });
 
     // Raycaster
-    this.raycaster = this.raycasterPlugin.createRaycaster();
+    const bounds = new Phaser.Geom.Rectangle(
+      0,
+      0,
+      map.widthInPixels,
+      map.heightInPixels
+    );
+    this.raycaster = this.raycasterPlugin.createRaycaster({
+      boundingBox: bounds,
+    });
     this.ray = this.raycaster.createRay({
       origin: {
         x: this.faune.x,
         y: this.faune.y,
       },
     });
-    // this.raycaster.mapGameObjects(wallsLayer);
-    // let intersection = this.ray.cast();
-    // this.ray.cast();
+
+    //set ray cone size (angle)
+    this.ray.setConeDeg(60);
+    // cast ray in a cone
+    this.intersections = this.ray.castCone();
+
     this.graphics = this.add.graphics({
       lineStyle: { width: 1, color: 0x00ff00 },
-      fillStyle: { color: 0xff00ff },
+      fillStyle: { color: 0xffffff, alpha: 0.3 },
     });
-    let line = new Phaser.Geom.Line(
-      this.ray.origin.x,
-      this.ray.origin.y,
-      // intersection.x,
-      // intersection.y
-      0,
-      0
-    );
-    // this.graphics.fillPoint(this.ray.origin.x, this.ray.origin.y, 3);
-    this.graphics.strokeLineShape(line);
+    this.draw();
 
     this.physics.add.collider(this.faune, wallsLayer);
     this.physics.add.collider(this.lizards, wallsLayer);
@@ -215,16 +218,26 @@ export default class Game extends Phaser.Scene {
     );
 
     this.ray.setAngle(mouseAngle);
+    // this.ray.setAngle(this.ray.angle + 0.01);
+    this.intersections = this.ray.castCone();
+    this.draw();
+  }
 
+  draw() {
+    this.intersections.push({
+      origin: {
+        x: this.faune.x,
+        y: this.faune.y,
+      },
+    });
     this.graphics.clear();
-
-    let intersection = this.ray.cast();
-    let line = new Phaser.Geom.Line(
-      this.faune.x,
-      this.faune.y,
-      intersection.x,
-      intersection.y
-    );
-    this.graphics.strokeLineShape(line);
+    for (let intersection of this.intersections) {
+      this.graphics.strokeLineShape({
+        x1: this.faune.x,
+        y1: this.faune.y,
+        x2: intersection.x,
+        y2: intersection.y,
+      });
+    }
   }
 }
