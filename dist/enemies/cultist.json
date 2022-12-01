@@ -1,180 +1,180 @@
 {
 	"textures": [
 		{
-			"image": "bod.png",
+			"image": "cultist.png",
 			"format": "RGBA8888",
 			"size": {
-				"w": 464,
-				"h": 57
+				"w": 400,
+				"h": 150
 			},
 			"scale": 1,
 			"frames": [
 				{
-					"filename": "Bringer-of-Death_Walk_1.png",
+					"filename": "cultist-0.png",
 					"rotated": false,
-					"trimmed": true,
+					"trimmed": false,
 					"sourceSize": {
-						"w": 60,
-						"h": 60
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 56,
-						"h": 56
-					},
-					"frame": {
-						"x": 0,
-						"y": 0,
-						"w": 56,
-						"h": 56
-					}
-				},
-				{
-					"filename": "Bringer-of-Death_Walk_2.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 60,
-						"h": 60
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 58,
-						"h": 54
-					},
-					"frame": {
-						"x": 58,
-						"y": 0,
-						"w": 58,
-						"h": 54
-					}
-				},
-				{
-					"filename": "Bringer-of-Death_Walk_3.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 60,
-						"h": 60
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 58,
-						"h": 56
-					},
-					"frame": {
-						"x": 116,
-						"y": 0,
-						"w": 58,
-						"h": 56
-					}
-				},
-				{
-					"filename": "Bringer-of-Death_Walk_4.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 60,
-						"h": 60
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 56,
-						"h": 57
-					},
-					"frame": {
-						"x": 174,
-						"y": 0,
-						"w": 56,
-						"h": 57
-					}
-				},
-				{
-					"filename": "Bringer-of-Death_Walk_5.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 60,
-						"h": 60
+						"w": 50,
+						"h": 150
 					},
 					"spriteSourceSize": {
 						"x": 0,
 						"y": 0,
 						"w": 50,
-						"h": 56
+						"h": 150
 					},
 					"frame": {
-						"x": 232,
+						"x": 0,
 						"y": 0,
 						"w": 50,
-						"h": 56
+						"h": 150
 					}
 				},
 				{
-					"filename": "Bringer-of-Death_Walk_6.png",
+					"filename": "cultist-1.png",
 					"rotated": false,
-					"trimmed": true,
+					"trimmed": false,
 					"sourceSize": {
-						"w": 60,
-						"h": 60
+						"w": 50,
+						"h": 150
 					},
 					"spriteSourceSize": {
 						"x": 0,
 						"y": 0,
-						"w": 48,
-						"h": 54
+						"w": 50,
+						"h": 50
 					},
 					"frame": {
-						"x": 290,
+						"x": 50,
 						"y": 0,
-						"w": 48,
-						"h": 54
+						"w": 50,
+						"h": 150
 					}
 				},
 				{
-					"filename": "Bringer-of-Death_Walk_7.png",
+					"filename": "cultist-2.png",
 					"rotated": false,
-					"trimmed": true,
+					"trimmed": false,
 					"sourceSize": {
-						"w": 60,
-						"h": 60
+						"w": 50,
+						"h": 150
 					},
 					"spriteSourceSize": {
 						"x": 0,
 						"y": 0,
-						"w": 47,
-						"h": 56
+						"w": 50,
+						"h": 50
 					},
 					"frame": {
-						"x": 348,
+						"x": 100,
 						"y": 0,
-						"w": 47,
-						"h": 56
+						"w": 50,
+						"h": 150
 					}
 				},
 				{
-					"filename": "Bringer-of-Death_Walk_8.png",
+					"filename": "cultist-3.png",
 					"rotated": false,
-					"trimmed": true,
+					"trimmed": false,
 					"sourceSize": {
-						"w": 60,
-						"h": 60
+						"w": 50,
+						"h": 150
 					},
 					"spriteSourceSize": {
 						"x": 0,
 						"y": 0,
-						"w": 52,
-						"h": 57
+						"w": 50,
+						"h": 50
 					},
 					"frame": {
-						"x": 406,
+						"x": 150,
 						"y": 0,
-						"w": 52,
-						"h": 57
+						"w": 50,
+						"h": 150
+					}
+				},
+				{
+					"filename": "cultist-4.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 50,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 50,
+						"h": 50
+					},
+					"frame": {
+						"x": 200,
+						"y": 0,
+						"w": 50,
+						"h": 150
+					}
+				},
+				{
+					"filename": "cultist-5.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 50,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 50,
+						"h": 50
+					},
+					"frame": {
+						"x": 250,
+						"y": 0,
+						"w": 50,
+						"h": 150
+					}
+				},
+				{
+					"filename": "cultist-6.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 50,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 50,
+						"h": 50
+					},
+					"frame": {
+						"x": 300,
+						"y": 0,
+						"w": 50,
+						"h": 150
+					}
+				},
+				{
+					"filename": "cultist-7.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 50,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 50,
+						"h": 50
+					},
+					"frame": {
+						"x": 350,
+						"y": 0,
+						"w": 50,
+						"h": 150
 					}
 				}
 			]
@@ -183,6 +183,6 @@
 	"meta": {
 		"app": "https://www.codeandweb.com/texturepacker",
 		"version": "3.0",
-		"smartupdate": "$TexturePacker:SmartUpdate:d2f09e28fcdca67ddcd774f82cd9cf55:cf0da69460a69e8b6bdb6c82b300e7c:07148dba600aa9187bb8e9442b5c3921$"
+		"smartupdate": "$TexturePacker:SmartUpdate:5f7ada6caaa9987b92a9cdd963748b53:619da4788ec750a5d7fea4563846b72c:b8deb386961dca37e6bf6520eeea939d$"
 	}
 }
