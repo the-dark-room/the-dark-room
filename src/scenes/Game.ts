@@ -5,6 +5,7 @@ import { createLizardAnims } from '../anims/EnemyAnims'
 import createGhostAnims from '../anims/GhostAnims'  //GHOST
 import createBodAnims from '../anims/BodAnims'  //BOD
 import createFrogAnims from '../anims/FrogAnims'	//FROG
+import createSkeletonAnims from '../anims/SkeletonAnims'	//SKELETON
 import { createCharacterAnims } from '../anims/CharacterAnims'
 import { createChestAnims } from '../anims/TreasureAnims'
 
@@ -12,6 +13,7 @@ import Lizard from '../enemies/Lizard'
 import Ghost from '../enemies/Ghost'  //GHOST
 import Bod from '../enemies/Bod'	//BOD
 import Frog from '../enemies/Frog'	//FROG
+import Skeleton from '../enemies/Skeleton'	//SKELETON
 
 import '../characters/Faune'
 import Faune from '../characters/Faune'
@@ -28,6 +30,7 @@ export default class Game extends Phaser.Scene {
 	private ghosts!: Phaser.Physics.Arcade.Group   //GHOST
 	private bods!: Phaser.Physics.Arcade.Group   //BOD
 	private frogs!: Phaser.Physics.Arcade.Group   //FROG
+	private skeletons!: Phaser.Physics.Arcade.Group   //SKELETON
 
 	private playerLizardsCollider?: Phaser.Physics.Arcade.Collider
 
@@ -54,6 +57,7 @@ export default class Game extends Phaser.Scene {
 		createGhostAnims(this.anims)  //GHOST
 		createBodAnims(this.anims)  //BOD
 		createFrogAnims(this.anims)	//FROG
+		createSkeletonAnims(this.anims)	//SKELETON
 		createChestAnims(this.anims)
 
 		// adds the map and the tiles for it
@@ -107,26 +111,29 @@ export default class Game extends Phaser.Scene {
 		// 	this.lizards.get(lizObj.x! + lizObj.width! * 0.5, lizObj.y! - lizObj.height! * 0.5, 'lizard')
 		// })
 
+
 		this.ghosts = this.physics.add.group({  //GHOST
 			classType: Ghost
 		})
-
-		this.ghosts.get( 100, 100, 'ghost')
+		this.ghosts.get( 100, 100, 'ghost').setScale(0.6)
 	
 
 		this.bods = this.physics.add.group({  //BOD
 			classType: Bod
 		})
-
-		this.bods.get( 100, 100, 'bod').setScale(0.5)
+		this.bods.get( 100, 100, 'bod').setScale(0.4)
 	
-
+6
 		this.frogs = this.physics.add.group({  //FROG
 			classType: Frog
 		})
-
-		this.frogs.get( 100, 100, 'frog')
+		this.frogs.get( 100, 100, 'frog').setScale(0.8)
 	
+
+		this.skeletons = this.physics.add.group({  //SKELETONS
+			classType: Skeleton
+		})
+		this.skeletons.get( 100, 100, 'skeleton')
 		/*
 		** ENEMIES
 		*/
@@ -136,6 +143,8 @@ export default class Game extends Phaser.Scene {
 		this.physics.add.collider(this.lizards, wallsLayer)
 		this.physics.add.collider(this.ghosts, wallsLayer)  //GHOST
 		this.physics.add.collider(this.bods, wallsLayer)  //BOD
+		this.physics.add.collider(this.frogs, wallsLayer)  //FROG
+		this.physics.add.collider(this.skeletons, wallsLayer)  //SKELETON
 
 		this.physics.add.collider(this.faune, chests, this.handlePlayerChestCollision, undefined, this)
 
