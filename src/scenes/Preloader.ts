@@ -31,6 +31,7 @@ export default class Preloader extends Phaser.Scene
 		this.load.audio('hurt-sound', 'audio/hurt-sound.mp3')
 		this.load.audio('click', 'audio/click.mp3')
 		this.load.audio('game-over', 'audio/game-over.mp3')
+		this.load.audio('thriller-music', 'audio/thriller-music.mp3')
 
 		// create loading bar
     let loadingBar = this.add.graphics({
