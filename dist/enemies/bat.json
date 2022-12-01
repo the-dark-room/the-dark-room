@@ -1,7 +1,7 @@
 {
 	"textures": [
 		{
-			"image": "frog.png",
+			"image": "bat.png",
 			"format": "RGBA8888",
 			"size": {
 				"w": 48,
@@ -10,7 +10,7 @@
 			"scale": 1,
 			"frames": [
 				{
-					"filename": "frog-0.png",
+					"filename": "bat-0.png",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -31,7 +31,7 @@
 					}
 				},
 				{
-					"filename": "frog-1.png",
+					"filename": "bat-1.png",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -52,7 +52,7 @@
 					}
 				},
 				{
-					"filename": "frog-2.png",
+					"filename": "bat-2.png",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -78,6 +78,6 @@
 	"meta": {
 		"app": "https://www.codeandweb.com/texturepacker",
 		"version": "3.0",
-		"smartupdate": "$TexturePacker:SmartUpdate:b74de41d4e4889ffd08a487d32607f2e:398ea88bce862a880037920a5ea623da:8dde0dd0197344c2f9f9f01d8d204375$"
+		"smartupdate": "$TexturePacker:SmartUpdate:bc1182bc4eebe5a71478376f02c3e3b2:a61cb48d132546540a651181f528453d:7701fa4d77073f039a4bfcba279ca81e$"
 	}
 }
