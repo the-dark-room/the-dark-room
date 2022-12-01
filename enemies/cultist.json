@@ -4,8 +4,8 @@
 			"image": "cultist.png",
 			"format": "RGBA8888",
 			"size": {
-				"w": 472,
-				"h": 106
+				"w": 400,
+				"h": 150
 			},
 			"scale": 1,
 			"frames": [
@@ -14,20 +14,20 @@
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
-						"w": 59,
-						"h": 97
+						"w": 50,
+						"h": 150
 					},
 					"spriteSourceSize": {
-						"x": 107,
-						"y": 71,
-						"w": 59,
-						"h": 97
+						"x": 0,
+						"y": 0,
+						"w": 50,
+						"h": 150
 					},
 					"frame": {
 						"x": 0,
 						"y": 0,
-						"w": 59,
-						"h": 97
+						"w": 50,
+						"h": 150
 					}
 				},
 				{
@@ -35,20 +35,20 @@
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
-						"w": 58,
-						"h": 102
+						"w": 50,
+						"h": 150
 					},
 					"spriteSourceSize": {
-						"x": 107,
-						"y": 66,
-						"w": 58,
-						"h": 102
+						"x": 0,
+						"y": 0,
+						"w": 50,
+						"h": 50
 					},
 					"frame": {
-						"x": 59,
+						"x": 50,
 						"y": 0,
-						"w": 58,
-						"h": 102
+						"w": 50,
+						"h": 150
 					}
 				},
 				{
@@ -56,20 +56,20 @@
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
-						"w": 58,
-						"h": 105
+						"w": 50,
+						"h": 150
 					},
 					"spriteSourceSize": {
-						"x": 107,
-						"y": 63,
-						"w": 58,
-						"h": 105
+						"x": 0,
+						"y": 0,
+						"w": 50,
+						"h": 50
 					},
 					"frame": {
-						"x": 118,
+						"x": 100,
 						"y": 0,
-						"w": 58,
-						"h": 105
+						"w": 50,
+						"h": 150
 					}
 				},
 				{
@@ -77,20 +77,20 @@
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
-						"w": 58,
-						"h": 105
+						"w": 50,
+						"h": 150
 					},
 					"spriteSourceSize": {
-						"x": 107,
-						"y": 63,
-						"w": 58,
-						"h": 105
+						"x": 0,
+						"y": 0,
+						"w": 50,
+						"h": 50
 					},
 					"frame": {
-						"x": 177,
+						"x": 150,
 						"y": 0,
-						"w": 58,
-						"h": 105
+						"w": 50,
+						"h": 150
 					}
 				},
 				{
@@ -98,20 +98,20 @@
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
-						"w": 59,
-						"h": 102
+						"w": 50,
+						"h": 150
 					},
 					"spriteSourceSize": {
-						"x": 107,
-						"y": 66,
-						"w": 59,
-						"h": 102
+						"x": 0,
+						"y": 0,
+						"w": 50,
+						"h": 50
 					},
 					"frame": {
-						"x": 236,
+						"x": 200,
 						"y": 0,
-						"w": 59,
-						"h": 102
+						"w": 50,
+						"h": 150
 					}
 				},
 				{
@@ -119,20 +119,20 @@
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
-						"w": 57,
-						"h": 106
+						"w": 50,
+						"h": 150
 					},
 					"spriteSourceSize": {
-						"x": 107,
-						"y": 62,
-						"w": 57,
-						"h": 106
+						"x": 0,
+						"y": 0,
+						"w": 50,
+						"h": 50
 					},
 					"frame": {
-						"x": 295,
+						"x": 250,
 						"y": 0,
-						"w": 57,
-						"h": 106
+						"w": 50,
+						"h": 150
 					}
 				},
 				{
@@ -140,20 +140,20 @@
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
-						"w": 56,
-						"h": 99
+						"w": 50,
+						"h": 150
 					},
 					"spriteSourceSize": {
-						"x": 107,
-						"y": 69,
-						"w": 56,
-						"h": 99
+						"x": 0,
+						"y": 0,
+						"w": 50,
+						"h": 50
 					},
 					"frame": {
-						"x": 354,
+						"x": 300,
 						"y": 0,
-						"w": 56,
-						"h": 99
+						"w": 50,
+						"h": 150
 					}
 				},
 				{
@@ -161,20 +161,20 @@
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
-						"w": 58,
-						"h": 99
+						"w": 50,
+						"h": 150
 					},
 					"spriteSourceSize": {
-						"x": 107,
-						"y": 69,
-						"w": 58,
-						"h": 99
+						"x": 0,
+						"y": 0,
+						"w": 50,
+						"h": 50
 					},
 					"frame": {
-						"x": 413,
+						"x": 350,
 						"y": 0,
-						"w": 58,
-						"h": 99
+						"w": 50,
+						"h": 150
 					}
 				}
 			]
@@ -183,6 +183,6 @@
 	"meta": {
 		"app": "https://www.codeandweb.com/texturepacker",
 		"version": "3.0",
-		"smartupdate": "$TexturePacker:SmartUpdate:801246f719c9684de0809b52bf160e16:dbc6fb53075e40e16cbe5bf73132a3e5:b8deb386961dca37e6bf6520eeea939d$"
+		"smartupdate": "$TexturePacker:SmartUpdate:5f7ada6caaa9987b92a9cdd963748b53:619da4788ec750a5d7fea4563846b72c:b8deb386961dca37e6bf6520eeea939d$"
 	}
 }
