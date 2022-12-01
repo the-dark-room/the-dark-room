@@ -1,0 +1,83 @@
+{
+	"textures": [
+		{
+			"image": "frog.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 48,
+				"h": 16
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "frog-0.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 16,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 16,
+						"h": 16
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 16,
+						"h": 16
+					}
+				},
+				{
+					"filename": "frog-1.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 16,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 16,
+						"h": 16
+					},
+					"frame": {
+						"x": 16,
+						"y": 0,
+						"w": 16,
+						"h": 16
+					}
+				},
+				{
+					"filename": "frog-2.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 16,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 16,
+						"h": 16
+					},
+					"frame": {
+						"x": 32,
+						"y": 0,
+						"w": 16,
+						"h": 16
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:b74de41d4e4889ffd08a487d32607f2e:398ea88bce862a880037920a5ea623da:8dde0dd0197344c2f9f9f01d8d204375$"
+	}
+}
