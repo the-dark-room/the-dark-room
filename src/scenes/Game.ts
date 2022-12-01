@@ -206,17 +206,17 @@ export default class Game extends Phaser.Scene {
       this.playerLizardsCollider?.destroy();
     }
   }
-
   update(t: number, dt: number) {
     if (this.faune) {
       this.faune.update(this.cursors);
     }
 
     const mouseAngle = Math.atan2(
-      this.game.input.mousePointer.y - this.faune.y,
-      this.game.input.mousePointer.x - this.faune.x
+      this.game.input.mousePointer.worldY - this.faune.y,
+      this.game.input.mousePointer.worldX - this.faune.x
     );
-
+    // console.log(this.game.input.mousePointer.worldX);
+    // console.log("AAAAAAAAAAAAAAAAAAAAAAAAA", this.faune.x, this.faune.y);
     this.ray.setAngle(mouseAngle);
     // this.ray.setAngle(this.ray.angle + 0.01);
     this.intersections = this.ray.castCone();
@@ -224,13 +224,19 @@ export default class Game extends Phaser.Scene {
   }
 
   draw() {
-    this.intersections.push({
-      origin: {
-        x: this.faune.x,
-        y: this.faune.y,
-      },
-    });
+    // this.intersections.push({
+    //   origin: {
+    //     x: this.faune.x,
+    //     y: this.faune.y,
+    //   },
+    // });
+    this.ray.setOrigin(this.faune.x, this.faune.y);
+    this.intersections.push(this.ray.origin);
+
     this.graphics.clear();
+    this.graphics.fillStyle(0xffffff, 0.3);
+    this.graphics.fillPoints(this.intersections);
+
     for (let intersection of this.intersections) {
       this.graphics.strokeLineShape({
         x1: this.faune.x,
