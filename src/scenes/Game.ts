@@ -40,6 +40,12 @@ export default class Game extends Phaser.Scene {
 	}
 
 	create() {
+		// main music
+		const thrillerMusic = this.sound.add('thriller-music', {
+			loop: true,
+			volume: 0.2
+		})
+		thrillerMusic.play()
 
 		this.scene.run('game-ui')
 
