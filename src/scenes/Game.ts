@@ -152,7 +152,7 @@ export default class Game extends Phaser.Scene {
 			this.skeletons.get( x, y, 'skeleton')
 			this.bats.get( x, y, `bat-${b}`)
 		}
-		console.log(this.physics)
+		// console.log(this.physics)
 		// this.bats.get( 100, 100, 'bat')
 
 
