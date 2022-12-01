@@ -4,12 +4,14 @@ import { debugDraw } from '../utils/debug'
 import { createLizardAnims } from '../anims/EnemyAnims'
 import createGhostAnims from '../anims/GhostAnims'  //GHOST
 import createBodAnims from '../anims/BodAnims'  //BOD
+import createFrogAnims from '../anims/FrogAnims'	//FROG
 import { createCharacterAnims } from '../anims/CharacterAnims'
 import { createChestAnims } from '../anims/TreasureAnims'
 
 import Lizard from '../enemies/Lizard'
 import Ghost from '../enemies/Ghost'  //GHOST
-import Bod from '../enemies/Bod'
+import Bod from '../enemies/Bod'	//BOD
+import Frog from '../enemies/Frog'	//FROG
 
 import '../characters/Faune'
 import Faune from '../characters/Faune'
@@ -25,6 +27,7 @@ export default class Game extends Phaser.Scene {
 	private lizards!: Phaser.Physics.Arcade.Group
 	private ghosts!: Phaser.Physics.Arcade.Group   //GHOST
 	private bods!: Phaser.Physics.Arcade.Group   //BOD
+	private frogs!: Phaser.Physics.Arcade.Group   //FROG
 
 	private playerLizardsCollider?: Phaser.Physics.Arcade.Collider
 
@@ -44,6 +47,7 @@ export default class Game extends Phaser.Scene {
 		createLizardAnims(this.anims)
 		createGhostAnims(this.anims)  //GHOST
 		createBodAnims(this.anims)  //BOD
+		createFrogAnims(this.anims)	//FROG
 		createChestAnims(this.anims)
 
 		// adds the map and the tiles for it
@@ -78,6 +82,12 @@ export default class Game extends Phaser.Scene {
 
 		this.cameras.main.startFollow(this.faune, true)
 
+
+		/*
+		** ENEMIES
+		*/
+
+
 		this.lizards = this.physics.add.group({
 			classType: Lizard,
 			createCallback: (go) => {
@@ -92,36 +102,34 @@ export default class Game extends Phaser.Scene {
 		// })
 
 		this.ghosts = this.physics.add.group({  //GHOST
-			classType: Ghost,
-			createCallback: (go) => {
-				const ghostGo = go as Ghost
-				ghostGo.body.onCollide = true
-			}
+			classType: Ghost
 		})
 
-		// this.ghosts.get( 100, 100, 'ghost')
-		const ghostLayer = map.getObjectLayer('Lizards')
-		ghostLayer.objects.forEach(ghostObj => {
-			this.ghosts.get(100,  100, 'ghost')
-		})
+		this.ghosts.get( 100, 100, 'ghost')
+	
 
 		this.bods = this.physics.add.group({  //BOD
-			classType: Bod,
-			createCallback: (go) => {
-				const bodGo = go as Bod
-				bodGo.body.onCollide = true
-			}
+			classType: Bod
 		})
 
 		this.bods.get( 100, 100, 'bod').setScale(0.5)
-		// const bodLayer = map.getObjectLayer('Lizards')
-		// bodLayer.objects.forEach(bodObj => {
-		// 	this.ghosts.get(100,  100, 'bod')
-		// })
+	
+
+		this.frogs = this.physics.add.group({  //FROG
+			classType: Frog
+		})
+
+		this.frogs.get( 100, 100, 'frog')
+	
+		/*
+		** ENEMIES
+		*/
+
 
 		this.physics.add.collider(this.faune, wallsLayer)
 		this.physics.add.collider(this.lizards, wallsLayer)
 		this.physics.add.collider(this.ghosts, wallsLayer)  //GHOST
+		this.physics.add.collider(this.bods, wallsLayer)  //BOD
 
 		this.physics.add.collider(this.faune, chests, this.handlePlayerChestCollision, undefined, this)
 
