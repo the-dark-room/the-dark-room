@@ -21,9 +21,10 @@ export default class Game extends Phaser.Scene {
   private raycaster;
   private ray;
   private graphics;
+  private numberOfRays = 15;
+  private lightAngle = Math.PI / 4;
   private rayLength = 100;
   private intersections;
-  private container;
 
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
   private faune!: Faune;
@@ -44,6 +45,9 @@ export default class Game extends Phaser.Scene {
   create() {
     this.scene.run("game-ui");
 
+    this.input.setPollAlways();
+    // this.input.mousePointer.setPollAlways();
+
     createCharacterAnims(this.anims);
     createLizardAnims(this.anims);
     createChestAnims(this.anims);
@@ -55,7 +59,7 @@ export default class Game extends Phaser.Scene {
       "tiles"
     );
 
-    map.createStaticLayer("background", tileset);
+    const layer = map.createStaticLayer("background", tileset);
 
     this.knives = this.physics.add.group({
       classType: Phaser.Physics.Arcade.Image,
@@ -68,6 +72,18 @@ export default class Game extends Phaser.Scene {
     const wallsLayer = map.createStaticLayer("Walls", tileset);
 
     wallsLayer.setCollisionByProperty({ collides: true });
+
+    // // ray test --------------------
+    // let polygons = [];
+    // wallsLayer.forEachTile(function(t) {
+    //   if(t.index == 1) {
+    //     polygons.push([[t.pixelX, t.pixelY], [t.pixelX + t.width, t.pixelY], [t.pixelX + t.width, t.pixelY + t.height], [t.pixelX, t.pixelY + t.height]]);
+    //   }
+    // });
+    // console.log(polygons);
+    // polygons.push([[-1, -1], [wallsLayer.width + 1 , - 1], [wallsLayer.width + 1, wallsLayer.height + 1], [-1, wallsLayer.height + 1]]);
+
+    // // no ray test -----------------
 
     const chests = this.physics.add.staticGroup({
       classType: Chest,
@@ -91,8 +107,6 @@ export default class Game extends Phaser.Scene {
       },
     });
 
-    this.container = this.add.container(map.widthInPixels, map.heightInPixels);
-
     const lizardsLayer = map.getObjectLayer("Lizards");
     lizardsLayer.objects.forEach((lizObj) => {
       this.lizards.get(
@@ -102,11 +116,6 @@ export default class Game extends Phaser.Scene {
       );
     });
 
-    // this.lizards.forEach((lizard) => this.container.add(lizard));
-    // this.lizards.children.entries.forEach((lizard) =>
-    //   this.container.add(lizard)
-    // );
-    console.log(this.lizards.children.entries);
     // Raycaster
     const bounds = new Phaser.Geom.Rectangle(
       0,
@@ -125,31 +134,119 @@ export default class Game extends Phaser.Scene {
       // rayRange: this.rayLength,
     });
 
-    this.raycaster.mapGameObjects(this.lizards.children.entries);
-    // This one causes an error
-    // this.raycaster.mapGameObjects(this.map, false, {
-    //   collisionTiles: [wallsLayer],
-    // });
-    // this.ray.autoSlice = true;
-    this.ray.autoSlice = true;
-    //enable arcade physics body
-    this.ray.enablePhysics();
-    //set collision (field of view) range
-    // this.ray.setCollisionRange(this.rayLength);
-
     //set ray cone size (angle)
     this.ray.setConeDeg(60);
     // cast ray in a cone
     this.intersections = this.ray.castCone();
-
-    let visibleObjects = this.ray.overlap();
-    visibleObjects = this.ray.overlap(this.lizards);
 
     this.graphics = this.add.graphics({
       lineStyle: { width: 1, color: 0x00ff00 },
       fillStyle: { color: 0xffffff, alpha: 0.3 },
     });
     this.draw();
+
+    // BEGIN TILE-RAYCASTING TEST CODE
+
+    // let polygons = [];
+    // this.cursors = this.input.keyboard.createCursorKeys();
+
+    // wallsLayer.forEachTile((t) => {
+    //   if(t.index == 1){
+    //   polygons.push([[t.pixelX, t.pixelY], [t.pixelX + t.width, t.pixelY], [t.pixelX + t.width, t.pixelY + t.height], [t.pixelX, t.pixelY + t.height]]);
+    //   }
+    // })
+    // console.log(polygons);
+    // polygons.push([[-1, -1], [wallsLayer.width + 1 , - 1], [wallsLayer.width + 1, wallsLayer.height + 1], [-1, wallsLayer.height + 1]]);
+    // console.log(polygons);
+
+    // let wKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+    //       wKey.on("down", function(){
+    //           wallGraphics.setVisible(true);
+    //       }, this);
+    //       wKey.on("up", function(){
+    //           wallGraphics.setVisible(false);
+    //       }, this);
+    //   let wallGraphics = this.add.graphics();
+    //       wallGraphics.setVisible(false);
+    //   wallGraphics.lineStyle(1, 0x00ff00);
+    //   polygons.forEach(function(p){
+    //     wallGraphics.strokeRect(p[0][0], p[0][1], p[2][0] - p[0][0],  p[2][1] - p[0][1]);
+    // });
+
+    // this.group = this.add.group()
+    // this.raycaster.mapGameObjects(this.group.getChildren())
+    // this.raycaster.mapGameObjects(wallsLayer, false, {
+    //   collisionTiles: [244, 248, 294, 193]
+    // })
+
+    //create obstacles
+    let obstacles = this.add.group();
+    createObstacles(this, this.lizards);
+
+    //map obstacles
+    this.raycaster.mapGameObjects(obstacles.getChildren());
+    // this.raycaster.mapGameObjects(this.lizards.getChildren())
+    this.raycaster.mapGameObjects(wallsLayer, false, {
+      collisionTiles: [248, 244, 294],
+    });
+    // this.raycaster.mapGameObjects(chests)
+
+    // let lizardBois = this.lizards;
+    // console.log(lizardBois);
+
+    // obstacles.add(chests, true)
+
+    function createObstacles(scene, lizards) {
+      //create rectangle obstacle
+      let obstacle = scene.add
+        .rectangle(100, 100, 75, 75)
+        .setStrokeStyle(1, 0xff0000);
+      obstacles.add(obstacle, true);
+
+      //create line obstacle
+      obstacle = scene.add
+        .line(400, 100, 0, 0, 200, 50)
+        .setStrokeStyle(1, 0xff0000);
+      obstacles.add(obstacle);
+
+      //create circle obstacle
+      obstacle = scene.add.circle(650, 100, 50).setStrokeStyle(1, 0xff0000);
+      obstacles.add(obstacle);
+
+      //create polygon obstacle
+      obstacle = scene.add
+        .polygon(650, 500, [0, 0, 50, 50, 100, 0, 100, 75, 50, 100, 0, 50])
+        .setStrokeStyle(1, 0xff0000);
+      obstacles.add(obstacle);
+
+      //create overlapping obstacles
+      for (let i = 0; i < 5; i++) {
+        obstacle = scene.add
+          .rectangle(350 + 30 * i, 550 - 30 * i, 50, 50)
+          .setStrokeStyle(1, 0xff0000);
+        obstacles.add(obstacle, true);
+      }
+
+      //create image obstacle
+      obstacle = scene.add.image(100, 500, "lizard");
+      obstacles.add(obstacle, true);
+
+      let t = chests.getChildren();
+      t.forEach((chest) => {
+        obstacles.add(chest, true);
+      });
+
+      let l = lizards.getChildren();
+      // l.forEach((liz) => {
+      //   obstacles.add(liz, true)
+      // })
+
+      for (let i = 0; i < 10; i++) {
+        obstacles.add(l[i]);
+      }
+    }
+
+    // END TEST CODE
 
     this.physics.add.collider(this.faune, wallsLayer);
     this.physics.add.collider(this.lizards, wallsLayer);
@@ -228,17 +325,25 @@ export default class Game extends Phaser.Scene {
       this.playerLizardsCollider?.destroy();
     }
   }
+
   update(t: number, dt: number) {
     if (this.faune) {
       this.faune.update(this.cursors);
     }
+    console.log(this.game.input.mousePointer);
 
+    // This makes sure that the mouse x and y are accurate
+    const crosshairX =
+      this.game.input.mousePointer.x +
+      this.game.input.mousePointer.camera?.worldView.x;
+    const crosshairY =
+      this.game.input.mousePointer.y +
+      this.game.input.mousePointer.camera?.worldView.y;
     const mouseAngle = Math.atan2(
-      this.game.input.mousePointer.worldY - this.faune.y,
-      this.game.input.mousePointer.worldX - this.faune.x
+      crosshairY - this.faune.y,
+      crosshairX - this.faune.x
     );
-    // console.log(this.game.input.mousePointer.worldX);
-    // console.log("AAAAAAAAAAAAAAAAAAAAAAAAA", this.faune.x, this.faune.y);
+
     this.ray.setAngle(mouseAngle);
     // this.ray.setAngle(this.ray.angle + 0.01);
     this.intersections = this.ray.castCone();
