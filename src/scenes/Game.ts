@@ -32,6 +32,8 @@ export default class Game extends Phaser.Scene {
 	private faune!: Faune
 
 	private knives!: Phaser.Physics.Arcade.Group
+	private meleeHitbox!: Phaser.Types.Physics.Arcade.ImageWithDynamicBody
+
 	// private lizards!: Phaser.Physics.Arcade.Group
 	private ghosts!: Phaser.Physics.Arcade.Group   //GHOST
 	private bods!: Phaser.Physics.Arcade.Group   //BOD
@@ -83,7 +85,14 @@ export default class Game extends Phaser.Scene {
 			maxSize: 200
 		})
 
+		// TODO: create sword swing hit box
+
+		this.meleeHitbox = this.add.rectangle(0, 0, 20, 20, 0xffffff, 0) as unknown as Phaser.Types.Physics.Arcade.ImageWithDynamicBody
+		this.physics.add.existing(this.meleeHitbox)
+		this.meleeHitbox.body.enable = false
+
 		this.faune = this.add.faune(128, 128, 'faune')
+		// this.faune.setSword(this.swordHitbox)
 		this.faune.setKnives(this.knives)
 
 		// // smaller hitbox
@@ -127,22 +136,22 @@ export default class Game extends Phaser.Scene {
 		this.ghosts = this.physics.add.group({  //GHOST
 			classType: Ghost
 		})
-		
+
 
 		this.bods = this.physics.add.group({  //BOD
 			classType: Bod
 		})
-		
+
 6
 		this.frogs = this.physics.add.group({  //FROG
 			classType: Frog
 		})
-		
+
 
 		this.skeletons = this.physics.add.group({  //SKELETONS
 			classType: Skeleton
 		})
-		
+
 
 		this.bats = this.physics.add.group({  //BAT
 			classType: Bat
@@ -168,7 +177,7 @@ export default class Game extends Phaser.Scene {
 			this.skeletons.get( x, y, 'skeleton')
 			this.bats.get( x, y, `bat-${b}`)
 			this.cultists.get( x, y, 'cultist').setScale(0.6)
-			
+
 		}
 		this.chrisps.get(100, 100, 'chrisp').setScale(0.8)
 
@@ -192,9 +201,28 @@ export default class Game extends Phaser.Scene {
 		this.physics.add.collider(this.faune, chests, this.handlePlayerChestCollision, undefined, this)
 
 		this.physics.add.collider(this.knives, wallsLayer, this.handleKnifeWallCollision, undefined, this)
-		// this.physics.add.collider(this.knives, this.lizards, this.handleKnifeLizardCollision, undefined, this)
+		this.physics.add.collider(this.knives, this.ghosts, this.handleKnifeEnemyCollision, undefined, this)
+		this.physics.add.collider(this.knives, this.bods, this.handleKnifeEnemyCollision, undefined, this)
+		this.physics.add.collider(this.knives, this.frogs, this.handleKnifeEnemyCollision, undefined, this)
+		this.physics.add.collider(this.knives, this.skeletons, this.handleKnifeEnemyCollision, undefined, this)
+		this.physics.add.collider(this.knives, this.chrisps, this.handleKnifeEnemyCollision, undefined, this)
+		this.physics.add.collider(this.knives, this.cultists, this.handleKnifeEnemyCollision, undefined, this)
+		this.physics.add.collider(this.knives, this.bats, this.handleKnifeEnemyCollision, undefined, this)
+
+		this.physics.add.overlap(this.meleeHitbox, this.ghosts, this.handleSwordEnemyCollision, undefined, this)
+		this.physics.add.overlap(this.meleeHitbox, this.bods, this.handleSwordEnemyCollision, undefined, this)
+		this.physics.add.overlap(this.meleeHitbox, this.frogs, this.handleSwordEnemyCollision, undefined, this)
+		this.physics.add.overlap(this.meleeHitbox, this.skeletons, this.handleSwordEnemyCollision, undefined, this)
+		this.physics.add.overlap(this.meleeHitbox, this.chrisps, this.handleSwordEnemyCollision, undefined, this)
+		this.physics.add.overlap(this.meleeHitbox, this.cultists, this.handleSwordEnemyCollision, undefined, this)
+		this.physics.add.overlap(this.meleeHitbox, this.bats, this.handleSwordEnemyCollision, undefined, this)
 
 		// this.playerLizardsCollider = this.physics.add.collider(this.lizards, this.faune, this.handlePlayerLizardCollision, undefined, this)
+	}
+
+	private handleSwordEnemyCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject)
+	{
+		obj2.destroy()
 	}
 
 	private handlePlayerChestCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
@@ -203,14 +231,14 @@ export default class Game extends Phaser.Scene {
 	}
 
 	private handleKnifeWallCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
-		this.knives.killAndHide(obj1)
+		obj1.destroy()
 	}
 
-	// private handleKnifeLizardCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
-	// 	this.knives.killAndHide(obj1)
-	// 	this.lizards.killAndHide(obj2)
-	// 	this.lizards.remove(obj2) // removes the sprite from the group, rendering it harmless
-	// }
+	private handleKnifeEnemyCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
+		obj1.destroy()
+		obj2.destroy()
+		// this.lizards.remove(obj2) // removes the sprite from the group, rendering it harmless
+	}
 
 	// private handlePlayerLizardCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
 	// 	const lizard = obj2 as Lizard
@@ -239,7 +267,7 @@ export default class Game extends Phaser.Scene {
 	// 		this.playerLizardsCollider?.destroy()
 	// 	}
 	// }
-	
+
 	update(t: number, dt: number) {
 		if (this.faune) {
 			this.faune.update(this.cursors)
