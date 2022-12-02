@@ -75,10 +75,14 @@ export default class Cultist extends Phaser.Physics.Arcade.Sprite
 
 			case Direction.LEFT:
 				this.setVelocity(-speed, 0)
+				this.scaleX = -0.6
+				this.body.offset.x = 50
 				break
 
 			case Direction.RIGHT:
 				this.setVelocity(speed, 0)
+				this.scaleX = 0.6
+				this.body.offset.x = 0
 				break
 		}
 	}

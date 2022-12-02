@@ -75,10 +75,14 @@ export default class Bod extends Phaser.Physics.Arcade.Sprite
 
 			case Direction.LEFT:
 				this.setVelocity(-speed, 0)
+				this.scaleX = 0.5
+				this.body.offset.x = 0
 				break
 
 			case Direction.RIGHT:
 				this.setVelocity(speed, 0)
+				this.scaleX = -0.5
+				this.body.offset.x = 60
 				break
 		}
 	}

@@ -75,11 +75,14 @@ export default class Chrisp extends Phaser.Physics.Arcade.Sprite
 
 			case Direction.LEFT:
 				this.setVelocity(-speed, 0)
+				this.scaleX = -1
+				this.body.offset.x = 64
 				break
 
 			case Direction.RIGHT:
 				this.setVelocity(speed, 0)
-				this.flipX = true;
+				this.scaleX = 1
+				this.body.offset.x = 0
 				break
 		}
 	}
