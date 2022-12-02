@@ -21,10 +21,9 @@ export default class Game extends Phaser.Scene {
   private raycaster;
   private ray;
   private graphics;
-  private numberOfRays = 15;
-  private lightAngle = Math.PI / 4;
   private rayLength = 100;
   private intersections;
+  private container;
 
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
   private faune!: Faune;
@@ -92,6 +91,8 @@ export default class Game extends Phaser.Scene {
       },
     });
 
+    this.container = this.add.container(map.widthInPixels, map.heightInPixels);
+
     const lizardsLayer = map.getObjectLayer("Lizards");
     lizardsLayer.objects.forEach((lizObj) => {
       this.lizards.get(
@@ -101,6 +102,11 @@ export default class Game extends Phaser.Scene {
       );
     });
 
+    // this.lizards.forEach((lizard) => this.container.add(lizard));
+    // this.lizards.children.entries.forEach((lizard) =>
+    //   this.container.add(lizard)
+    // );
+    console.log(this.lizards.children.entries);
     // Raycaster
     const bounds = new Phaser.Geom.Rectangle(
       0,
@@ -116,12 +122,28 @@ export default class Game extends Phaser.Scene {
         x: this.faune.x,
         y: this.faune.y,
       },
+      // rayRange: this.rayLength,
     });
+
+    this.raycaster.mapGameObjects(this.lizards.children.entries);
+    // This one causes an error
+    // this.raycaster.mapGameObjects(this.map, false, {
+    //   collisionTiles: [wallsLayer],
+    // });
+    // this.ray.autoSlice = true;
+    this.ray.autoSlice = true;
+    //enable arcade physics body
+    this.ray.enablePhysics();
+    //set collision (field of view) range
+    // this.ray.setCollisionRange(this.rayLength);
 
     //set ray cone size (angle)
     this.ray.setConeDeg(60);
     // cast ray in a cone
     this.intersections = this.ray.castCone();
+
+    let visibleObjects = this.ray.overlap();
+    visibleObjects = this.ray.overlap(this.lizards);
 
     this.graphics = this.add.graphics({
       lineStyle: { width: 1, color: 0x00ff00 },
