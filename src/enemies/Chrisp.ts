@@ -32,7 +32,7 @@ export default class Chrisp extends Phaser.Physics.Arcade.Sprite
 		scene.physics.world.on(Phaser.Physics.Arcade.Events.TILE_COLLIDE, this.handleTileCollision, this)
 
 		this.moveEvent = scene.time.addEvent({
-			delay: 2000,
+			delay: Phaser.Math.Between(10000,12000),
 			callback: () => {
 				this.direction = randomDirection(this.direction)
 			},
@@ -79,6 +79,7 @@ export default class Chrisp extends Phaser.Physics.Arcade.Sprite
 
 			case Direction.RIGHT:
 				this.setVelocity(speed, 0)
+				this.flipX = true;
 				break
 		}
 	}

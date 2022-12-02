@@ -32,7 +32,7 @@ export default class Bat extends Phaser.Physics.Arcade.Sprite
 		scene.physics.world.on(Phaser.Physics.Arcade.Events.TILE_COLLIDE, this.handleTileCollision, this)
 
 		this.moveEvent = scene.time.addEvent({
-			delay: 2000,
+			delay: Phaser.Math.Between(1000,2000),
 			callback: () => {
 				this.direction = randomDirection(this.direction)
 			},
@@ -61,7 +61,7 @@ export default class Bat extends Phaser.Physics.Arcade.Sprite
 	{
 		super.preUpdate(t, dt)
 
-		const speed = 10
+		const speed = 20
 
 		switch (this.direction)
 		{
