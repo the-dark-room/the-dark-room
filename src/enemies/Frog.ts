@@ -32,7 +32,7 @@ export default class Frog extends Phaser.Physics.Arcade.Sprite
 		scene.physics.world.on(Phaser.Physics.Arcade.Events.TILE_COLLIDE, this.handleTileCollision, this)
 
 		this.moveEvent = scene.time.addEvent({
-			delay: 2000,
+			delay: Phaser.Math.Between(2000,3000),
 			callback: () => {
 				this.direction = randomDirection(this.direction)
 			},
@@ -61,7 +61,7 @@ export default class Frog extends Phaser.Physics.Arcade.Sprite
 	{
 		super.preUpdate(t, dt)
 
-		const speed = 10
+		const speed = 5
 
 		switch (this.direction)
 		{
@@ -75,10 +75,14 @@ export default class Frog extends Phaser.Physics.Arcade.Sprite
 
 			case Direction.LEFT:
 				this.setVelocity(-speed, 0)
+				this.scaleX = -1
+				this.body.offset.x = 16
 				break
 
 			case Direction.RIGHT:
 				this.setVelocity(speed, 0)
+				this.scaleX = 1
+				this.body.offset.x = 0
 				break
 		}
 	}
