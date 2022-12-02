@@ -45,7 +45,7 @@ export default class Game extends Phaser.Scene {
   create() {
     this.scene.run("game-ui");
 
-    this.input.setPollAlways();
+    // this.input.setPollAlways();
     // this.input.mousePointer.setPollAlways();
 
     createCharacterAnims(this.anims);
