@@ -28,6 +28,8 @@ export default class Preloader extends Phaser.Scene
 		this.load.atlas('chrisp', 'enemies/chrisp.png', 'enemies/chrisp.json') //CHRISP
 
 		this.load.atlas('beartrap', 'traps/bearTrap.png', 'traps/bearTrap.json') //BEAR TRAP
+		this.load.atlas('firetrap', 'traps/Fire-Trap.png', 'traps/Fire-Trap.json') //FIRE TRAP
+
 		this.load.atlas('treasure', 'items/treasure.png', 'items/treasure.json')
 
 		this.load.image('ui-heart-empty', 'ui/ui_heart_empty.png')
