@@ -5,7 +5,7 @@ const createBearTrapAnims = (anims: Phaser.Animations.AnimationManager) => {
 		key: 'beartrap-close',
 		frames: anims.generateFrameNames('beartrap', { start: 0, end: 3, prefix: 'Bear_Trap-', suffix: '.png' }),
 		// repeat: -1,
-		frameRate: 5
+		frameRate: 10
 	})
 }
 

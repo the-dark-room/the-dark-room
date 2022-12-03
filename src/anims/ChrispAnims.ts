@@ -5,7 +5,7 @@ const createChrispAnims = (anims: Phaser.Animations.AnimationManager) => {
 		key: 'chrisp-walk',
 		frames: anims.generateFrameNames('chrisp', { start: 27, end: 32, prefix: 'chrisp-', suffix: '.png' }),
 		repeat: -1,
-		frameRate: 15
+		frameRate: 10
 	})
 }
 
