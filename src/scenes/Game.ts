@@ -10,6 +10,7 @@ import createBatAnims from '../anims/BatAnims'  //BAT
 import createCultistAnims from '../anims/CultistAnims'  //CULTIST
 import createChrispAnims from '../anims/ChrispAnims'  //CHRISP
 import createBearTrapAnims from '../anims/BearTrapAnims'  //BEAR TRAP
+import createFireTrapAnims from '../anims/FireTrapAnims'  //FIRE TRAP
 import { createCharacterAnims } from '../anims/CharacterAnims'
 import { createChestAnims } from '../anims/TreasureAnims'
 
@@ -21,6 +22,7 @@ import Bat from '../enemies/Bat'	//BAT
 import Cultist from '../enemies/Cultist'	//CULTIST
 import Chrisp from '../enemies/Chrisp'	//CHRISP
 import BearTrap from '../traps/BearTrap'	//BEAR TRAP
+import FireTrap from '../traps/FireTrap'	//FIRE TRAP
 
 import '../characters/Faune'
 import Faune from '../characters/Faune'
@@ -43,6 +45,7 @@ export default class Game extends Phaser.Scene {
 	private cultists!: Phaser.Physics.Arcade.Group   //CULTIST
 	private chrisps!: Phaser.Physics.Arcade.Group   //CHRISP
 	private beartraps!: Phaser.Physics.Arcade.StaticGroup   //BEAR TRAP
+	private firetraps!: Phaser.Physics.Arcade.StaticGroup   //FIRE TRAP
 	
 	
 	private playerGhostsCollider?: Phaser.Physics.Arcade.Collider
@@ -53,6 +56,7 @@ export default class Game extends Phaser.Scene {
 	private playerCultistsCollider?: Phaser.Physics.Arcade.Collider 
 	private playerChrispsCollider?: Phaser.Physics.Arcade.Collider 
 	private playerBeartrapsCollider?: Phaser.Physics.Arcade.Collider 
+	private playerFiretrapsCollider?: Phaser.Physics.Arcade.Collider 
 	
 	
 
@@ -84,6 +88,7 @@ export default class Game extends Phaser.Scene {
 		createCultistAnims(this.anims)  //CULTIST
 		createChrispAnims(this.anims)  //CHRISP
 		createBearTrapAnims(this.anims)  //BEAR TRAP
+		createFireTrapAnims(this.anims)  //FIRE TRAP
 		createChestAnims(this.anims)
 
 		// adds the map and the tiles for it
@@ -131,10 +136,7 @@ export default class Game extends Phaser.Scene {
 		*/
 
 
-		// const lizardsLayer = map.getObjectLayer('Lizards')
-		// lizardsLayer.objects.forEach(lizObj => {
-		// 	this.lizards.get(lizObj.x! + lizObj.width! * 0.5, lizObj.y! - lizObj.height! * 0.5, 'lizard')
-		// })
+		
 
 
 		this.ghosts = this.physics.add.group({  //GHOST
@@ -161,21 +163,36 @@ export default class Game extends Phaser.Scene {
 		this.beartraps = this.physics.add.staticGroup({  //BEAR TRAP
 			classType: BearTrap
 		})
+		this.firetraps = this.physics.add.staticGroup({  //FIRE TRAP
+			classType: FireTrap
+		})
 
+
+		// const lizardsLayer = map.getObjectLayer('Lizards')
+				// lizardsLayer.objects.forEach(lizObj => {
+				// 	this.lizards.get(lizObj.x! + lizObj.width! * 0.5, lizObj.y! - lizObj.height! * 0.5, 'lizard')
+				// })
+
+		function randCoord() {
+			return Phaser.Math.Between(200, 900)
+		}
 
 		for(let b = 0; b < 10; b++){
-			const x = Phaser.Math.Between(200, 980)
-			const y = Phaser.Math.Between(200, 980)
-			this.ghosts.get( x, y, 'ghost').setScale(0.8)
-			this.bods.get( x, y, 'bod').setScale(0.5)
-			this.frogs.get( x, y, 'frog')
-			this.skeletons.get( x, y, 'skeleton')
-			this.bats.get( x, y, `bat-${b}`)
-			this.cultists.get( x, y, 'cultist').setScale(0.6)
+
+			this.ghosts.get( randCoord(), randCoord(), 'ghost').setScale(0.8)
+			this.bods.get( randCoord(), randCoord(), 'bod').setScale(0.5)
+			this.frogs.get( randCoord(), randCoord(), 'frog')
+			this.skeletons.get( randCoord(), randCoord(), 'skeleton')
+			this.bats.get( randCoord(), randCoord(), `bat-${b}`)
+			this.cultists.get( randCoord(), randCoord(), 'cultist').setScale(0.6)
+			this.beartraps.get(randCoord(), randCoord(), 'beartrap').visible = false
+			this.firetraps.get(randCoord(), randCoord(), 'firetrap').visible = false
 
 		}
-		this.chrisps.get(200, 200, 'chrisp')
+		this.chrisps.get(210, 200, 'chrisp')
 		this.beartraps.get(100, 100, 'beartrap').visible = false
+		this.firetraps.get(80, 80, 'firetrap').visible = false
+		
 
 
 
@@ -222,6 +239,7 @@ export default class Game extends Phaser.Scene {
 		this.playerBatsCollider = this.physics.add.collider(this.bats, this.faune, this.handlePlayerEnemyCollision, undefined, this)
 
 		this.playerBeartrapsCollider = this.physics.add.collider(this.beartraps, this.faune, this.handlePlayerBearTrapsCollision, undefined, this)
+		this.playerFiretrapsCollider = this.physics.add.collider(this.firetraps, this.faune, this.handlePlayerFireTrapsCollision, undefined, this)
 	}
 
 	private handleSwordEnemyCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject)
@@ -247,14 +265,9 @@ export default class Game extends Phaser.Scene {
 
 	private handlePlayerBearTrapsCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
 
-		// TODO start trap animation
 		obj2.visible = true
 		obj2.close()
 		this.beartraps.remove(obj2)
-
-
-		// const enemyX = Math.floor(obj2.x)
-		// const enemyY = Math.floor(obj2.y)
 		
 		const dx = this.faune.x
 		const dy = this.faune.y
@@ -267,7 +280,7 @@ export default class Game extends Phaser.Scene {
 			volume: 0.2
 		})
 
-		// sceneEvents.emit('player-health-changed', this.faune.health)
+		sceneEvents.emit('player-health-changed', this.faune.health)
 
 		if (this.faune.health <= 0){
 			const deathSound = this.sound.add('game-over', {
@@ -277,7 +290,36 @@ export default class Game extends Phaser.Scene {
 				deathSound.play()
 			}, 600)
 
-			// this.playerEnemiesCollider?.destroy()
+		}
+	}
+
+	private handlePlayerFireTrapsCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
+
+		obj2.visible = true
+		obj2.start()
+		this.firetraps.remove(obj2)
+		
+		const dx = this.faune.x
+		const dy = this.faune.y
+
+		const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(0)
+
+		this.faune.handleDamage(dir)
+		// damage sound
+		this.sound.play('hurt-sound', {
+			volume: 0.2
+		})
+
+		sceneEvents.emit('player-health-changed', this.faune.health)
+
+		if (this.faune.health <= 0){
+			const deathSound = this.sound.add('game-over', {
+				volume: 2
+			})
+			setTimeout(() => {
+				deathSound.play()
+			}, 600)
+
 		}
 	}
 
@@ -296,7 +338,7 @@ export default class Game extends Phaser.Scene {
 			volume: 0.2
 		})
 
-		// sceneEvents.emit('player-health-changed', this.faune.health)
+		sceneEvents.emit('player-health-changed', this.faune.health)
 
 		if (this.faune.health <= 0){
 			const deathSound = this.sound.add('game-over', {
