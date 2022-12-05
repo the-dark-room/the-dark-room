@@ -4,6 +4,7 @@ import Phaser from "phaser";
 import Preloader from "./scenes/Preloader";
 import Game from "./scenes/Game";
 import GameUI from "./scenes/GameUI";
+import Menu from "./scenes/Menu";
 
 import PhaserRaycaster from "phaser-raycaster";
 
