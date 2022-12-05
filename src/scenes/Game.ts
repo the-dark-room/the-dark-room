@@ -65,11 +65,9 @@ export default class Game extends Phaser.Scene {
   private graphics;
   private intersections;
 	
-<<<<<<< HEAD
 	private gameTimer
 	private MAXTIME = 60
 	private currentTime = 0
-=======
 	// raycasting stuff
   light;
   renderTexture;
@@ -78,7 +76,6 @@ export default class Game extends Phaser.Scene {
 	blackRectangle;
 	mapWidth;
 	mapHeight;
->>>>>>> main
 
 	constructor() {
 		super('game')
@@ -89,7 +86,6 @@ export default class Game extends Phaser.Scene {
 	}
 
 	create() {
-<<<<<<< HEAD
 
 
 
@@ -119,11 +115,9 @@ export default class Game extends Phaser.Scene {
 
 
 
-=======
 		// zoom for testing walls
     // this.cameras.main.setZoom(.5)
 		
->>>>>>> main
 		// main music
 		const thrillerMusic = this.sound.add('thriller-music', {
 			loop: true,
@@ -568,9 +562,7 @@ export default class Game extends Phaser.Scene {
     this.intersections = this.ray.castCone();
     this.draw();
 	}
-<<<<<<< HEAD
 	
-=======
 
 	// function we call several times (no touchie)
 	draw() {
@@ -595,5 +587,4 @@ export default class Game extends Phaser.Scene {
       this.fogOfWar.erase(this.graphics);
     }
   }
->>>>>>> main
 }
