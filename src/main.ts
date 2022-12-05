@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 
+
 import Preloader from "./scenes/Preloader";
 import Game from "./scenes/Game";
 import GameUI from "./scenes/GameUI";
@@ -17,7 +18,12 @@ export default new Phaser.Game({
       debug: true,
     },
   },
-  scene: [Preloader, Game, GameUI],
+  scene: [
+		Preloader, 
+		Game, 
+		GameUI,
+		Menu,
+	],
   scale: {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,

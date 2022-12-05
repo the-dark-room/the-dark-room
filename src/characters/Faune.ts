@@ -54,29 +54,24 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 		this.activeChest = chest
 	}
 
-	handleDamage(dir: Phaser.Math.Vector2)
-	{
-		if (this._health <= 0)
-		{
+	handleDamage(dir: Phaser.Math.Vector2) {
+		if (this._health <= 0){
 			return
 		}
 
-		if (this.healthState === HealthState.DAMAGE)
-		{
+		if (this.healthState === HealthState.DAMAGE){
 			return
 		}
 
 		--this._health
 
-		if (this._health <= 0)
-		{
+		if (this._health <= 0){
 			// TODO: die
 			this.healthState = HealthState.DEAD
 			this.anims.play('faune-faint')
 			this.setVelocity(0, 0)
 		}
-		else
-		{
+		else{
 			this.setVelocity(dir.x, dir.y)
 
 			this.setTint(0xff0000)
@@ -86,16 +81,13 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 		}
 	}
 
-	private throwKnife()
-	{
-		if (!this.knives)
-		{
+	private throwKnife(){
+		if (!this.knives){
 			return
 		}
 
 		const knife = this.knives.get(this.x, this.y, 'knife') as Phaser.Physics.Arcade.Image
-		if (!knife)
-		{
+		if (!knife){
 			return
 		}
 
@@ -104,8 +96,7 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 
 		const vec = new Phaser.Math.Vector2(0, 0)
 
-		switch (direction)
-		{
+		switch (direction){
 			case 'up':
 				vec.y = -1
 				break
@@ -116,12 +107,10 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 
 			default:
 			case 'side':
-				if (this.scaleX < 0)
-				{
+				if (this.scaleX < 0){
 					vec.x = -1
 				}
-				else
-				{
+				else{
 					vec.x = 1
 				}
 				break
@@ -140,19 +129,21 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 		knife.setVelocity(vec.x * 300, vec.y * 300)
 	}
 
-	preUpdate(t: number, dt: number)
-	{
+	preUpdate(t: number, dt: number){
+
+		// smaller hitbox
+		// this.setSize(10, 12).setOffset(12,15)
+
+		
 		super.preUpdate(t, dt)
 
-		switch (this.healthState)
-		{
+		switch (this.healthState){
 			case HealthState.IDLE:
 				break
 
 			case HealthState.DAMAGE:
 				this.damageTime += dt
-				if (this.damageTime >= 250)
-				{
+				if (this.damageTime >= 250){
 					this.healthState = HealthState.IDLE
 					this.setTint(0xffffff)
 					this.damageTime = 0
@@ -161,31 +152,25 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 		}
 	}
 
-	update(cursors: Phaser.Types.Input.Keyboard.CursorKeys)
-	{
+	update(cursors: Phaser.Types.Input.Keyboard.CursorKeys){
 		if (this.healthState === HealthState.DAMAGE
 			|| this.healthState === HealthState.DEAD
-		)
-		{
+		){
 			return
 		}
 
-		if (!cursors)
-		{
+		if (!cursors){
 			return
 		}
 
-		if (Phaser.Input.Keyboard.JustDown(cursors.space!))
-		{
-			if (this.activeChest)
-			{
+		if (Phaser.Input.Keyboard.JustDown(cursors.space!)){
+			if (this.activeChest){
 				const coins = this.activeChest.open()
 				this._coins += coins
 
 				sceneEvents.emit('player-coins-changed', this._coins)
 			}
-			else
-			{
+			else{
 				this.throwKnife()
 			}
 			return
@@ -198,42 +183,40 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 		const upDown = cursors.up?.isDown
 		const downDown = cursors.down?.isDown
 
-		if (leftDown)
-		{
+		if (leftDown){
 			this.anims.play('faune-run-side', true)
 			this.setVelocity(-speed, 0)
 
 			this.scaleX = -1
 			this.body.offset.x = 24
+			
+			this.setSize(10, 10).setOffset(21,16)
 		}
-		else if (rightDown)
-		{
+		else if (rightDown){
 			this.anims.play('faune-run-side', true)
 			this.setVelocity(speed, 0)
 
 			this.scaleX = 1
 			this.body.offset.x = 8
+
+			this.setSize(10, 10).setOffset(11,16)
 		}
-		else if (upDown)
-		{
+		else if (upDown){
 			this.anims.play('faune-run-up', true)
 			this.setVelocity(0, -speed)
 		}
-		else if (downDown)
-		{
+		else if (downDown){
 			this.anims.play('faune-run-down', true)
 			this.setVelocity(0, speed)
 		}
-		else
-		{
+		else{
 			const parts = this.anims.currentAnim.key.split('-')
 			parts[1] = 'idle'
 			this.anims.play(parts.join('-'))
 			this.setVelocity(0, 0)
 		}
 
-		if (leftDown || rightDown || upDown || downDown)
-		{
+		if (leftDown || rightDown || upDown || downDown){
 			this.activeChest = undefined
 		}
 	}
