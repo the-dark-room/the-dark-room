@@ -47,19 +47,19 @@ export default class Game extends Phaser.Scene {
 	private chrisps!: Phaser.Physics.Arcade.Group   //CHRISP
 	private beartraps!: Phaser.Physics.Arcade.StaticGroup   //BEAR TRAP
 	private firetraps!: Phaser.Physics.Arcade.StaticGroup   //FIRE TRAP
-	
-	
+
+
 	private playerGhostsCollider?: Phaser.Physics.Arcade.Collider
-	private playerBodsCollider?: Phaser.Physics.Arcade.Collider 
-	private playerFrogsCollider?: Phaser.Physics.Arcade.Collider 
+	private playerBodsCollider?: Phaser.Physics.Arcade.Collider
+	private playerFrogsCollider?: Phaser.Physics.Arcade.Collider
 	private playerSkeletonsCollider?: Phaser.Physics.Arcade.Collider
-	private playerBatsCollider?: Phaser.Physics.Arcade.Collider 
-	private playerCultistsCollider?: Phaser.Physics.Arcade.Collider 
-	private playerChrispsCollider?: Phaser.Physics.Arcade.Collider 
-	private playerBeartrapsCollider?: Phaser.Physics.Arcade.Collider 
-	private playerFiretrapsCollider?: Phaser.Physics.Arcade.Collider 
-	
-	
+	private playerBatsCollider?: Phaser.Physics.Arcade.Collider
+	private playerCultistsCollider?: Phaser.Physics.Arcade.Collider
+	private playerChrispsCollider?: Phaser.Physics.Arcade.Collider
+	private playerBeartrapsCollider?: Phaser.Physics.Arcade.Collider
+	private playerFiretrapsCollider?: Phaser.Physics.Arcade.Collider
+
+
 
 	constructor() {
 		super('game')
@@ -132,10 +132,10 @@ export default class Game extends Phaser.Scene {
 
 		this.faune = this.add.faune(50, 50, 'faune')
 		this.faune.setSword(this.meleeHitbox)
-		// this.faune.setKnives(this.knives)
+		this.faune.setKnives(this.knives)
 
 		// // smaller hitbox
-		// this.faune.setSize(10, 12).setOffset(12,15)
+		this.faune.setSize(10, 12).setOffset(12,15)
 		this.faune.setDepth(1)
 
 		const wallsLayer = map.createLayer('Walls', tileset)
@@ -158,7 +158,7 @@ export default class Game extends Phaser.Scene {
 		*/
 
 
-		
+
 
 
 		this.ghosts = this.physics.add.group({  //GHOST
@@ -213,7 +213,7 @@ export default class Game extends Phaser.Scene {
 		this.chrisps.get(210, 200, 'chrisp')
 		this.beartraps.get(100, 100, 'beartrap').visible = false
 		this.firetraps.get(80, 80, 'firetrap').visible = false
-		
+
 
 
 
@@ -283,7 +283,7 @@ export default class Game extends Phaser.Scene {
 		obj2.visible = true
 		obj2.close()
 		this.beartraps.remove(obj2)
-		
+
 		const dx = this.faune.x
 		const dy = this.faune.y
 
@@ -313,7 +313,7 @@ export default class Game extends Phaser.Scene {
 		obj2.visible = true
 		obj2.start()
 		this.firetraps.remove(obj2)
-		
+
 		const dx = this.faune.x
 		const dy = this.faune.y
 
@@ -341,7 +341,7 @@ export default class Game extends Phaser.Scene {
 	private handlePlayerEnemyCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
 		const enemyX = Math.floor(obj2.x)
 		const enemyY = Math.floor(obj2.y)
-		
+
 		const dx = this.faune.x - enemyX
 		const dy = this.faune.y - enemyY
 

@@ -105,7 +105,6 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 			this.meleeHitbox!.y = this.y - this.height * 0.4
 			this.meleeHitbox!.x = this.x
 
-			// @ts-nocheck
 			this.scene.sword.setDepth(0)
 			this.scene.sword.y = this.y - 10
 			this.scene.sword.x = this.x - 5
@@ -134,8 +133,6 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 			? this.x - this.width * 0.35
 			: this.x + this.width * 0.35
 		}
-
-		// this.scene.physics.world.remove(this.meleeHitbox.body)
 	}
 
 	private throwKnife(){
@@ -220,22 +217,26 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 			return
 		}
 
-		if (Phaser.Input.Keyboard.JustDown(cursors.space!)){
-			if (this.activeChest){
-				const coins = this.activeChest.open()
-				this._coins += coins
-
-				sceneEvents.emit('player-coins-changed', this._coins)
-			}
-			else if (this.knives){
-				this.throwKnife()
-			}
-			else //sword swing
-			{
-				this.swingSword()
-			}
+		if (Phaser.Input.Keyboard.JustDown(cursors.space!)) {
+			this.throwKnife()
 			return
 		}
+
+		this.scene.input.on('pointerdown', function (pointer) {
+			if (pointer.leftButtonDown()){
+				if (this.activeChest){
+					const coins = this.activeChest.open()
+					this._coins += coins
+
+					sceneEvents.emit('player-coins-changed', this._coins)
+				}
+				else //sword swing
+				{
+					this.swingSword()
+				}
+				return
+			}
+		}, this);
 
 		const speed = 100
 
