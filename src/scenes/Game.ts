@@ -86,14 +86,14 @@ export default class Game extends Phaser.Scene {
 			maxSize: 200
 		})
 
-		this.meleeHitbox = this.add.rectangle(0, 0, 20, 20, 0xffffff, 0) as unknown as Phaser.Types.Physics.Arcade.ImageWithDynamicBody
+		this.meleeHitbox = this.add.rectangle(0, 0, 25, 20, 0xffffff, 0) as unknown as Phaser.Types.Physics.Arcade.ImageWithDynamicBody
 		this.physics.add.existing(this.meleeHitbox)
 		this.meleeHitbox.body.enable = false
 
 		this.anims.create({
 			key: 'swing',
 			frames: [
-					{ key: 'sword1' },
+					// { key: 'sword1' },
 					{ key: 'sword2' },
 					{ key: 'sword3' },
 					{ key: 'sword4' },
@@ -105,6 +105,7 @@ export default class Game extends Phaser.Scene {
 			repeat: 0
 		});
 
+		// @ts-ignore
 		this.sword = this.add.sprite(45, 40, 'sword1').setVisible(false)
 		this.sword.setScale(0.5)
 		this.sword.on('animationcomplete', () => {
@@ -118,7 +119,7 @@ export default class Game extends Phaser.Scene {
 
 		// // smaller hitbox
 		// this.faune.setSize(10, 12).setOffset(12,15)
-		this.faune.setDepth(999)
+		this.faune.setDepth(1)
 
 		const wallsLayer = map.createLayer('Walls', tileset)
 

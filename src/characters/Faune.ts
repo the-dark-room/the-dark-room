@@ -1,3 +1,7 @@
+//TODO: during development, remove the nocheck below to find possible errors
+//It's there because sword doesn't exist on the scene until runtime
+
+// @ts-nocheck
 import Phaser from 'phaser'
 import Chest from '../items/Chest'
 
@@ -101,17 +105,20 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 			this.meleeHitbox!.y = this.y - this.height * 0.4
 			this.meleeHitbox!.x = this.x
 
+			// @ts-nocheck
+			this.scene.sword.setDepth(0)
 			this.scene.sword.y = this.y - 10
-			this.scene.sword.x = this.x + 5
-			this.scene.sword.setAngle(0)
+			this.scene.sword.x = this.x - 5
+			this.scene.sword.setAngle(-90)
 		}
 		else if (this.faceDown){
-			this.meleeHitbox!.y = this.y + this.height * 0.4
+			this.meleeHitbox!.y = this.y + this.height * 0.5
 			this.meleeHitbox!.x = this.x
 
-			this.scene.sword.y = this.y + this.height * 0.6
-			this.scene.sword.x = this.x - 10
-			this.scene.sword.setAngle(180)
+			this.scene.sword.setDepth(2)
+			this.scene.sword.y = this.y + this.height * 0.5 + 4
+			this.scene.sword.x = this.x + 6
+			this.scene.sword.setAngle(125)
 		}
 		else {
 			this.meleeHitbox!.y = this.y + this.height * 0.1
