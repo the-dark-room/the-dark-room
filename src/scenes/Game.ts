@@ -12,7 +12,7 @@ import Faune from "../characters/Faune";
 
 import { sceneEvents } from "../events/EventsCenter";
 import Chest from "../items/Chest";
-import Walls from "~/items/Walls";
+// import Walls from "~/items/Walls";
 
 import PhaserRaycaster from "phaser-raycaster";
 
@@ -42,6 +42,9 @@ export default class Game extends Phaser.Scene {
   renderTexture;
   cover;
   fogOfWar;
+	blackRectangle;
+	mapWidth;
+	mapHeight;
 
   constructor() {
     super("game");
@@ -168,7 +171,7 @@ export default class Game extends Phaser.Scene {
         x: this.faune.x,
         y: this.faune.y,
       },
-      // rayRange: this.rayLength,
+      // rayRange: this.rayLength, // leave it infinite
     });
 
     //set ray cone size (angle)
@@ -177,16 +180,19 @@ export default class Game extends Phaser.Scene {
     this.intersections = this.ray.castCone();
 
     this.graphics = this.add.graphics({
-      // lineStyle: { width: 1, color: 0x00ff00 },
+      lineStyle: { width: 0, color: 0x00ff00 },
       fillStyle: { color: 0xffffff, alpha: 0.3 },
     });
-    this.draw();
+    
 
     // test floor
 
     // let floor = this.add.sprite(0,0, "floor")
 
-    const blackRectangle = new Phaser.GameObjects.Rectangle(
+		this.mapWidth = map.widthInPixels;
+		this.mapHeight = map.heightInPixels;
+
+    this.blackRectangle = new Phaser.GameObjects.Rectangle(
       this,
       0,
       0,
@@ -196,12 +202,13 @@ export default class Game extends Phaser.Scene {
       1
     );
     this.fogOfWar = this.add.renderTexture(
-      -map.widthInPixels / 2,
-      -map.heightInPixels / 2,
-      map.widthInPixels * 2,
-      map.heightInPixels * 2
+      0,
+      0,
+      map.widthInPixels,
+      map.heightInPixels 
     );
-    this.fogOfWar.draw(blackRectangle, map.widthInPixels, map.heightInPixels);
+    this.fogOfWar.draw(this.blackRectangle, map.widthInPixels*0.5, map.heightInPixels*0.5);
+		this.draw();
 
     // Masking
     // const width = this.cover.width;
@@ -498,13 +505,16 @@ export default class Game extends Phaser.Scene {
     // this.graphics.fillStyle(this.light, 0.3);
     this.graphics.fillPoints(this.intersections);
 
+		this.fogOfWar.draw(this.blackRectangle, this.mapWidth*0.5, this.mapHeight*0.5);
+
     for (let intersection of this.intersections) {
-      this.graphics.strokeLineShape({
+			let graph = {
         x1: this.faune.x,
         y1: this.faune.y,
         x2: intersection.x,
         y2: intersection.y,
-      });
+      }
+      this.graphics.strokeLineShape(graph);
       this.fogOfWar.erase(this.graphics);
     }
   }
