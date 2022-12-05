@@ -151,7 +151,7 @@ export default class Game extends Phaser.Scene {
 		// this.faune.setKnives(this.knives)
 
 		// // smaller hitbox
-		// this.faune.setSize(10, 12).setOffset(12,15)
+		this.faune.setSize(10, 12).setOffset(12,15)
 		this.faune.setDepth(1)
 
 		const wallsLayer = map.createLayer('Walls', tileset)
