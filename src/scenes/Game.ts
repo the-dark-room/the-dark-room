@@ -12,8 +12,12 @@ import Faune from "../characters/Faune";
 
 import { sceneEvents } from "../events/EventsCenter";
 import Chest from "../items/Chest";
+import Walls from "~/items/Walls";
 
 import PhaserRaycaster from "phaser-raycaster";
+
+// let light = null;
+// let renderTexture = null;;
 
 export default class Game extends Phaser.Scene {
   // Raycaster
@@ -33,9 +37,17 @@ export default class Game extends Phaser.Scene {
   private lizards!: Phaser.Physics.Arcade.Group;
 
   private playerLizardsCollider?: Phaser.Physics.Arcade.Collider;
+  // test?
+  light;
+  renderTexture;
+  cover;
+  fogOfWar;
 
   constructor() {
     super("game");
+    // this.light = null;
+    // this.renderTexture = null;
+    // this.cover;
   }
 
   preload() {
@@ -43,6 +55,9 @@ export default class Game extends Phaser.Scene {
   }
 
   create() {
+    // zoom for testing walls
+    // this.cameras.main.setZoom(.5)
+
     this.scene.run("game-ui");
 
     createCharacterAnims(this.anims);
@@ -70,6 +85,10 @@ export default class Game extends Phaser.Scene {
 
     wallsLayer.setCollisionByProperty({ collides: true });
 
+    const reveal = this.add.image(0, 0, "reveal");
+    this.cover = this.add.image(0, 0, "floor");
+    this.cover.setTint(0x004c99);
+
     // // ray test --------------------
     // let polygons = [];
     // wallsLayer.forEachTile(function(t) {
@@ -81,6 +100,27 @@ export default class Game extends Phaser.Scene {
     // polygons.push([[-1, -1], [wallsLayer.width + 1 , - 1], [wallsLayer.width + 1, wallsLayer.height + 1], [-1, wallsLayer.height + 1]]);
 
     // // no ray test -----------------
+
+    //wall object layer test ------------------------
+
+    // makes the walls just a black square for raycasting purposes
+    // const objectWalls = this.physics.add.staticGroup({
+    //   classType: Walls,
+    // })
+    // const wallObjectLayer = map.getObjectLayer("objectWalls")
+    // wallObjectLayer.objects.forEach((wallObj) => {
+    //   objectWalls.get(
+    //     wallObj.x! + wallObj.width! * 0.5,
+    //     wallObj.y! - wallObj.height! * 0.5,
+    //     "blackSquare",
+    //   )
+    // })
+
+    // this.raycaster.mapGameObjects(wallsLayer, false, {
+    //   collisionTiles: [193]
+    // })
+
+    //stop test ---------------------------------
 
     const chests = this.physics.add.staticGroup({
       classType: Chest,
@@ -137,10 +177,63 @@ export default class Game extends Phaser.Scene {
     this.intersections = this.ray.castCone();
 
     this.graphics = this.add.graphics({
-      lineStyle: { width: 1, color: 0x00ff00 },
+      // lineStyle: { width: 1, color: 0x00ff00 },
       fillStyle: { color: 0xffffff, alpha: 0.3 },
     });
     this.draw();
+
+    // test floor
+
+    // let floor = this.add.sprite(0,0, "floor")
+
+    const blackRectangle = new Phaser.GameObjects.Rectangle(
+      this,
+      0,
+      0,
+      map.widthInPixels,
+      map.heightInPixels,
+      0,
+      1
+    );
+    this.fogOfWar = this.add.renderTexture(
+      -map.widthInPixels / 2,
+      -map.heightInPixels / 2,
+      map.widthInPixels * 2,
+      map.heightInPixels * 2
+    );
+    this.fogOfWar.draw(blackRectangle, map.widthInPixels, map.heightInPixels);
+
+    // Masking
+    // const width = this.cover.width;
+    // const height = this.cover.height;
+
+    // const rt = this.make.renderTexture({
+    //   width,
+    //   height,
+    //   add: false, // maybe unneeded? no idea what it does
+    // });
+
+    // const maskImage = this.make.image({
+    //   x: 0,
+    //   y: 0,
+    //   key: rt.texture.key,
+    //   add: false,
+    // });
+
+    // this.cover.mask = new Phaser.Display.Masks.BitmapMask(this, maskImage);
+    // this.cover.mask.invertAlpha = true;
+
+    // reveal.mask = new Phaser.Display.Masks.BitmapMask(this, maskImage);
+
+    // this.light = this.add.circle(0, 0, 30, 0x000000, 1);
+    // this.light.visible = false;
+
+    // this.input.on(
+    //   Phaser.Input.Events.POINTER_MOVE,
+    //   this.handlePointerMove,
+    //   this
+    // );
+    // this.renderTexture = rt;
 
     // BEGIN TILE-RAYCASTING TEST CODE
 
@@ -195,13 +288,13 @@ export default class Game extends Phaser.Scene {
 
     function createObstacles(scene, lizards) {
       //create rectangle obstacle
-      let obstacle = scene.add
-        .rectangle(100, 100, 75, 75)
-        .setStrokeStyle(1, 0xff0000);
-      obstacles.add(obstacle, true);
+      // let obstacle = scene.add
+      //   .rectangle(100, 100, 75, 75)
+      //   .setStrokeStyle(1, 0xff0000);
+      // obstacles.add(obstacle, true);
 
       //create line obstacle
-      obstacle = scene.add
+      let obstacle = scene.add
         .line(400, 100, 0, 0, 200, 50)
         .setStrokeStyle(1, 0xff0000);
       obstacles.add(obstacle);
@@ -225,22 +318,47 @@ export default class Game extends Phaser.Scene {
       }
 
       //create image obstacle
-      obstacle = scene.add.image(100, 500, "lizard");
-      obstacles.add(obstacle, true);
+      // obstacle = scene.add.image(800, 800, "mapImage");
+      // obstacles.add(obstacle, true);
 
       let t = chests.getChildren();
       t.forEach((chest) => {
         obstacles.add(chest, true);
       });
 
-      let l = lizards.getChildren();
-      // l.forEach((liz) => {
-      //   obstacles.add(liz, true)
+      // walls
+      // let wallObjects = objectWalls.getChildren();
+      // wallObjects.forEach((wall) => {
+      //   obstacles.add(wall, true)
       // })
 
-      for (let i = 0; i < 10; i++) {
-        obstacles.add(l[i]);
-      }
+      // obstacle = scene.add.image(80, 500, "mapImage")
+      // obstacles.add(obstacle, true)
+
+      // let me try adding polygons for the rays to interact with...
+
+      // LEFT OUTER WALL
+      obstacle = scene.add
+        .rectangle(8, 800, 16, 1600) // (x, y) = (tile-coords * 16) / 2
+        .setStrokeStyle(1, 0xff0000); // the MIDDLE of the shape is what the (x, y) refers to, that's why
+      obstacles.add(obstacle, true); // we do this weird shiz.
+
+      // TOP OUTER WALL
+      obstacle = scene.add
+        .rectangle(800, 8, 1600, 16) // (x, y) = (tile-coords * 16) / 2
+        .setStrokeStyle(1, 0xff0000); // the MIDDLE of the shape is what the (x, y) refers to, that's why
+      obstacles.add(obstacle, true); // we do this weird shiz.
+
+      // RIGHT OUTER WALL
+      obstacle = scene.add
+        .rectangle(1592, 800, 16, 1600) // (x, y) = (tile-coords * 16) / 2
+        .setStrokeStyle(1, 0xff0000); // the MIDDLE of the shape is what the (x, y) refers to, that's why
+      obstacles.add(obstacle, true); // we do this weird shiz.
+
+      obstacle = scene.add
+        .rectangle(800, 1592, 1600, 16) // (x, y) = (tile-coords * 16) / 2
+        .setStrokeStyle(1, 0xff0000); // the MIDDLE of the shape is what the (x, y) refers to, that's why
+      obstacles.add(obstacle, true);
     }
 
     // END TEST CODE
@@ -278,6 +396,15 @@ export default class Game extends Phaser.Scene {
       undefined,
       this
     );
+  }
+
+  // test shit
+  handlePointerMove(pointer) {
+    const x = pointer.x - this.cover.x + this.cover.width * 0.5;
+    const y = pointer.y - this.cover.y + this.cover.height * 0.5;
+
+    this.renderTexture.clear();
+    this.renderTexture.draw(this.light, x, y);
   }
 
   private handlePlayerChestCollision(
@@ -327,7 +454,6 @@ export default class Game extends Phaser.Scene {
     if (this.faune) {
       this.faune.update(this.cursors);
     }
-    console.log(this.game.input.mousePointer);
 
     // This makes sure that the mouse x and y are accurate
     const crosshairX =
@@ -345,6 +471,8 @@ export default class Game extends Phaser.Scene {
     // this.ray.setAngle(this.ray.angle + 0.01);
     this.intersections = this.ray.castCone();
     this.draw();
+
+    // this.handlePointerMove(crosshairX, crosshairY)
   }
 
   draw() {
@@ -354,11 +482,20 @@ export default class Game extends Phaser.Scene {
     //     y: this.faune.y,
     //   },
     // });
+    // const eraser = new Phaser.GameObjects.Rectangle(this, 0, 0, 200, 200, 0, 1);
+    // this.fogOfWar.erase(
+    //   eraser,
+    //   this.faune.body.x + 1600 / 2,
+    //   this.faune.body.y + 1600 / 2
+    // );
+    // eraser.destroy();
     this.ray.setOrigin(this.faune.x, this.faune.y);
     this.intersections.push(this.ray.origin);
-
+    // this.renderTexture.clear();
+    // this.renderTexture.draw(this.light, x, y);
     this.graphics.clear();
     this.graphics.fillStyle(0xffffff, 0.3);
+    // this.graphics.fillStyle(this.light, 0.3);
     this.graphics.fillPoints(this.intersections);
 
     for (let intersection of this.intersections) {
@@ -368,6 +505,7 @@ export default class Game extends Phaser.Scene {
         x2: intersection.x,
         y2: intersection.y,
       });
+      this.fogOfWar.erase(this.graphics);
     }
   }
 }
