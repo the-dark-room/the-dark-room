@@ -58,7 +58,9 @@ export default class Game extends Phaser.Scene {
 	private playerBeartrapsCollider?: Phaser.Physics.Arcade.Collider 
 	private playerFiretrapsCollider?: Phaser.Physics.Arcade.Collider 
 	
-	
+	private gameTimer
+	private MAXTIME = 60
+	private currentTime = 0
 
 	constructor() {
 		super('game')
@@ -69,6 +71,35 @@ export default class Game extends Phaser.Scene {
 	}
 
 	create() {
+
+
+
+		/*
+		** Game Timer
+		*/
+
+		function updateGameTime(){
+			this.currentTime += 1
+			// console.log(this.currentTime)
+			sceneEvents.emit('gameTimer-changed', {
+				MAXTIME: this.MAXTIME,
+				currentTime: this.currentTime
+			})
+		}
+
+		this.gameTimer = this.time.addEvent({
+			delay: 1000,
+			callback: updateGameTime,
+			repeat: 60,
+			callbackScope: this
+		})
+
+		/*
+		**
+		*/
+
+
+
 		// main music
 		const thrillerMusic = this.sound.add('thriller-music', {
 			loop: true,
@@ -357,4 +388,5 @@ export default class Game extends Phaser.Scene {
 			this.faune.update(this.cursors)
 		}
 	}
+	
 }
