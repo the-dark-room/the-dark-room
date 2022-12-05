@@ -1,3 +1,7 @@
+//TODO: during development, remove the nocheck below to find possible errors
+//It's there because sword doesn't exist on the scene until runtime
+
+// @ts-nocheck
 import Phaser from 'phaser'
 import Chest from '../items/Chest'
 
@@ -29,7 +33,12 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 	private _health = 3
 	private _coins = 0
 
+
+	private faceUp = false;
+	private faceDown = true;
+
 	private knives?: Phaser.Physics.Arcade.Group
+	private meleeHitbox!: Phaser.Types.Physics.Arcade.ImageWithDynamicBody
 	private activeChest?: Chest
 
 	get health()
@@ -47,6 +56,11 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 	setKnives(knives: Phaser.Physics.Arcade.Group)
 	{
 		this.knives = knives
+	}
+
+	setSword(sword: Phaser.Types.Physics.Arcade.ImageWithDynamicBody)
+	{
+		this.meleeHitbox = sword
 	}
 
 	setChest(chest: Chest)
@@ -81,6 +95,49 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 		}
 	}
 
+	private swingSword(){
+	// TODO: create sword swing hit box
+		this.meleeHitbox.body.enable = true
+		this.scene.sword.setVisible(true)
+		this.scene.sword.play('swing', false)
+
+		if (this.faceUp){
+			this.meleeHitbox!.y = this.y - this.height * 0.4
+			this.meleeHitbox!.x = this.x
+
+			// @ts-nocheck
+			this.scene.sword.setDepth(0)
+			this.scene.sword.y = this.y - 10
+			this.scene.sword.x = this.x - 5
+			this.scene.sword.setAngle(-90)
+		}
+		else if (this.faceDown){
+			this.meleeHitbox!.y = this.y + this.height * 0.5
+			this.meleeHitbox!.x = this.x
+
+			this.scene.sword.setDepth(2)
+			this.scene.sword.y = this.y + this.height * 0.5 + 4
+			this.scene.sword.x = this.x + 6
+			this.scene.sword.setAngle(125)
+		}
+		else {
+			this.meleeHitbox!.y = this.y + this.height * 0.1
+
+			this.meleeHitbox!.x = this.flipX
+			? this.x - this.width * 0.35
+			: this.x + this.width * 0.35
+
+			this.scene.sword.setAngle(0)
+			this.scene.sword.y = this.y + this.height * 0.1
+
+			this.scene.sword.x = this.flipX
+			? this.x - this.width * 0.35
+			: this.x + this.width * 0.35
+		}
+
+		// this.scene.physics.world.remove(this.meleeHitbox.body)
+	}
+
 	private throwKnife(){
 		if (!this.knives){
 			return
@@ -107,7 +164,7 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 
 			default:
 			case 'side':
-				if (this.scaleX < 0){
+				if (this.flipX){
 					vec.x = -1
 				}
 				else{
@@ -126,7 +183,7 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 		knife.x += vec.x * 16
 		knife.y += vec.y * 16
 
-		knife.setVelocity(vec.x * 300, vec.y * 300)
+		knife.setVelocity(vec.x * 50, vec.y * 50)
 	}
 
 	preUpdate(t: number, dt: number){
@@ -134,7 +191,7 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 		// smaller hitbox
 		// this.setSize(10, 12).setOffset(12,15)
 
-		
+
 		super.preUpdate(t, dt)
 
 		switch (this.healthState){
@@ -170,8 +227,12 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 
 				sceneEvents.emit('player-coins-changed', this._coins)
 			}
-			else{
+			else if (this.knives){
 				this.throwKnife()
+			}
+			else //sword swing
+			{
+				this.swingSword()
 			}
 			return
 		}
@@ -186,28 +247,38 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 		if (leftDown){
 			this.anims.play('faune-run-side', true)
 			this.setVelocity(-speed, 0)
+			this.flipX = true
+			this.scene.sword.flipX = true
 
-			this.scaleX = -1
-			this.body.offset.x = 24
-			
-			this.setSize(10, 10).setOffset(21,16)
+			this.faceUp = false
+			this.faceDown = false
 		}
 		else if (rightDown){
 			this.anims.play('faune-run-side', true)
 			this.setVelocity(speed, 0)
+			this.flipX = false
+			this.scene.sword.flipX = false
 
-			this.scaleX = 1
-			this.body.offset.x = 8
-
-			this.setSize(10, 10).setOffset(11,16)
+			this.faceUp = false
+			this.faceDown = false
 		}
 		else if (upDown){
 			this.anims.play('faune-run-up', true)
 			this.setVelocity(0, -speed)
+
+			this.scene.sword.flipX = false
+
+			this.faceUp = true
+			this.faceDown = false
 		}
 		else if (downDown){
 			this.anims.play('faune-run-down', true)
 			this.setVelocity(0, speed)
+
+			this.scene.sword.flipX = false
+
+			this.faceDown = true
+			this.faceUp = false
 		}
 		else{
 			const parts = this.anims.currentAnim.key.split('-')

@@ -1,5 +1,4 @@
-import Phaser from 'phaser'
-
+import Phaser from "phaser";
 import { debugDraw } from '../utils/debug'
 
 import createGhostAnims from '../anims/GhostAnims'  //GHOST
@@ -35,6 +34,7 @@ export default class Game extends Phaser.Scene {
 	private faune!: Faune
 
 	private knives!: Phaser.Physics.Arcade.Group
+	private sword!: Phaser.Physics.Arcade.Sprite
 	private meleeHitbox!: Phaser.Types.Physics.Arcade.ImageWithDynamicBody
 
 	private ghosts!: Phaser.Physics.Arcade.Group   //GHOST
@@ -57,10 +57,28 @@ export default class Game extends Phaser.Scene {
 	private playerChrispsCollider?: Phaser.Physics.Arcade.Collider 
 	private playerBeartrapsCollider?: Phaser.Physics.Arcade.Collider 
 	private playerFiretrapsCollider?: Phaser.Physics.Arcade.Collider 
+
+	// Raycaster
+  private raycasterPlugin!: PhaserRaycaster; // Not sure if this is how to add the plugin
+  private raycaster;
+  private ray;
+  private graphics;
+  private intersections;
 	
+<<<<<<< HEAD
 	private gameTimer
 	private MAXTIME = 60
 	private currentTime = 0
+=======
+	// raycasting stuff
+  light;
+  renderTexture;
+  cover;
+  fogOfWar;
+	blackRectangle;
+	mapWidth;
+	mapHeight;
+>>>>>>> main
 
 	constructor() {
 		super('game')
@@ -71,6 +89,7 @@ export default class Game extends Phaser.Scene {
 	}
 
 	create() {
+<<<<<<< HEAD
 
 
 
@@ -100,6 +119,11 @@ export default class Game extends Phaser.Scene {
 
 
 
+=======
+		// zoom for testing walls
+    // this.cameras.main.setZoom(.5)
+		
+>>>>>>> main
 		// main music
 		const thrillerMusic = this.sound.add('thriller-music', {
 			loop: true,
@@ -133,19 +157,40 @@ export default class Game extends Phaser.Scene {
 			maxSize: 200
 		})
 
-		// TODO: create sword swing hit box
-
-		this.meleeHitbox = this.add.rectangle(0, 0, 20, 20, 0xffffff, 0) as unknown as Phaser.Types.Physics.Arcade.ImageWithDynamicBody
+		this.meleeHitbox = this.add.rectangle(0, 0, 25, 20, 0xffffff, 0) as unknown as Phaser.Types.Physics.Arcade.ImageWithDynamicBody
 		this.physics.add.existing(this.meleeHitbox)
 		this.meleeHitbox.body.enable = false
 
-		this.faune = this.add.faune(128, 128, 'faune')
-		// this.faune.setSword(this.swordHitbox)
-		this.faune.setKnives(this.knives)
+		this.anims.create({
+			key: 'swing',
+			frames: [
+					// { key: 'sword1' },
+					{ key: 'sword2' },
+					{ key: 'sword3' },
+					{ key: 'sword4' },
+					// { key: 'sword5' },
+					// { key: 'sword6' },
+					// { key: 'sword7' },
+			],
+			frameRate: 8,
+			repeat: 0
+		});
+
+		// @ts-ignore
+		this.sword = this.add.sprite(45, 40, 'sword1').setVisible(false)
+		this.sword.setScale(0.5)
+		this.sword.on('animationcomplete', () => {
+			this.meleeHitbox.body.enable = false
+			this.sword.setVisible(false)
+		})
+
+		this.faune = this.add.faune(50, 50, 'faune')
+		this.faune.setSword(this.meleeHitbox)
+		// this.faune.setKnives(this.knives)
 
 		// // smaller hitbox
-		// this.faune.setSize(10, 12).setOffset(12,15)
-		this.faune.setDepth(999)
+		this.faune.setSize(10, 12).setOffset(12,15)
+		this.faune.setDepth(1)
 
 		const wallsLayer = map.createLayer('Walls', tileset)
 
@@ -162,12 +207,137 @@ export default class Game extends Phaser.Scene {
 		this.cameras.main.startFollow(this.faune, true)
 
 
+		// Raycaster
+		// sets the bounding box for the rays
+    const bounds = new Phaser.Geom.Rectangle(
+      0,
+      0,
+      map.widthInPixels,
+      map.heightInPixels
+    );
+		// creates raycasting
+    this.raycaster = this.raycasterPlugin.createRaycaster({
+      boundingBox: bounds,
+    });
+		// creates the ray with origin being on the player
+    this.ray = this.raycaster.createRay({
+      origin: {
+        x: this.faune.x,
+        y: this.faune.y,
+      },
+    });
+
+    //set ray cone size (angle)
+    this.ray.setConeDeg(60);
+    // cast ray in a cone
+    this.intersections = this.ray.castCone();
+
+		// lineStyle with a width of 0 ensures that the rays are invisible
+    this.graphics = this.add.graphics({
+      lineStyle: { width: 0, color: 0x00ff00 },
+      fillStyle: { color: 0xffffff, alpha: 0.3 },
+    });
+
+
+		// setting some constants
+		this.mapWidth = map.widthInPixels;
+		this.mapHeight = map.heightInPixels;
+
+		// creates the "mask" over the map
+    this.blackRectangle = new Phaser.GameObjects.Rectangle(
+      this,
+      0,
+      0,
+      map.widthInPixels,
+      map.heightInPixels,
+      0,
+      1
+    );
+		// creates the renderTexture that we can draw with
+    this.fogOfWar = this.add.renderTexture(
+      0,
+      0,
+      map.widthInPixels,
+      map.heightInPixels 
+    );
+		// actually draw it
+    this.fogOfWar.draw(this.blackRectangle, map.widthInPixels*0.5, map.heightInPixels*0.5);
+		// using the same function we made for our raycasting to draw the fogOfWar
+		this.draw();
+
+
+    //create obstacles for the raycasting to interact with
+    let obstacles = this.add.group();
+    createObstacles(this);
+
+    //map obstacles
+    this.raycaster.mapGameObjects(obstacles.getChildren());
+    // this.raycaster.mapGameObjects(wallsLayer, false, {
+    //   collisionTiles: [248, 244, 294],
+    // });
+
+		// creating obstacles
+    function createObstacles(scene) {
+			let obstacle;
+
+      //create line obstacle
+      // let obstacle = scene.add
+      //   .line(400, 100, 0, 0, 200, 50)
+      //   .setStrokeStyle(1, 0xff0000);
+      // obstacles.add(obstacle);
+
+      //create polygon obstacle
+      // obstacle = scene.add
+      //   .polygon(650, 500, [0, 0, 50, 50, 100, 0, 100, 75, 50, 100, 0, 50])
+      //   .setStrokeStyle(1, 0xff0000);
+      // obstacles.add(obstacle);
+
+      //create overlapping obstacles
+      // for (let i = 0; i < 5; i++) {
+      //   obstacle = scene.add
+      //     .rectangle(350 + 30 * i, 550 - 30 * i, 50, 50)
+      //     .setStrokeStyle(1, 0xff0000);
+      //   obstacles.add(obstacle, true);
+      // }
+
+      //create image obstacle
+      // obstacle = scene.add.image(800, 800, "mapImage");
+      // obstacles.add(obstacle, true);
+
+      // let t = chests.getChildren();
+      // t.forEach((chest) => {
+      //   obstacles.add(chest, true);
+      // });
+
+
+      // LEFT OUTER WALL
+      obstacle = scene.add
+        .rectangle(8, 800, 16, 1600) // (x, y) = (tile-coords * 16) / 2
+        .setStrokeStyle(1, 0xff0000); // the MIDDLE of the shape is what the (x, y) refers to, that's why
+      obstacles.add(obstacle, true); // we do this weird shiz.
+
+      // TOP OUTER WALL
+      obstacle = scene.add
+        .rectangle(800, 8, 1600, 16) // (x, y) = (tile-coords * 16) / 2
+        .setStrokeStyle(1, 0xff0000); // the MIDDLE of the shape is what the (x, y) refers to, that's why
+      obstacles.add(obstacle, true); // we do this weird shiz.
+
+      // RIGHT OUTER WALL
+      obstacle = scene.add
+        .rectangle(1592, 800, 16, 1600) // (x, y) = (tile-coords * 16) / 2
+        .setStrokeStyle(1, 0xff0000); // the MIDDLE of the shape is what the (x, y) refers to, that's why
+      obstacles.add(obstacle, true); // we do this weird shiz.
+
+      obstacle = scene.add
+        .rectangle(800, 1592, 1600, 16) // (x, y) = (tile-coords * 16) / 2
+        .setStrokeStyle(1, 0xff0000); // the MIDDLE of the shape is what the (x, y) refers to, that's why
+      obstacles.add(obstacle, true);
+    }
+
+
 		/*
 		** ENEMIES
 		*/
-
-
-		
 
 
 		this.ghosts = this.physics.add.group({  //GHOST
@@ -218,7 +388,6 @@ export default class Game extends Phaser.Scene {
 			this.cultists.get( randCoord(), randCoord(), 'cultist').setScale(0.6)
 			this.beartraps.get(randCoord(), randCoord(), 'beartrap').visible = false
 			this.firetraps.get(randCoord(), randCoord(), 'firetrap').visible = false
-
 		}
 		this.chrisps.get(210, 200, 'chrisp')
 		this.beartraps.get(100, 100, 'beartrap').visible = false
@@ -231,7 +400,7 @@ export default class Game extends Phaser.Scene {
 		** ENEMIES
 		*/
 
-
+		// Wall collisions
 		this.physics.add.collider(this.faune, wallsLayer)
 
 		this.physics.add.collider(this.ghosts, wallsLayer)  //GHOST
@@ -241,18 +410,12 @@ export default class Game extends Phaser.Scene {
 		this.physics.add.collider(this.bats, wallsLayer)  //BAT
 		this.physics.add.collider(this.cultists, wallsLayer)  //CULTIST
 		this.physics.add.collider(this.chrisps, wallsLayer)  //CHRISP
+		this.physics.add.collider(this.knives, wallsLayer, this.handleKnifeWallCollision, undefined, this) //knives
 
+		//chest-faune collisions
 		this.physics.add.collider(this.faune, chests, this.handlePlayerChestCollision, undefined, this)
 
-		this.physics.add.collider(this.knives, wallsLayer, this.handleKnifeWallCollision, undefined, this)
-		this.physics.add.collider(this.knives, this.ghosts, this.handleKnifeEnemyCollision, undefined, this)
-		this.physics.add.collider(this.knives, this.bods, this.handleKnifeEnemyCollision, undefined, this)
-		this.physics.add.collider(this.knives, this.frogs, this.handleKnifeEnemyCollision, undefined, this)
-		this.physics.add.collider(this.knives, this.skeletons, this.handleKnifeEnemyCollision, undefined, this)
-		this.physics.add.collider(this.knives, this.chrisps, this.handleKnifeEnemyCollision, undefined, this)
-		this.physics.add.collider(this.knives, this.cultists, this.handleKnifeEnemyCollision, undefined, this)
-		this.physics.add.collider(this.knives, this.bats, this.handleKnifeEnemyCollision, undefined, this)
-
+		// melee-enemy collisions
 		this.physics.add.overlap(this.meleeHitbox, this.ghosts, this.handleSwordEnemyCollision, undefined, this)
 		this.physics.add.overlap(this.meleeHitbox, this.bods, this.handleSwordEnemyCollision, undefined, this)
 		this.physics.add.overlap(this.meleeHitbox, this.frogs, this.handleSwordEnemyCollision, undefined, this)
@@ -387,6 +550,50 @@ export default class Game extends Phaser.Scene {
 		if (this.faune) {
 			this.faune.update(this.cursors)
 		}
+
+		// This makes sure that the mouse x and y are accurate
+    const crosshairX =
+      this.game.input.mousePointer.x +
+      this.game.input.mousePointer.camera?.worldView.x;
+    const crosshairY =
+      this.game.input.mousePointer.y +
+      this.game.input.mousePointer.camera?.worldView.y;
+    const mouseAngle = Math.atan2(
+      crosshairY - this.faune.y,
+      crosshairX - this.faune.x
+    );
+
+		// setting the angle for the rays
+    this.ray.setAngle(mouseAngle);
+    this.intersections = this.ray.castCone();
+    this.draw();
 	}
+<<<<<<< HEAD
 	
+=======
+
+	// function we call several times (no touchie)
+	draw() {
+    this.ray.setOrigin(this.faune.x, this.faune.y);
+    this.intersections.push(this.ray.origin);
+    this.graphics.clear();
+    this.graphics.fillStyle(0xffffff, 0.3);
+    this.graphics.fillPoints(this.intersections);
+
+		// redraw the black fogOfWar. If we want this to be a scratch-off thing, comment out the below line
+		this.fogOfWar.draw(this.blackRectangle, this.mapWidth*0.5, this.mapHeight*0.5);
+
+    for (let intersection of this.intersections) {
+			let graph = {
+        x1: this.faune.x,
+        y1: this.faune.y,
+        x2: intersection.x,
+        y2: intersection.y,
+      }
+      this.graphics.strokeLineShape(graph);
+			// removes the blackness from the area cast by the rays
+      this.fogOfWar.erase(this.graphics);
+    }
+  }
+>>>>>>> main
 }
