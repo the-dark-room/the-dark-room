@@ -65,6 +65,9 @@ export default class Game extends Phaser.Scene {
   private graphics;
   private intersections;
 	
+	private gameTimer
+	private MAXTIME = 60
+	private currentTime = 0
 	// raycasting stuff
   light;
   renderTexture;
@@ -83,6 +86,35 @@ export default class Game extends Phaser.Scene {
 	}
 
 	create() {
+
+
+
+		/*
+		** Game Timer
+		*/
+
+		function updateGameTime(){
+			this.currentTime += 1
+			// console.log(this.currentTime)
+			sceneEvents.emit('gameTimer-changed', {
+				MAXTIME: this.MAXTIME,
+				currentTime: this.currentTime
+			})
+		}
+
+		this.gameTimer = this.time.addEvent({
+			delay: 1000,
+			callback: updateGameTime,
+			repeat: 60,
+			callbackScope: this
+		})
+
+		/*
+		**
+		*/
+
+
+
 		// zoom for testing walls
     // this.cameras.main.setZoom(.5)
 		
@@ -530,6 +562,7 @@ export default class Game extends Phaser.Scene {
     this.intersections = this.ray.castCone();
     this.draw();
 	}
+	
 
 	// function we call several times (no touchie)
 	draw() {
