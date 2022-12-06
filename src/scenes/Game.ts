@@ -34,8 +34,8 @@ export default class Game extends Phaser.Scene {
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
 	private faune!: Faune
 
-	private knives!: Phaser.Physics.Arcade.Group
 	private sword!: Phaser.Physics.Arcade.Sprite
+	private knives!: Phaser.Physics.Arcade.Group
 	private meleeHitbox!: Phaser.Types.Physics.Arcade.ImageWithDynamicBody
 
 	private ghosts!: Phaser.Physics.Arcade.Group   //GHOST
@@ -98,46 +98,15 @@ export default class Game extends Phaser.Scene {
 
 		map.createLayer('background', tileset)
 
-		this.knives = this.physics.add.group({
-			classType: Phaser.Physics.Arcade.Image,
-			maxSize: 200
-		})
-
-		this.meleeHitbox = this.add.rectangle(0, 0, 25, 20, 0xffffff, 0) as unknown as Phaser.Types.Physics.Arcade.ImageWithDynamicBody
-		this.physics.add.existing(this.meleeHitbox)
-		this.meleeHitbox.body.enable = false
-
-		this.anims.create({
-			key: 'swing',
-			frames: [
-					// { key: 'sword1' },
-					{ key: 'sword2' },
-					{ key: 'sword3' },
-					{ key: 'sword4' },
-					// { key: 'sword5' },
-					// { key: 'sword6' },
-					// { key: 'sword7' },
-			],
-			frameRate: 8,
-			repeat: 0
-		});
-
 		// @ts-ignore
-		this.sword = this.add.sprite(45, 40, 'sword1').setVisible(false)
-		this.sword.setScale(0.5)
-		this.sword.on('animationcomplete', () => {
-			this.meleeHitbox.body.enable = false
-			this.sword.setVisible(false)
-		})
 
+
+		//faune setup
 		this.faune = this.add.faune(50, 50, 'faune')
-		this.faune.setSword(this.meleeHitbox)
-		this.faune.setKnives(this.knives)
-
-		// // smaller hitbox
 		this.faune.setSize(10, 12).setOffset(12,15)
 		this.faune.setDepth(1)
 
+		//wall setup
 		const wallsLayer = map.createLayer('Walls', tileset)
 
 		wallsLayer.setCollisionByProperty({ collides: true })
@@ -156,11 +125,6 @@ export default class Game extends Phaser.Scene {
 		/*
 		** ENEMIES
 		*/
-
-
-
-
-
 		this.ghosts = this.physics.add.group({  //GHOST
 			classType: Ghost
 		})
@@ -244,6 +208,15 @@ export default class Game extends Phaser.Scene {
 		this.physics.add.overlap(this.meleeHitbox, this.chrisps, this.handleSwordEnemyCollision, undefined, this)
 		this.physics.add.overlap(this.meleeHitbox, this.cultists, this.handleSwordEnemyCollision, undefined, this)
 		this.physics.add.overlap(this.meleeHitbox, this.bats, this.handleSwordEnemyCollision, undefined, this)
+
+		// knife-enemy collisions
+		this.physics.add.collider(this.knives, this.ghosts, this.handleKnifeEnemyCollision, undefined, this)
+		this.physics.add.collider(this.knives, this.bods, this.handleKnifeEnemyCollision, undefined, this)
+		this.physics.add.collider(this.knives, this.frogs, this.handleKnifeEnemyCollision, undefined, this)
+		this.physics.add.collider(this.knives, this.skeletons, this.handleKnifeEnemyCollision, undefined, this)
+		this.physics.add.collider(this.knives, this.chrisps, this.handleKnifeEnemyCollision, undefined, this)
+		this.physics.add.collider(this.knives, this.cultists, this.handleKnifeEnemyCollision, undefined, this)
+		this.physics.add.collider(this.knives, this.bats, this.handleKnifeEnemyCollision, undefined, this)
 
 		this.playerGhostsCollider = this.physics.add.collider(this.ghosts, this.faune, this.handlePlayerEnemyCollision, undefined, this)
 		this.playerBodsCollider = this.physics.add.collider(this.bods, this.faune, this.handlePlayerEnemyCollision, undefined, this)
