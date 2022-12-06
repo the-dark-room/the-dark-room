@@ -37,17 +37,17 @@ export default class Game extends Phaser.Scene {
 	private chrisps!: Phaser.Physics.Arcade.Group   //CHRISP
 	private beartraps!: Phaser.Physics.Arcade.StaticGroup   //BEAR TRAP
 	private firetraps!: Phaser.Physics.Arcade.StaticGroup   //FIRE TRAP
-	
-	
+
+
 	private playerGhostsCollider?: Phaser.Physics.Arcade.Collider
-	private playerBodsCollider?: Phaser.Physics.Arcade.Collider 
-	private playerFrogsCollider?: Phaser.Physics.Arcade.Collider 
+	private playerBodsCollider?: Phaser.Physics.Arcade.Collider
+	private playerFrogsCollider?: Phaser.Physics.Arcade.Collider
 	private playerSkeletonsCollider?: Phaser.Physics.Arcade.Collider
-	private playerBatsCollider?: Phaser.Physics.Arcade.Collider 
-	private playerCultistsCollider?: Phaser.Physics.Arcade.Collider 
-	private playerChrispsCollider?: Phaser.Physics.Arcade.Collider 
-	private playerBeartrapsCollider?: Phaser.Physics.Arcade.Collider 
-	private playerFiretrapsCollider?: Phaser.Physics.Arcade.Collider 
+	private playerBatsCollider?: Phaser.Physics.Arcade.Collider
+	private playerCultistsCollider?: Phaser.Physics.Arcade.Collider
+	private playerChrispsCollider?: Phaser.Physics.Arcade.Collider
+	private playerBeartrapsCollider?: Phaser.Physics.Arcade.Collider
+	private playerFiretrapsCollider?: Phaser.Physics.Arcade.Collider
 
 	// Raycaster
   private raycasterPlugin!: PhaserRaycaster; // Not sure if this is how to add the plugin
@@ -55,8 +55,8 @@ export default class Game extends Phaser.Scene {
   private ray;
   private graphics;
   private intersections;
-	
-	
+
+
 	// raycasting stuff
   light;
   renderTexture;
@@ -84,7 +84,7 @@ export default class Game extends Phaser.Scene {
 
 	preload() {
 		this.cursors = this.input.keyboard.createCursorKeys()
-		
+
 	}
 
 	create() {
@@ -112,7 +112,7 @@ export default class Game extends Phaser.Scene {
 		})
 
 		this.keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
-		
+
 		/*
 		** Game Timer
 		*/
@@ -121,7 +121,7 @@ export default class Game extends Phaser.Scene {
 
 		// zoom for testing walls
     // this.cameras.main.setZoom(.5)
-		
+
 		// main music
 		const thrillerMusic = this.sound.add('thriller-music', {
 			loop: true,
@@ -131,10 +131,10 @@ export default class Game extends Phaser.Scene {
 
 		this.scene.run('game-ui')
 
-		
+
 
 		loadAllAnims(this.anims)
-	
+
 
 		// adds the map and the tiles for it
 		const map = this.make.tilemap({ key: 'dungeon' })
@@ -248,7 +248,7 @@ export default class Game extends Phaser.Scene {
       0,
       0,
       map.widthInPixels,
-      map.heightInPixels 
+      map.heightInPixels
     );
 		// actually draw it
     this.fogOfWar.draw(this.blackRectangle, map.widthInPixels*0.5, map.heightInPixels*0.5);
@@ -446,7 +446,7 @@ export default class Game extends Phaser.Scene {
 		obj2.visible = true
 		obj2.close()
 		this.beartraps.remove(obj2)
-		
+
 		const dx = this.faune.x
 		const dy = this.faune.y
 
@@ -476,7 +476,7 @@ export default class Game extends Phaser.Scene {
 		obj2.visible = true
 		obj2.start()
 		this.firetraps.remove(obj2)
-		
+
 		const dx = this.faune.x
 		const dy = this.faune.y
 
@@ -504,7 +504,7 @@ export default class Game extends Phaser.Scene {
 	private handlePlayerEnemyCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
 		const enemyX = Math.floor(obj2.x)
 		const enemyY = Math.floor(obj2.y)
-		
+
 		const dx = this.faune.x - enemyX
 		const dy = this.faune.y - enemyY
 
@@ -559,9 +559,9 @@ export default class Game extends Phaser.Scene {
 		// setting the angle for the rays
     this.ray.setAngle(mouseAngle);
     this.intersections = this.ray.castCone();
-    // this.draw();
+    this.draw();
 	}
-	
+
 
 	// function we call several times (no touchie)
 	draw() {
