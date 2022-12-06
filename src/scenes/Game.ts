@@ -1,17 +1,8 @@
 import Phaser from "phaser";
 import { debugDraw } from '../utils/debug'
 
-import createGhostAnims from '../anims/GhostAnims'  //GHOST
-import createBodAnims from '../anims/BodAnims'  //BOD
-import createFrogAnims from '../anims/FrogAnims'	//FROG
-import createSkeletonAnims from '../anims/SkeletonAnims'	//SKELETON
-import createBatAnims from '../anims/BatAnims'  //BAT
-import createCultistAnims from '../anims/CultistAnims'  //CULTIST
-import createChrispAnims from '../anims/ChrispAnims'  //CHRISP
-import createBearTrapAnims from '../anims/BearTrapAnims'  //BEAR TRAP
-import createFireTrapAnims from '../anims/FireTrapAnims'  //FIRE TRAP
-import { createCharacterAnims } from '../anims/CharacterAnims'
-import { createChestAnims } from '../anims/TreasureAnims'
+import { loadAllAnims } from "../anims";
+
 
 import Ghost from '../enemies/Ghost'  //GHOST
 import Bod from '../enemies/Bod'	//BOD
@@ -65,9 +56,7 @@ export default class Game extends Phaser.Scene {
   private graphics;
   private intersections;
 	
-	private gameTimer
-	private MAXTIME = 60
-	private currentTime = 0
+	
 	// raycasting stuff
   light;
   renderTexture;
@@ -76,6 +65,17 @@ export default class Game extends Phaser.Scene {
 	blackRectangle;
 	mapWidth;
 	mapHeight;
+
+
+	/*
+	** GAME TIMER
+	*/
+	private gameTimer
+	private MAXTIME = 60
+	private currentTime = 0
+	/*
+	** GAME TIMER
+	*/
 
 	constructor() {
 		super('game')
@@ -87,12 +87,9 @@ export default class Game extends Phaser.Scene {
 
 	create() {
 
-
-
 		/*
-		** Game Timer
+		** GAME TIMER
 		*/
-
 		function updateGameTime(){
 			this.currentTime += 1
 			// console.log(this.currentTime)
@@ -108,9 +105,8 @@ export default class Game extends Phaser.Scene {
 			repeat: 60,
 			callbackScope: this
 		})
-
 		/*
-		**
+		** Game Timer
 		*/
 
 
@@ -127,18 +123,10 @@ export default class Game extends Phaser.Scene {
 
 		this.scene.run('game-ui')
 
-		createCharacterAnims(this.anims)
+		
 
-		createGhostAnims(this.anims)  //GHOST
-		createBodAnims(this.anims)  //BOD
-		createFrogAnims(this.anims)	//FROG
-		createSkeletonAnims(this.anims)	//SKELETON
-		createBatAnims(this.anims)  //BAT
-		createCultistAnims(this.anims)  //CULTIST
-		createChrispAnims(this.anims)  //CHRISP
-		createBearTrapAnims(this.anims)  //BEAR TRAP
-		createFireTrapAnims(this.anims)  //FIRE TRAP
-		createChestAnims(this.anims)
+		loadAllAnims(this.anims)
+	
 
 		// adds the map and the tiles for it
 		const map = this.make.tilemap({ key: 'dungeon' })
@@ -332,8 +320,6 @@ export default class Game extends Phaser.Scene {
 		/*
 		** ENEMIES
 		*/
-
-
 		this.ghosts = this.physics.add.group({  //GHOST
 			classType: Ghost
 		})
@@ -386,10 +372,6 @@ export default class Game extends Phaser.Scene {
 		this.chrisps.get(210, 200, 'chrisp')
 		this.beartraps.get(100, 100, 'beartrap').visible = false
 		this.firetraps.get(80, 80, 'firetrap').visible = false
-		
-
-
-
 		/*
 		** ENEMIES
 		*/
@@ -560,7 +542,7 @@ export default class Game extends Phaser.Scene {
 		// setting the angle for the rays
     this.ray.setAngle(mouseAngle);
     this.intersections = this.ray.castCone();
-    this.draw();
+    // this.draw();
 	}
 	
 
