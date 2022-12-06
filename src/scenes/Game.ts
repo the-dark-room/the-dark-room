@@ -3,7 +3,6 @@ import { debugDraw } from '../utils/debug'
 
 import { loadAllAnims } from "../anims";
 
-
 import Ghost from '../enemies/Ghost'  //GHOST
 import Bod from '../enemies/Bod'	//BOD
 import Frog from '../enemies/Frog'	//FROG
@@ -37,6 +36,8 @@ export default class Game extends Phaser.Scene {
 	private chrisps!: Phaser.Physics.Arcade.Group   //CHRISP
 	private beartraps!: Phaser.Physics.Arcade.StaticGroup   //BEAR TRAP
 	private firetraps!: Phaser.Physics.Arcade.StaticGroup   //FIRE TRAP
+
+	private ghostTrackTimer  //TIMER TO UPDATE GHOST CHASING PLAYER
 
 
 	private playerGhostsCollider?: Phaser.Physics.Arcade.Collider
@@ -374,12 +375,32 @@ export default class Game extends Phaser.Scene {
 		// 	this.firetraps.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, 'firetrap').visible = false
 		// })
 		
+
+		
+		/*
+		** GHOST CHASING PLAYER
+		*/
+		this.ghostTrackTimer = this.time.addEvent({
+			delay: 1000,
+			callback: ghostTracker,
+			loop: true,
+			callbackScope: this
+		})
+
+		function ghostTracker () {
+			this.ghosts.children.entries.forEach(e => {
+			this.physics.moveToObject(e, this.faune, 10)
+		})
+		}
+		/*
+		** GHOST CHASING PLAYER
+		*/
 		
 
 		// Wall collisions
 		this.physics.add.collider(this.faune, wallsLayer)
 
-		this.physics.add.collider(this.ghosts, wallsLayer)  //GHOST
+		// this.physics.add.collider(this.ghosts, wallsLayer)  //GHOST
 		this.physics.add.collider(this.bods, wallsLayer)  //BOD
 		this.physics.add.collider(this.frogs, wallsLayer)  //FROG
 		this.physics.add.collider(this.skeletons, wallsLayer)  //SKELETON
@@ -392,7 +413,7 @@ export default class Game extends Phaser.Scene {
 		this.physics.add.collider(this.faune, chests, this.handlePlayerChestCollision, undefined, this)
 
 		// melee-enemy collisions
-		this.physics.add.overlap(this.meleeHitbox, this.ghosts, this.handleSwordEnemyCollision, undefined, this)
+		this.physics.add.overlap(this.meleeHitbox, this.ghosts, this.handleSwordGhostCollision, undefined, this)
 		this.physics.add.overlap(this.meleeHitbox, this.bods, this.handleSwordEnemyCollision, undefined, this)
 		this.physics.add.overlap(this.meleeHitbox, this.frogs, this.handleSwordEnemyCollision, undefined, this)
 		this.physics.add.overlap(this.meleeHitbox, this.skeletons, this.handleSwordEnemyCollision, undefined, this)
@@ -401,7 +422,7 @@ export default class Game extends Phaser.Scene {
 		this.physics.add.overlap(this.meleeHitbox, this.bats, this.handleSwordEnemyCollision, undefined, this)
 
 		// knife-enemy collisions
-		this.physics.add.collider(this.knives, this.ghosts, this.handleKnifeEnemyCollision, undefined, this)
+		this.physics.add.collider(this.knives, this.ghosts, this.handleKnifeGhostCollision, undefined, this)
 		this.physics.add.collider(this.knives, this.bods, this.handleKnifeEnemyCollision, undefined, this)
 		this.physics.add.collider(this.knives, this.frogs, this.handleKnifeEnemyCollision, undefined, this)
 		this.physics.add.collider(this.knives, this.skeletons, this.handleKnifeEnemyCollision, undefined, this)
@@ -439,6 +460,18 @@ export default class Game extends Phaser.Scene {
 		obj1.destroy()
 		obj2.destroy()
 		// this.lizards.remove(obj2) // removes the sprite from the group, rendering it harmless
+	}
+
+
+	// PAUSE GHOST WHEN HIT WITH KNIFE
+	private handleKnifeGhostCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject){
+		obj2.body.velocity = obj1.body.velocity
+		obj1.destroy()
+	}
+
+	// PAUSE GHOST WHEN HIT WITH SWORD
+	private handleSwordGhostCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject){
+		obj2.body.velocity = new Phaser.Math.Vector2(0,0)
 	}
 
 
@@ -565,7 +598,7 @@ export default class Game extends Phaser.Scene {
 		// setting the angle for the rays
     this.ray.setAngle(mouseAngle);
     this.intersections = this.ray.castCone();
-    this.draw();
+    // this.draw();
 	}
 
 
