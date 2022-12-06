@@ -38,6 +38,8 @@ export default class Game extends Phaser.Scene {
 	private firetraps!: Phaser.Physics.Arcade.StaticGroup   //FIRE TRAP
 
 	private ghostTrackTimer  //TIMER TO UPDATE GHOST CHASING PLAYER
+	private GHOSTSPEED = 4  //HOW MANY PIXELS PER SECOND THE GHOST MOVES
+	private GHOSTSTUN = 2000  //HOW OFTEN THE GHOST UPDATES ITS DIRECTION / ALSO IS STUN DURATION
 
 
 	private playerGhostsCollider?: Phaser.Physics.Arcade.Collider
@@ -114,7 +116,7 @@ export default class Game extends Phaser.Scene {
 
 		this.keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
 		/*
-		** Game Timer
+		** GAME TIMER
 		*/
 
 
@@ -381,7 +383,7 @@ export default class Game extends Phaser.Scene {
 		** GHOST CHASING PLAYER
 		*/
 		this.ghostTrackTimer = this.time.addEvent({
-			delay: 1000,
+			delay: this.GHOSTSTUN,
 			callback: ghostTracker,
 			loop: true,
 			callbackScope: this
@@ -389,7 +391,7 @@ export default class Game extends Phaser.Scene {
 
 		function ghostTracker () {
 			this.ghosts.children.entries.forEach(e => {
-			this.physics.moveToObject(e, this.faune, 10)
+			this.physics.moveToObject(e, this.faune, this.GHOSTSPEED)
 		})
 		}
 		/*
@@ -465,7 +467,7 @@ export default class Game extends Phaser.Scene {
 
 	// PAUSE GHOST WHEN HIT WITH KNIFE
 	private handleKnifeGhostCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject){
-		obj2.body.velocity = obj1.body.velocity
+		obj2.body.velocity = obj1.body.velocity || new Phaser.Math.Vector2(0,0).normalize().scale(400)
 		obj1.destroy()
 	}
 
