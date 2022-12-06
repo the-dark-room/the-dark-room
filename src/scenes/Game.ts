@@ -1,18 +1,8 @@
-import Phaser from 'phaser'
-
+import Phaser from "phaser";
 import { debugDraw } from '../utils/debug'
 
-import createGhostAnims from '../anims/GhostAnims'  //GHOST
-import createBodAnims from '../anims/BodAnims'  //BOD
-import createFrogAnims from '../anims/FrogAnims'	//FROG
-import createSkeletonAnims from '../anims/SkeletonAnims'	//SKELETON
-import createBatAnims from '../anims/BatAnims'  //BAT
-import createCultistAnims from '../anims/CultistAnims'  //CULTIST
-import createChrispAnims from '../anims/ChrispAnims'  //CHRISP
-import createBearTrapAnims from '../anims/BearTrapAnims'  //BEAR TRAP
-import createFireTrapAnims from '../anims/FireTrapAnims'  //FIRE TRAP
-import { createCharacterAnims } from '../anims/CharacterAnims'
-import { createChestAnims } from '../anims/TreasureAnims'
+import { loadAllAnims } from "../anims";
+
 
 import Ghost from '../enemies/Ghost'  //GHOST
 import Bod from '../enemies/Bod'	//BOD
@@ -59,7 +49,34 @@ export default class Game extends Phaser.Scene {
 	private playerBeartrapsCollider?: Phaser.Physics.Arcade.Collider
 	private playerFiretrapsCollider?: Phaser.Physics.Arcade.Collider
 
+	// Raycaster
+  private raycasterPlugin!: PhaserRaycaster; // Not sure if this is how to add the plugin
+  private raycaster;
+  private ray;
+  private graphics;
+  private intersections;
 
+
+	// raycasting stuff
+  light;
+  renderTexture;
+  cover;
+  fogOfWar;
+	blackRectangle;
+	mapWidth;
+	mapHeight;
+
+
+	/*
+	** GAME TIMER
+	*/
+	private gameTimer
+	private MAXTIME = 60
+	private currentTime = 0
+	private keyQ
+	/*
+	** GAME TIMER
+	*/
 
 	constructor() {
 		super('game')
@@ -67,9 +84,44 @@ export default class Game extends Phaser.Scene {
 
 	preload() {
 		this.cursors = this.input.keyboard.createCursorKeys()
+
 	}
 
 	create() {
+
+		/*
+		** GAME TIMER
+		*/
+		function updateGameTime(){
+			this.currentTime += 1
+			// console.log(this.currentTime)
+			sceneEvents.emit('gameTimer-changed', {
+				MAXTIME: this.MAXTIME,
+				currentTime: this.currentTime
+			})
+			if(this.currentTime >= this.MAXTIME){
+				// this.scene.start('loser', { currentTime: this.currentTime }) //LOSER
+			}
+		}
+
+		this.gameTimer = this.time.addEvent({
+			delay: 1000,
+			callback: updateGameTime,
+			repeat: 60,
+			callbackScope: this
+		})
+
+		this.keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
+
+		/*
+		** Game Timer
+		*/
+
+
+
+		// zoom for testing walls
+    // this.cameras.main.setZoom(.5)
+
 		// main music
 		const thrillerMusic = this.sound.add('thriller-music', {
 			loop: true,
@@ -79,18 +131,10 @@ export default class Game extends Phaser.Scene {
 
 		this.scene.run('game-ui')
 
-		createCharacterAnims(this.anims)
 
-		createGhostAnims(this.anims)  //GHOST
-		createBodAnims(this.anims)  //BOD
-		createFrogAnims(this.anims)	//FROG
-		createSkeletonAnims(this.anims)	//SKELETON
-		createBatAnims(this.anims)  //BAT
-		createCultistAnims(this.anims)  //CULTIST
-		createChrispAnims(this.anims)  //CHRISP
-		createBearTrapAnims(this.anims)  //BEAR TRAP
-		createFireTrapAnims(this.anims)  //FIRE TRAP
-		createChestAnims(this.anims)
+
+		loadAllAnims(this.anims)
+
 
 		// adds the map and the tiles for it
 		const map = this.make.tilemap({ key: 'dungeon' })
@@ -120,6 +164,134 @@ export default class Game extends Phaser.Scene {
 		})
 
 		this.cameras.main.startFollow(this.faune, true)
+
+
+		// Raycaster
+		// sets the bounding box for the rays
+    const bounds = new Phaser.Geom.Rectangle(
+      0,
+      0,
+      map.widthInPixels,
+      map.heightInPixels
+    );
+		// creates raycasting
+    this.raycaster = this.raycasterPlugin.createRaycaster({
+      boundingBox: bounds,
+    });
+		// creates the ray with origin being on the player
+    this.ray = this.raycaster.createRay({
+      origin: {
+        x: this.faune.x,
+        y: this.faune.y,
+      },
+    });
+
+    //set ray cone size (angle)
+    this.ray.setConeDeg(60);
+    // cast ray in a cone
+    this.intersections = this.ray.castCone();
+
+		// lineStyle with a width of 0 ensures that the rays are invisible
+    this.graphics = this.add.graphics({
+      lineStyle: { width: 0, color: 0x00ff00 },
+      fillStyle: { color: 0xffffff, alpha: 0.3 },
+    });
+
+
+		// setting some constants
+		this.mapWidth = map.widthInPixels;
+		this.mapHeight = map.heightInPixels;
+
+		// creates the "mask" over the map
+    this.blackRectangle = new Phaser.GameObjects.Rectangle(
+      this,
+      0,
+      0,
+      map.widthInPixels,
+      map.heightInPixels,
+      0,
+      1
+    );
+		// creates the renderTexture that we can draw with
+    this.fogOfWar = this.add.renderTexture(
+      0,
+      0,
+      map.widthInPixels,
+      map.heightInPixels
+    );
+		// actually draw it
+    this.fogOfWar.draw(this.blackRectangle, map.widthInPixels*0.5, map.heightInPixels*0.5);
+		// using the same function we made for our raycasting to draw the fogOfWar
+		this.draw();
+
+
+    //create obstacles for the raycasting to interact with
+    let obstacles = this.add.group();
+    createObstacles(this);
+
+    //map obstacles
+    this.raycaster.mapGameObjects(obstacles.getChildren());
+    // this.raycaster.mapGameObjects(wallsLayer, false, {
+    //   collisionTiles: [248, 244, 294],
+    // });
+
+		// creating obstacles
+    function createObstacles(scene) {
+			let obstacle;
+
+      //create line obstacle
+      // let obstacle = scene.add
+      //   .line(400, 100, 0, 0, 200, 50)
+      //   .setStrokeStyle(1, 0xff0000);
+      // obstacles.add(obstacle);
+
+      //create polygon obstacle
+      // obstacle = scene.add
+      //   .polygon(650, 500, [0, 0, 50, 50, 100, 0, 100, 75, 50, 100, 0, 50])
+      //   .setStrokeStyle(1, 0xff0000);
+      // obstacles.add(obstacle);
+
+      //create overlapping obstacles
+      // for (let i = 0; i < 5; i++) {
+      //   obstacle = scene.add
+      //     .rectangle(350 + 30 * i, 550 - 30 * i, 50, 50)
+      //     .setStrokeStyle(1, 0xff0000);
+      //   obstacles.add(obstacle, true);
+      // }
+
+      //create image obstacle
+      // obstacle = scene.add.image(800, 800, "mapImage");
+      // obstacles.add(obstacle, true);
+
+      // let t = chests.getChildren();
+      // t.forEach((chest) => {
+      //   obstacles.add(chest, true);
+      // });
+
+
+      // LEFT OUTER WALL
+      obstacle = scene.add
+        .rectangle(8, 800, 16, 1600) // (x, y) = (tile-coords * 16) / 2
+        .setStrokeStyle(1, 0xff0000); // the MIDDLE of the shape is what the (x, y) refers to, that's why
+      obstacles.add(obstacle, true); // we do this weird shiz.
+
+      // TOP OUTER WALL
+      obstacle = scene.add
+        .rectangle(800, 8, 1600, 16) // (x, y) = (tile-coords * 16) / 2
+        .setStrokeStyle(1, 0xff0000); // the MIDDLE of the shape is what the (x, y) refers to, that's why
+      obstacles.add(obstacle, true); // we do this weird shiz.
+
+      // RIGHT OUTER WALL
+      obstacle = scene.add
+        .rectangle(1592, 800, 16, 1600) // (x, y) = (tile-coords * 16) / 2
+        .setStrokeStyle(1, 0xff0000); // the MIDDLE of the shape is what the (x, y) refers to, that's why
+      obstacles.add(obstacle, true); // we do this weird shiz.
+
+      obstacle = scene.add
+        .rectangle(800, 1592, 1600, 16) // (x, y) = (tile-coords * 16) / 2
+        .setStrokeStyle(1, 0xff0000); // the MIDDLE of the shape is what the (x, y) refers to, that's why
+      obstacles.add(obstacle, true);
+    }
 
 
 		/*
@@ -177,10 +349,6 @@ export default class Game extends Phaser.Scene {
 		this.chrisps.get(210, 200, 'chrisp')
 		this.beartraps.get(100, 100, 'beartrap').visible = false
 		this.firetraps.get(80, 80, 'firetrap').visible = false
-
-
-
-
 		/*
 		** ENEMIES
 		*/
@@ -341,8 +509,59 @@ export default class Game extends Phaser.Scene {
 	}
 
 	update(t: number, dt: number) {
+
+
+		if (this.keyQ.isDown)
+		{
+			this.scene.stop('game-ui')
+			this.scene.start('winner', { currentTime: this.currentTime }) //WINNER
+		}
+
+
 		if (this.faune) {
 			this.faune.update(this.cursors)
 		}
+
+		// This makes sure that the mouse x and y are accurate
+    const crosshairX =
+      this.game.input.mousePointer.x +
+      this.game.input.mousePointer.camera?.worldView.x;
+    const crosshairY =
+      this.game.input.mousePointer.y +
+      this.game.input.mousePointer.camera?.worldView.y;
+    const mouseAngle = Math.atan2(
+      crosshairY - this.faune.y,
+      crosshairX - this.faune.x
+    );
+
+		// setting the angle for the rays
+    this.ray.setAngle(mouseAngle);
+    this.intersections = this.ray.castCone();
+    this.draw();
 	}
+
+
+	// function we call several times (no touchie)
+	draw() {
+    this.ray.setOrigin(this.faune.x, this.faune.y);
+    this.intersections.push(this.ray.origin);
+    this.graphics.clear();
+    this.graphics.fillStyle(0xffffff, 0.3);
+    this.graphics.fillPoints(this.intersections);
+
+		// redraw the black fogOfWar. If we want this to be a scratch-off thing, comment out the below line
+		this.fogOfWar.draw(this.blackRectangle, this.mapWidth*0.5, this.mapHeight*0.5);
+
+    for (let intersection of this.intersections) {
+			let graph = {
+        x1: this.faune.x,
+        y1: this.faune.y,
+        x2: intersection.x,
+        y2: intersection.y,
+      }
+      this.graphics.strokeLineShape(graph);
+			// removes the blackness from the area cast by the rays
+      this.fogOfWar.erase(this.graphics);
+    }
+  }
 }

@@ -238,6 +238,18 @@
          "objects":[
                 {
                  "class":"",
+                 "gid":8623,
+                 "height":16,
+                 "id":33,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":16,
+                 "x":128,
+                 "y":112
+                }, 
+                {
+                 "class":"",
                  "gid":8603,
                  "height":16,
                  "id":90,

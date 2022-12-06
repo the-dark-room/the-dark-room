@@ -8,6 +8,7 @@ export default class GameUI extends Phaser.Scene
 
 	private flashTimer
 	private flashTimerOutline
+	private FLASHTIMERWIDTH = 58
 	private flashTimerWidth = 58
 
 	constructor()
@@ -48,6 +49,10 @@ export default class GameUI extends Phaser.Scene
 		})
 
 
+		/*
+		** FLASHLIGHT GRAPHICS
+		*/
+
 		this.flashTimer = this.add.graphics();
 		this.flashTimer.fillStyle(0xffff00)
 		this.flashTimer.fillRect(58, 5, this.flashTimerWidth, 10)
@@ -55,6 +60,13 @@ export default class GameUI extends Phaser.Scene
 		this.flashTimerOutline = this.add.graphics();
 		this.flashTimerOutline.lineStyle(1, 0xffffff, 1);
 		this.flashTimerOutline.strokeRoundedRect(60, 4, 64, 12, 4);
+
+		sceneEvents.on('gameTimer-changed', this.handleGameTimerChanged, this)
+
+		/*
+		** FLASHLIGHT GRAPHICS
+		*/
+
 
 	}
 
@@ -73,6 +85,18 @@ export default class GameUI extends Phaser.Scene
 		})
 	}
 
+
+
+	/*
+	** FLASHLIGHT GAME TIMER
+	*/
+
+	private handleGameTimerChanged({MAXTIME, currentTime}){
+		const percentage = 1 - currentTime / MAXTIME
+		this.flashTimerWidth = this.FLASHTIMERWIDTH * percentage
+		// console.log(percentage)
+	}
+
 	update(){
 		this.flashTimer.clear()
 		
@@ -81,8 +105,11 @@ export default class GameUI extends Phaser.Scene
 			this.flashTimer = this.add.graphics();
 			this.flashTimer.fillStyle(0xffff00)
 			this.flashTimer.fillRect(63, 5, this.flashTimerWidth, 10)
-			this.flashTimerWidth -= 0.05
 		}
 		
 	}
+
+	/*
+	** FLASHLIGHT GAME TIMER
+	*/
 }
