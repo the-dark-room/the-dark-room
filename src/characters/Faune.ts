@@ -37,7 +37,7 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 	private faceUp = false;
 	private faceDown = true;
 
-	private knives?: Phaser.Physics.Arcade.Group
+	private knives!: Phaser.Physics.Arcade.Group
 	private meleeHitbox!: Phaser.Types.Physics.Arcade.ImageWithDynamicBody
 	private activeChest?: Chest
 
@@ -51,16 +51,40 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 		super(scene, x, y, texture, frame)
 
 		this.anims.play('faune-idle-down')
-	}
 
-	setKnives(knives: Phaser.Physics.Arcade.Group)
-	{
-		this.knives = knives
-	}
+		//knives initialize
+		this.scene.knives = this.scene.physics.add.group({
+			classType: Phaser.Physics.Arcade.Image,
+			maxSize: 200
+		})
 
-	setSword(sword: Phaser.Types.Physics.Arcade.ImageWithDynamicBody)
-	{
-		this.meleeHitbox = sword
+		this.knives = this.scene.knives
+
+		//melleHitbox for sword initialize
+		this.scene.meleeHitbox = this.scene.add.rectangle(0, 0, 25, 20, 0xffffff, 0) as unknown as Phaser.Types.Physics.Arcade.ImageWithDynamicBody
+		this.meleeHitbox = this.scene.meleeHitbox
+
+		this.scene.physics.add.existing(this.scene.meleeHitbox)
+		this.scene.meleeHitbox.body.enable = false
+
+		//Sword animation initialize
+		this.scene.anims.create({
+			key: 'swing',
+			frames: [
+					{ key: 'sword2' },
+					{ key: 'sword3' },
+					{ key: 'sword4' },
+			],
+			frameRate: 8,
+			repeat: 0
+		});
+
+		this.scene.sword = this.scene.add.sprite(45, 40, 'sword1').setVisible(false)
+		this.scene.sword.setScale(0.5)
+		this.scene.sword.on('animationcomplete', () => {
+			this.scene.meleeHitbox.body.enable = false
+			this.scene.sword.setVisible(false)
+		})
 	}
 
 	setChest(chest: Chest)
@@ -105,7 +129,6 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 			this.meleeHitbox!.y = this.y - this.height * 0.4
 			this.meleeHitbox!.x = this.x
 
-			// @ts-nocheck
 			this.scene.sword.setDepth(0)
 			this.scene.sword.y = this.y - 10
 			this.scene.sword.x = this.x - 5
@@ -134,8 +157,6 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 			? this.x - this.width * 0.35
 			: this.x + this.width * 0.35
 		}
-
-		// this.scene.physics.world.remove(this.meleeHitbox.body)
 	}
 
 	private throwKnife(){
@@ -220,29 +241,41 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 			return
 		}
 
-		if (Phaser.Input.Keyboard.JustDown(cursors.space!)){
-			if (this.activeChest){
-				const coins = this.activeChest.open()
-				this._coins += coins
-
-				sceneEvents.emit('player-coins-changed', this._coins)
-			}
-			else if (this.knives){
-				this.throwKnife()
-			}
-			else //sword swing
-			{
-				this.swingSword()
-			}
+		if (Phaser.Input.Keyboard.JustDown(cursors.space!)) {
+			this.throwKnife()
 			return
 		}
 
+		this.scene.input.on('pointerdown', function (pointer) {
+			if (pointer.leftButtonDown()){
+				if (this.activeChest){
+					const coins = this.activeChest.open()
+					this._coins += coins
+
+					sceneEvents.emit('player-coins-changed', this._coins)
+				}
+				else //sword swing
+				{
+
+					this.swingSword()
+				}
+				return
+			}
+		}, this);
+
 		const speed = 100
 
-		const leftDown = cursors.left?.isDown
-		const rightDown = cursors.right?.isDown
-		const upDown = cursors.up?.isDown
-		const downDown = cursors.down?.isDown
+		this.cursors = this.scene.input.keyboard.addKeys(
+			{up:Phaser.Input.Keyboard.KeyCodes.W,
+			down:Phaser.Input.Keyboard.KeyCodes.S,
+			left:Phaser.Input.Keyboard.KeyCodes.A,
+			right:Phaser.Input.Keyboard.KeyCodes.D
+		})
+
+		const leftDown = this.cursors.left?.isDown
+		const rightDown = this.cursors.right?.isDown
+		const upDown = this.cursors.up?.isDown
+		const downDown = this.cursors.down?.isDown
 
 		if (leftDown){
 			this.anims.play('faune-run-side', true)

@@ -21,8 +21,8 @@ export default new Phaser.Game({
     },
   },
   scene: [
-		Preloader, 
-		Game, 
+		Preloader,
+		Game,
 		GameUI,
 		Menu,
     Winner
