@@ -97,6 +97,9 @@ export default class Game extends Phaser.Scene {
 				MAXTIME: this.MAXTIME,
 				currentTime: this.currentTime
 			})
+			if(this.currentTime > this.MAXTIME){
+				this.scene.start('winner')
+			}
 		}
 
 		this.gameTimer = this.time.addEvent({
