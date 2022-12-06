@@ -71,7 +71,7 @@ export default class Game extends Phaser.Scene {
 	** GAME TIMER
 	*/
 	private gameTimer
-	private MAXTIME = 60
+	private MAXTIME = 60 //IN SECONDS
 	private currentTime = 0
 	private keyQ
 	/*
@@ -100,7 +100,7 @@ export default class Game extends Phaser.Scene {
 				currentTime: this.currentTime
 			})
 			if(this.currentTime >= this.MAXTIME){
-				// this.scene.start('loser', { currentTime: this.currentTime }) //LOSER
+				this.scene.start('loser', { currentTime: this.currentTime }) //LOSER
 			}
 		}
 
@@ -348,6 +348,7 @@ export default class Game extends Phaser.Scene {
 		}
 		this.chrisps.get(210, 200, 'chrisp')
 		this.beartraps.get(100, 100, 'beartrap').visible = false
+		this.beartraps.get(110, 110, 'beartrap').visible = false
 		this.firetraps.get(80, 80, 'firetrap').visible = false
 		/*
 		** ENEMIES
@@ -443,6 +444,7 @@ export default class Game extends Phaser.Scene {
 				volume: 2
 			})
 			setTimeout(() => {
+				this.scene.start('loser', { currentTime: this.currentTime }) //LOSER
 				deathSound.play()
 			}, 600)
 
