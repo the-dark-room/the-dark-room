@@ -169,7 +169,7 @@ export default class Game extends Phaser.Scene {
 		this.cameras.main.startFollow(this.faune, true)
 
 		// shape bois
-		const shape = map.getObjectLayer('raycast')
+		const shape = map.getObjectLayer('saving')
 		let shapeArr = [];
 		shape.objects.forEach(shapeObj => {
 			shapeArr.push(shapeObj)
@@ -202,7 +202,7 @@ export default class Game extends Phaser.Scene {
         x: this.faune.x,
         y: this.faune.y,
       },
-			detectionRange: 10,
+			// detectionRange: 10,
     });
 		
 
