@@ -112,7 +112,6 @@ export default class Game extends Phaser.Scene {
 		})
 
 		this.keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
-
 		/*
 		** Game Timer
 		*/
@@ -295,7 +294,7 @@ export default class Game extends Phaser.Scene {
 
 
 		/*
-		** ENEMIES
+		** ENEMY PHYSICS GROUPS
 		*/
 		this.ghosts = this.physics.add.group({  //GHOST
 			classType: Ghost
@@ -326,33 +325,56 @@ export default class Game extends Phaser.Scene {
 		})
 
 
-		// const lizardsLayer = map.getObjectLayer('Lizards')
-				// lizardsLayer.objects.forEach(lizObj => {
-				// 	this.lizards.get(lizObj.x! + lizObj.width! * 0.5, lizObj.y! - lizObj.height! * 0.5, 'lizard')
-				// })
-
-		function randCoord() {
-			return Phaser.Math.Between(200, 900)
-		}
-
-		for(let b = 0; b < 10; b++){
-
-			this.ghosts.get( randCoord(), randCoord(), 'ghost').setScale(0.8)
-			this.bods.get( randCoord(), randCoord(), 'bod').setScale(0.5)
-			this.frogs.get( randCoord(), randCoord(), 'frog')
-			this.skeletons.get( randCoord(), randCoord(), 'skeleton')
-			this.bats.get( randCoord(), randCoord(), `bat-${b}`)
-			this.cultists.get( randCoord(), randCoord(), 'cultist').setScale(0.6)
-			this.beartraps.get(randCoord(), randCoord(), 'beartrap').visible = false
-			this.firetraps.get(randCoord(), randCoord(), 'firetrap').visible = false
-		}
-		this.chrisps.get(210, 200, 'chrisp')
-		this.beartraps.get(100, 100, 'beartrap').visible = false
-		this.beartraps.get(110, 110, 'beartrap').visible = false
-		this.firetraps.get(80, 80, 'firetrap').visible = false
 		/*
-		** ENEMIES
+		** LOAD ENEMIES INTO SCENE - uncomment when each map layer is complete
 		*/
+
+		const ghostsLayer = map.getObjectLayer('ghosts')
+		ghostsLayer.objects.forEach(e => {
+			this.ghosts.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, 'ghost').setScale(0.8)
+		})
+
+		// const bodsLayer = map.getObjectLayer('bods')
+		// bodsLayer.objects.forEach(e => {
+		// 	this.bods.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, 'bod').setScale(0.5)
+		// })
+
+		// const frogsLayer = map.getObjectLayer('frogs')
+		// frogsLayer.objects.forEach(e => {
+		// 	this.frogs.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, 'frog')
+		// })
+
+		// const skeletonsLayer = map.getObjectLayer('skeletons')
+		// skeletonsLayer.objects.forEach(e => {
+		// 	this.skeletons.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, 'skeleton')
+		// })
+
+		// const batsLayer = map.getObjectLayer('bats')
+		// batsLayer.objects.forEach(e => {
+		// 	this.bats.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, 'bat')
+		// })
+
+		// const cultistsLayer = map.getObjectLayer('cultists')
+		// cultistsLayer.objects.forEach(e => {
+		// 	this.cultists.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, 'cultist').setScale(0.6)
+		// })
+
+		// const chrispsLayer = map.getObjectLayer('chrisps')
+		// chrispsLayer.objects.forEach(e => {
+		// 	this.chrisps.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, 'chrisp')
+		// })
+
+		// const beartrapsLayer = map.getObjectLayer('beartraps')
+		// beartrapsLayer.objects.forEach(e => {
+		// 	this.beartraps.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, 'beartrap').visible = false
+		// })
+
+		// const firetrapsLayer = map.getObjectLayer('firetraps')
+		// firetrapsLayer.objects.forEach(e => {
+		// 	this.firetraps.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, 'firetrap').visible = false
+		// })
+		
+		
 
 		// Wall collisions
 		this.physics.add.collider(this.faune, wallsLayer)
@@ -420,6 +442,7 @@ export default class Game extends Phaser.Scene {
 	}
 
 
+	// TRAPS ARE INVISIBLE UNTIL STEPPED ON
 	private handlePlayerBearTrapsCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
 
 		obj2.visible = true
@@ -444,13 +467,14 @@ export default class Game extends Phaser.Scene {
 				volume: 2
 			})
 			setTimeout(() => {
-				this.scene.start('loser', { currentTime: this.currentTime }) //LOSER
 				deathSound.play()
+				this.scene.start('loser', { currentTime: this.currentTime }) //LOSER
 			}, 600)
 
 		}
 	}
 
+	// TRAPS ARE INVISIBLE UNTIL STEPPED ON
 	private handlePlayerFireTrapsCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
 
 		obj2.visible = true
@@ -476,6 +500,7 @@ export default class Game extends Phaser.Scene {
 			})
 			setTimeout(() => {
 				deathSound.play()
+				this.scene.start('loser', { currentTime: this.currentTime }) //LOSER
 			}, 600)
 
 		}
@@ -504,6 +529,7 @@ export default class Game extends Phaser.Scene {
 			})
 			setTimeout(() => {
 				deathSound.play()
+				this.scene.start('loser', { currentTime: this.currentTime }) //LOSER
 			}, 600)
 
 			// this.playerEnemiesCollider?.destroy()
