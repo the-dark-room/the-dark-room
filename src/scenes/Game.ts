@@ -73,6 +73,7 @@ export default class Game extends Phaser.Scene {
 	private gameTimer
 	private MAXTIME = 60
 	private currentTime = 0
+	private keyQ
 	/*
 	** GAME TIMER
 	*/
@@ -83,6 +84,7 @@ export default class Game extends Phaser.Scene {
 
 	preload() {
 		this.cursors = this.input.keyboard.createCursorKeys()
+		
 	}
 
 	create() {
@@ -97,8 +99,8 @@ export default class Game extends Phaser.Scene {
 				MAXTIME: this.MAXTIME,
 				currentTime: this.currentTime
 			})
-			if(this.currentTime > this.MAXTIME){
-				this.scene.start('winner')
+			if(this.currentTime >= this.MAXTIME){
+				// this.scene.start('loser', { currentTime: this.currentTime }) //LOSER
 			}
 		}
 
@@ -108,6 +110,9 @@ export default class Game extends Phaser.Scene {
 			repeat: 60,
 			callbackScope: this
 		})
+
+		this.keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
+		
 		/*
 		** Game Timer
 		*/
@@ -526,6 +531,15 @@ export default class Game extends Phaser.Scene {
 	}
 
 	update(t: number, dt: number) {
+
+
+		if (this.keyQ.isDown)
+		{
+			this.scene.stop('game-ui')
+			this.scene.start('winner', { currentTime: this.currentTime }) //WINNER
+		}
+
+
 		if (this.faune) {
 			this.faune.update(this.cursors)
 		}
