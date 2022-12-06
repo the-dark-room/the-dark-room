@@ -84,7 +84,7 @@ export default class Game extends Phaser.Scene {
 
 	create() {
 		// zoom for testing walls
-    // this.cameras.main.setZoom(.5)
+    // this.cameras.main.setZoom(.2)
 		
 		// main music
 		const thrillerMusic = this.sound.add('thriller-music', {
@@ -168,6 +168,20 @@ export default class Game extends Phaser.Scene {
 
 		this.cameras.main.startFollow(this.faune, true)
 
+		// shape bois
+		const shape = map.getObjectLayer('raycast')
+		let shapeArr = [];
+		shape.objects.forEach(shapeObj => {
+			shapeArr.push(shapeObj)
+		})
+		// console.log(shapeArr[0].polygon);
+		
+		let please = [];
+		for(let i=0; i<shapeArr[0].polygon.length; i++) {
+			please.push(shapeArr[0].polygon[i].x, shapeArr[0].polygon[i].y)
+		}
+		// console.log(please);
+
 
 		// Raycaster
 		// sets the bounding box for the rays
@@ -177,9 +191,10 @@ export default class Game extends Phaser.Scene {
       map.widthInPixels,
       map.heightInPixels
     );
+
 		// creates raycasting
     this.raycaster = this.raycasterPlugin.createRaycaster({
-      boundingBox: bounds,
+			boundingBox: bounds,
     });
 		// creates the ray with origin being on the player
     this.ray = this.raycaster.createRay({
@@ -187,7 +202,9 @@ export default class Game extends Phaser.Scene {
         x: this.faune.x,
         y: this.faune.y,
       },
+			detectionRange: 10,
     });
+		
 
     //set ray cone size (angle)
     this.ray.setConeDeg(60);
@@ -254,6 +271,8 @@ export default class Game extends Phaser.Scene {
       //   .setStrokeStyle(1, 0xff0000);
       // obstacles.add(obstacle);
 
+			// [0,0, 192,0, 192,240, 128,240, 128,656, 112,656, 112,240, 0,240]
+
       //create overlapping obstacles
       // for (let i = 0; i < 5; i++) {
       //   obstacle = scene.add
@@ -270,6 +289,21 @@ export default class Game extends Phaser.Scene {
       // t.forEach((chest) => {
       //   obstacles.add(chest, true);
       // });
+
+			// shapeArr.forEach((s) => {
+			// 	console.log(s);
+			// 	obstacles.add(s, true)
+			// })
+
+			// obstacle = scene.add
+			// 	.polygon(100, 400, [0,0, 192,0, 192,240, 128,240, 128,656, 112,656, 112,240, 0,240])
+			// 	.setStrokeStyle(1, 0xff0000)
+			// obstacles.add(obstacle)
+
+			obstacle = scene.add
+				.polygon(800, 800, please)
+				.setStrokeStyle(1, 0xff0000)
+			obstacles.add(obstacle)
 
 
       // LEFT OUTER WALL
