@@ -17,6 +17,7 @@
 	"homepage": "https://github.com/ourcade/phaser3-parcel-template",
 	"devDependencies": {
 		"@types/node": "^13.13.5",
+		"gh-pages": "^4.0.0",
 		"minimist": ">=1.2.2",
 		"parcel": "^2.8.0",
 		"parcel-plugin-clean-easy": "^1.0.2",
