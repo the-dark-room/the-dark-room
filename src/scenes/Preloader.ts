@@ -16,6 +16,15 @@ export default class Preloader extends Phaser.Scene
 		this.load.image('menuTiles', 'tiles/tilesetformattedupdate1.png')
 		this.load.tilemapTiledJSON('dungeon', 'tiles/dungeon.json')
 		this.load.tilemapTiledJSON('menumap', 'tiles/menumap.json')
+		this.load.tilemapTiledJSON('map_jail', 'tiles/map_jail.json')
+		this.load.tilemapTiledJSON('map_hallway', 'tiles/map_hallway.json')
+		this.load.tilemapTiledJSON('map_maze', 'tiles/map_maze.json')
+		this.load.tilemapTiledJSON('map_cultists', 'tiles/map_cultists.json')
+		this.load.tilemapTiledJSON('map_bigEmpty', 'tiles/map_bigEmpty.json')
+
+
+		this.load.image('stair-up', 'tiles/stair-up.png')
+		this.load.image('stair-down', 'tiles/stair-down.png')
 
 		this.load.atlas('faune', 'character/fauna.png', 'character/fauna.json')
 		this.load.atlas('lizard', 'enemies/lizard.png', 'enemies/lizard.json')

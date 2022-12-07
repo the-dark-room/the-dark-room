@@ -13,6 +13,7 @@ import LeaderBoard from "./scenes/LeaderBoard";
 
 export default new Phaser.Game({
   type: Phaser.AUTO,
+  parent: 'phaser',
   width: 400,
   height: 250,
   physics: {

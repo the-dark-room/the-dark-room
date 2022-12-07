@@ -63,24 +63,66 @@ export default class Game extends Phaser.Scene {
   renderTexture;
   cover;
   fogOfWar;
-  blackRectangle;
-  mapWidth;
-  mapHeight;
+	blackRectangle;
+	mapWidth;
+	mapHeight;
+	startNextMap;
 
-  /*
-   ** GAME TIMER
-   */
-  private gameTimer;
-  private MAXTIME = 60; //IN SECONDS
-  private currentTime = 0;
-  private keyQ;
-  /*
-   ** GAME TIMER
-   */
 
-  constructor() {
-    super("game");
-  }
+	/*
+	** GAME TIMER
+	*/
+	private gameTimer
+	private MAXTIME = 60 //IN SECONDS
+	private currentTime = 0
+	private keyQ
+	/*
+	** GAME TIMER
+	*/
+
+
+	constructor() {
+		super('game')
+	}
+
+	preload() {
+		this.cursors = this.input.keyboard.createCursorKeys()
+
+	}
+
+	create() {
+
+		/*
+		** GAME TIMER
+		*/
+		function updateGameTime(){
+			this.currentTime += 1
+			// console.log(this.currentTime)
+			sceneEvents.emit('gameTimer-changed', {
+				MAXTIME: this.MAXTIME,
+				currentTime: this.currentTime
+			})
+			if(this.currentTime >= this.MAXTIME){
+				this.scene.start('loser', { currentTime: this.currentTime }) //LOSER
+			}
+		}
+
+		this.gameTimer = this.time.addEvent({
+			delay: 1000,
+			callback: updateGameTime,
+			repeat: 60,
+			callbackScope: this
+		})
+
+		this.keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
+		/*
+		** GAME TIMER
+		*/
+
+
+
+		// zoom for testing walls
+    // this.cameras.main.setZoom(.2)
 
   preload() {
     this.cursors = this.input.keyboard.createCursorKeys();
@@ -124,7 +166,10 @@ export default class Game extends Phaser.Scene {
     });
     thrillerMusic.play();
 
-    this.scene.run("game-ui");
+
+		// adds the map and the tiles for it
+		let map = this.make.tilemap({ key: 'map_maze' })
+		const tileset = map.addTilesetImage('watabou_pixel_dungeon_spritesheet', 'tiles')
 
     loadAllAnims(this.anims);
 
@@ -161,7 +206,37 @@ export default class Game extends Phaser.Scene {
       );
     });
 
+
     this.cameras.main.startFollow(this.faune, true);
+
+		// get the polygon(s) for the walls
+		const shape = map.getObjectLayer('raycast')
+		let shapeArr = [];
+		shape.objects.forEach(shapeObj => {
+			shapeArr.push(shapeObj)
+		})
+		// console.log(shapeArr[0]);
+		
+		let please = [];
+		for(let i=0; i<shapeArr[0].polygon.length; i++) {
+			please.push(shapeArr[0].polygon[i].x, shapeArr[0].polygon[i].y)
+		}
+		// console.log(please);
+
+		// up stairs
+		const stairUp = map.getObjectLayer('stairUp')
+		const stairUpGroup = this.physics.add.staticGroup()
+		stairUp.objects.forEach(stairObj => {
+			stairUpGroup.get(stairObj.x! + stairObj.width! * 0.5, stairObj.y! - stairObj.height! * 0.5, 'stair-down')
+		})
+
+		// down stairs
+		const stairDown = map.getObjectLayer('stairDown')
+		const stairDownGroup = this.physics.add.staticGroup()
+		stairDown.objects.forEach(stairObj => {
+			stairDownGroup.get(stairObj.x! + stairObj.width! * 0.5, stairObj.y! - stairObj.height! * 0.5, 'stair-down')
+		})
+
 
     // Raycaster
     // sets the bounding box for the rays
@@ -171,9 +246,10 @@ export default class Game extends Phaser.Scene {
       map.widthInPixels,
       map.heightInPixels
     );
-    // creates raycasting
+
+		// creates raycasting
     this.raycaster = this.raycasterPlugin.createRaycaster({
-      boundingBox: bounds,
+			boundingBox: bounds,
     });
     // creates the ray with origin being on the player
     this.ray = this.raycaster.createRay({
@@ -181,7 +257,9 @@ export default class Game extends Phaser.Scene {
         x: this.faune.x,
         y: this.faune.y,
       },
+			// detectionRange: 10,
     });
+		
 
     //set ray cone size (angle)
     this.ray.setConeDeg(60);
@@ -250,6 +328,8 @@ export default class Game extends Phaser.Scene {
       //   .setStrokeStyle(1, 0xff0000);
       // obstacles.add(obstacle);
 
+			// [0,0, 192,0, 192,240, 128,240, 128,656, 112,656, 112,240, 0,240]
+
       //create overlapping obstacles
       // for (let i = 0; i < 5; i++) {
       //   obstacle = scene.add
@@ -266,6 +346,24 @@ export default class Game extends Phaser.Scene {
       // t.forEach((chest) => {
       //   obstacles.add(chest, true);
       // });
+
+
+			// shapeArr.forEach((s) => {
+			// 	console.log(s);
+			// 	obstacles.add(s, true)
+			// })
+
+			// obstacle = scene.add
+			// 	.polygon(100, 400, [0,0, 192,0, 192,240, 128,240, 128,656, 112,656, 112,240, 0,240])
+			// 	.setStrokeStyle(1, 0xff0000)
+			// obstacles.add(obstacle)
+
+			obstacle = scene.add
+				.polygon(map.widthInPixels / 2, map.heightInPixels / 2, please)
+				.setStrokeStyle(1, 0xff0000)
+			obstacles.add(obstacle)
+
+
 
       // LEFT OUTER WALL
       obstacle = scene.add
@@ -580,6 +678,7 @@ export default class Game extends Phaser.Scene {
       this
     );
 
+
     this.playerBeartrapsCollider = this.physics.add.collider(
       this.beartraps,
       this.faune,
@@ -595,6 +694,242 @@ export default class Game extends Phaser.Scene {
       this
     );
   }
+
+		/*
+		** ENEMY PHYSICS GROUPS
+		*/
+		this.ghosts = this.physics.add.group({  //GHOST
+			classType: Ghost
+		})
+		this.bods = this.physics.add.group({  //BOD
+			classType: Bod
+		})
+		this.frogs = this.physics.add.group({  //FROG
+			classType: Frog
+		})
+		this.skeletons = this.physics.add.group({  //SKELETONS
+			classType: Skeleton
+		})
+		this.bats = this.physics.add.group({  //BAT
+			classType: Bat
+		})
+		this.cultists = this.physics.add.group({  //CULTIST
+			classType: Cultist
+		})
+		this.chrisps = this.physics.add.group({  //CHRISP
+			classType: Chrisp
+		})
+		this.beartraps = this.physics.add.staticGroup({  //BEAR TRAP
+			classType: BearTrap
+		})
+		this.firetraps = this.physics.add.staticGroup({  //FIRE TRAP
+			classType: FireTrap
+		})
+
+
+		/*
+		** LOAD ENEMIES INTO SCENE - uncomment when each map layer is complete
+		*/
+
+		const ghostsLayer = map.getObjectLayer('ghosts')
+		ghostsLayer.objects.forEach(e => {
+			this.ghosts.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, 'ghost').setScale(0.8)
+		})
+
+		// const bodsLayer = map.getObjectLayer('bods')
+		// bodsLayer.objects.forEach(e => {
+		// 	this.bods.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, 'bod').setScale(0.5)
+		// })
+
+		// const frogsLayer = map.getObjectLayer('frogs')
+		// frogsLayer.objects.forEach(e => {
+		// 	this.frogs.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, 'frog')
+		// })
+
+		// const skeletonsLayer = map.getObjectLayer('skeletons')
+		// skeletonsLayer.objects.forEach(e => {
+		// 	this.skeletons.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, 'skeleton')
+		// })
+
+		// const batsLayer = map.getObjectLayer('bats')
+		// batsLayer.objects.forEach(e => {
+		// 	this.bats.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, 'bat')
+		// })
+
+		// const cultistsLayer = map.getObjectLayer('cultists')
+		// cultistsLayer.objects.forEach(e => {
+		// 	this.cultists.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, 'cultist').setScale(0.6)
+		// })
+
+		// const chrispsLayer = map.getObjectLayer('chrisps')
+		// chrispsLayer.objects.forEach(e => {
+		// 	this.chrisps.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, 'chrisp')
+		// })
+
+		// const beartrapsLayer = map.getObjectLayer('beartraps')
+		// beartrapsLayer.objects.forEach(e => {
+		// 	this.beartraps.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, 'beartrap').visible = false
+		// })
+
+		// const firetrapsLayer = map.getObjectLayer('firetraps')
+		// firetrapsLayer.objects.forEach(e => {
+		// 	this.firetraps.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, 'firetrap').visible = false
+		// })
+
+
+
+		/*
+		** GHOST CHASING PLAYER
+		*/
+		this.ghostTrackTimer = this.time.addEvent({
+			delay: this.GHOSTSTUN,
+			callback: ghostTracker,
+			loop: true,
+			callbackScope: this
+		})
+
+		function ghostTracker () {
+			this.ghosts.children.entries.forEach(e => {
+			this.physics.moveToObject(e, this.faune, this.GHOSTSPEED)
+		})
+		}
+		/*
+		** GHOST CHASING PLAYER
+		*/
+
+
+		// Wall collisions
+		this.physics.add.collider(this.faune, wallsLayer)
+
+		// this.physics.add.collider(this.ghosts, wallsLayer)  //GHOST
+		this.physics.add.collider(this.bods, wallsLayer)  //BOD
+		this.physics.add.collider(this.frogs, wallsLayer)  //FROG
+		this.physics.add.collider(this.skeletons, wallsLayer)  //SKELETON
+		this.physics.add.collider(this.bats, wallsLayer)  //BAT
+		this.physics.add.collider(this.cultists, wallsLayer)  //CULTIST
+		this.physics.add.collider(this.chrisps, wallsLayer)  //CHRISP
+		this.physics.add.collider(this.knives, wallsLayer, this.handleKnifeWallCollision, undefined, this) //knives
+		
+		//chest-faune collisions
+		this.physics.add.collider(this.faune, chests, this.handlePlayerChestCollision, undefined, this)
+		//stairs
+		this.physics.add.collider(this.faune, stairUpGroup, this.handleStairsUpCollision, undefined, this)
+		this.physics.add.collider(this.faune, stairDownGroup, this.handleStairsDownCollision)
+
+		// melee-enemy collisions
+		this.physics.add.overlap(this.meleeHitbox, this.ghosts, this.handleSwordGhostCollision, undefined, this)
+		this.physics.add.overlap(this.meleeHitbox, this.bods, this.handleSwordEnemyCollision, undefined, this)
+		this.physics.add.overlap(this.meleeHitbox, this.frogs, this.handleSwordEnemyCollision, undefined, this)
+		this.physics.add.overlap(this.meleeHitbox, this.skeletons, this.handleSwordEnemyCollision, undefined, this)
+		this.physics.add.overlap(this.meleeHitbox, this.chrisps, this.handleSwordEnemyCollision, undefined, this)
+		this.physics.add.overlap(this.meleeHitbox, this.cultists, this.handleSwordEnemyCollision, undefined, this)
+		this.physics.add.overlap(this.meleeHitbox, this.bats, this.handleSwordEnemyCollision, undefined, this)
+
+		// knife-enemy collisions
+		this.physics.add.collider(this.knives, this.ghosts, this.handleKnifeGhostCollision, undefined, this)
+		this.physics.add.collider(this.knives, this.bods, this.handleKnifeEnemyCollision, undefined, this)
+		this.physics.add.collider(this.knives, this.frogs, this.handleKnifeEnemyCollision, undefined, this)
+		this.physics.add.collider(this.knives, this.skeletons, this.handleKnifeEnemyCollision, undefined, this)
+		this.physics.add.collider(this.knives, this.chrisps, this.handleKnifeEnemyCollision, undefined, this)
+		this.physics.add.collider(this.knives, this.cultists, this.handleKnifeEnemyCollision, undefined, this)
+		this.physics.add.collider(this.knives, this.bats, this.handleKnifeEnemyCollision, undefined, this)
+
+		this.playerGhostsCollider = this.physics.add.collider(this.ghosts, this.faune, this.handlePlayerEnemyCollision, undefined, this)
+		this.playerBodsCollider = this.physics.add.collider(this.bods, this.faune, this.handlePlayerEnemyCollision, undefined, this)
+		this.playerFrogsCollider = this.physics.add.collider(this.frogs, this.faune, this.handlePlayerEnemyCollision, undefined, this)
+		this.playerSkeletonsCollider = this.physics.add.collider(this.skeletons, this.faune, this.handlePlayerEnemyCollision, undefined, this)
+		this.playerChrispsCollider = this.physics.add.collider(this.chrisps, this.faune, this.handlePlayerEnemyCollision, undefined, this)
+		this.playerCultistsCollider = this.physics.add.collider(this.cultists, this.faune, this.handlePlayerEnemyCollision, undefined, this)
+		this.playerBatsCollider = this.physics.add.collider(this.bats, this.faune, this.handlePlayerEnemyCollision, undefined, this)
+
+		this.playerBeartrapsCollider = this.physics.add.collider(this.beartraps, this.faune, this.handlePlayerBearTrapsCollision, undefined, this)
+		this.playerFiretrapsCollider = this.physics.add.collider(this.firetraps, this.faune, this.handlePlayerFireTrapsCollision, undefined, this)
+	}
+
+	private handleSwordEnemyCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject)
+	{
+		obj2.destroy()
+	}
+
+	private handlePlayerChestCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
+		const chest = obj2 as Chest
+		this.faune.setChest(chest)
+	}
+
+	private handleKnifeWallCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
+		obj1.destroy()
+	}
+
+	private handleKnifeEnemyCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
+		obj1.destroy()
+		obj2.destroy()
+		// this.lizards.remove(obj2) // removes the sprite from the group, rendering it harmless
+	}
+
+
+	// PAUSE GHOST WHEN HIT WITH KNIFE
+	private handleKnifeGhostCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject){
+		obj2.body.velocity = obj1.body.velocity || new Phaser.Math.Vector2(0,0).normalize().scale(400)
+		obj1.destroy()
+	}
+
+	// PAUSE GHOST WHEN HIT WITH SWORD
+	private handleSwordGhostCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject){
+		obj2.body.velocity = new Phaser.Math.Vector2(0,0)
+	}
+
+
+	// TRAPS ARE INVISIBLE UNTIL STEPPED ON
+	private handlePlayerBearTrapsCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
+
+		obj2.visible = true
+		obj2.close()
+		this.beartraps.remove(obj2)
+
+		const dx = this.faune.x
+		const dy = this.faune.y
+
+		const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(0)
+
+		this.faune.handleDamage(dir)
+		// damage sound
+		this.sound.play('hurt-sound', {
+			volume: 0.2
+		})
+
+		sceneEvents.emit('player-health-changed', this.faune.health)
+
+		if (this.faune.health <= 0){
+			const deathSound = this.sound.add('game-over', {
+				volume: 2
+			})
+			setTimeout(() => {
+				deathSound.play()
+				this.scene.start('loser', { currentTime: this.currentTime }) //LOSER
+			}, 600)
+
+		}
+	}
+
+	// TRAPS ARE INVISIBLE UNTIL STEPPED ON
+	private handlePlayerFireTrapsCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
+
+		obj2.visible = true
+		obj2.start()
+		this.firetraps.remove(obj2)
+
+		const dx = this.faune.x
+		const dy = this.faune.y
+
+		const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(0)
+
+		this.faune.handleDamage(dir)
+		// damage sound
+		this.sound.play('hurt-sound', {
+			volume: 0.2
+		})
+
+		sceneEvents.emit('player-health-changed', this.faune.health)
 
   private handleSwordEnemyCollision(
     obj1: Phaser.GameObjects.GameObject,
@@ -679,6 +1014,7 @@ export default class Game extends Phaser.Scene {
     }
   }
 
+
   // TRAPS ARE INVISIBLE UNTIL STEPPED ON
   private handlePlayerFireTrapsCollision(
     obj1: Phaser.GameObjects.GameObject,
@@ -687,6 +1023,20 @@ export default class Game extends Phaser.Scene {
     obj2.visible = true;
     obj2.start();
     this.firetraps.remove(obj2);
+
+	// for the stairs / map-scene transition
+	private handleStairsUpCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
+		console.log(this.scene);
+		// console.log('collide up');
+		this.scene.start('menu')
+	}
+
+	private handleStairsDownCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
+		console.log('collide down');
+	}
+
+
+	update(t: number, dt: number) {
 
     const dx = this.faune.x;
     const dy = this.faune.y;
@@ -772,6 +1122,8 @@ export default class Game extends Phaser.Scene {
     this.intersections = this.ray.castCone();
     this.draw();
   }
+
+
 
   // function we call several times (no touchie)
   draw() {
