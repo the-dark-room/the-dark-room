@@ -570,7 +570,7 @@ export default class Game extends Phaser.Scene {
 			})
 			setTimeout(() => {
 				deathSound.play()
-				this.scene.start('loser', { currentTime: this.currentTime }) //LOSER
+				this.scene.start('loser', { currentTime: currentTime }) //LOSER
 			}, 600)
 
 		}
@@ -602,7 +602,7 @@ export default class Game extends Phaser.Scene {
 			})
 			setTimeout(() => {
 				deathSound.play()
-				this.scene.start('loser', { currentTime: this.currentTime }) //LOSER
+				this.scene.start('loser', { currentTime: currentTime }) //LOSER
 			}, 600)
 
 		}
@@ -631,7 +631,7 @@ export default class Game extends Phaser.Scene {
 			})
 			setTimeout(() => {
 				deathSound.play()
-				this.scene.start('loser', { currentTime: this.currentTime }) //LOSER
+				this.scene.start('loser', { currentTime: currentTime }) //LOSER
 			}, 600)
 
 			// this.playerEnemiesCollider?.destroy()
@@ -678,6 +678,9 @@ export default class Game extends Phaser.Scene {
 
 
 	update(t: number, dt: number) {
+		console.log(currentTime);
+
+
 		if (this.keyQ.isDown)
 		{
 			this.scene.stop('game-ui')
