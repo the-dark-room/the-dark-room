@@ -32,7 +32,7 @@ export default class Winner extends Phaser.Scene {
     // console.log(this.scene)
     setTimeout(() => {
       this.scene.start("entername", { currentTime: this.exitTime }); //
-    }, 2000);
+    }, 6000);
   }
 
   update() {}

@@ -787,15 +787,15 @@ export default class Game extends Phaser.Scene {
       this.mapWidth * 0.5,
       this.mapHeight * 0.5
     );
-    // const player_reveal = new Phaser.GameObjects.Ellipse(
-    //   this,
-    //   this.faune.x,
-    //   this.faune.y,
-    //   this.faune.width + 5,
-    //   this.faune.height + 5,
-    //   0,
-    //   0
-    // );
+    const player_reveal = new Phaser.GameObjects.Ellipse(
+      this,
+      this.faune.x,
+      this.faune.y,
+      this.faune.width + 4,
+      this.faune.height + 4,
+      0,
+      1
+    );
 
     for (let intersection of this.intersections) {
       let graph = {
@@ -808,7 +808,7 @@ export default class Game extends Phaser.Scene {
       // removes the blackness from the area cast by the rays
       this.fogOfWar.erase(this.graphics);
     }
-    // this.fogOfWar.erase(player_reveal);
-    // player_reveal.destroy();
+    this.fogOfWar.erase(player_reveal);
+    player_reveal.destroy();
   }
 }

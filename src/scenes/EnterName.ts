@@ -19,25 +19,37 @@ export default class EnterName extends Phaser.Scene {
 
     this.exitTime = this.scene.settings.data.currentTime;
     let form = `
-<input type="text" name="nameField" placeholder="Enter your name" style="font-size: 32px">
-<input type="button" name="playButton" value="Let's Play" style="font-size: 32px">
-`;
+      <input type="text" name="nameField" placeholder="Initials" maxLength="3" style="font-size: 5%">
+      <input type="button" name="playButton" value="Submit" style="font-size: 5% ">
+      `;
 
-    // this.add
-    //   .dom(
-    //     100,
-    //     100,
-    //     "div",
-    //     "background-color:lime;width:220px;height:100px;font:48px Arial",
-    //     "Phaser"
-    //   )
-    //   .setDepth(10);
-    // const text1 = this.add
-    //   .text(screenCenterX, screenCenterY, `Your score was ${this.exitTime}`)
-    //   .setOrigin(0.5);
-    // text1.setTint(0xff00ff, 0xff0000, 0xff00ff, 0xff0000);
-    let element = this.add.dom(150, 150).createFromCache("nameform");
-    // console.log(this.scene)
+    const text1 = this.add
+      .text(
+        screenCenterX,
+        screenCenterY - screenCenterY / 4,
+        `Your score was ${this.exitTime}`
+      )
+      .setOrigin(0.5);
+    text1.setTint(0xff00ff, 0xff0000, 0xff00ff, 0xff0000);
+    const text2 = this.add
+      .text(
+        screenCenterX,
+        screenCenterY,
+        "Enter your initials for the Leaderboard"
+      )
+      .setOrigin(0.5);
+    text2.setTint(0xff00ff, 0xff0000, 0xff00ff, 0xff0000);
+    let element = this.add
+      .dom(screenCenterX, screenCenterY + screenCenterY / 4)
+      .createFromHTML(form);
+
+    element.addListener("click");
+
+    element.on("click", function (event) {
+      if (event.target.name === "playButton") {
+        console.log("Success!");
+      }
+    });
   }
 
   update() {}
