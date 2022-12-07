@@ -19,11 +19,20 @@ export default class EnterName extends Phaser.Scene {
 
     this.exitTime = this.scene.settings.data.currentTime;
 
-    // const text1 = this.add
-    //   .text(screenCenterX, screenCenterY, `Your score was ${this.exitTime}`)
-    //   .setOrigin(0.5);
-    // text1.setTint(0xff00ff, 0xff0000, 0xff00ff, 0xff0000);
-    let element = this.add.dom(100, 100).createFromCache("nameform");
+    // this.add
+    //   .dom(
+    //     400,
+    //     300,
+    //     "div",
+    //     "background-color:lime;width:220px;height:100px;font:48px Arial",
+    //     "Phaser"
+    //   )
+    //   .setDepth(10);
+    const text1 = this.add
+      .text(screenCenterX, screenCenterY, `Your score was ${this.exitTime}`)
+      .setOrigin(0.5);
+    text1.setTint(0xff00ff, 0xff0000, 0xff00ff, 0xff0000);
+    // let element = this.add.dom(100, 100).createFromCache("nameform");
     // console.log(this.scene)
   }
 
