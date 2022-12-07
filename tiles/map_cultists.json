@@ -503,6 +503,204 @@
         }, 
         {
          "draworder":"topdown",
+         "id":13,
+         "name":"bods",
+         "objects":[
+                {
+                 "class":"",
+                 "gid":120,
+                 "height":16,
+                 "id":32,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":16,
+                 "x":448,
+                 "y":80
+                }, 
+                {
+                 "class":"",
+                 "gid":120,
+                 "height":16,
+                 "id":33,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":16,
+                 "x":624,
+                 "y":112
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":14,
+         "name":"frogs",
+         "objects":[
+                {
+                 "class":"",
+                 "gid":32,
+                 "height":16,
+                 "id":34,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":16,
+                 "x":48,
+                 "y":464
+                }, 
+                {
+                 "class":"",
+                 "gid":32,
+                 "height":16,
+                 "id":35,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":16,
+                 "x":96,
+                 "y":496
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":15,
+         "name":"bats",
+         "objects":[
+                {
+                 "class":"",
+                 "gid":81,
+                 "height":16,
+                 "id":36,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":16,
+                 "x":144,
+                 "y":128
+                }, 
+                {
+                 "class":"",
+                 "gid":81,
+                 "height":16,
+                 "id":37,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":16,
+                 "x":736,
+                 "y":48
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":16,
+         "name":"chrisps",
+         "objects":[
+                {
+                 "class":"",
+                 "gid":449,
+                 "height":16,
+                 "id":38,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":16,
+                 "x":464,
+                 "y":432
+                }, 
+                {
+                 "class":"",
+                 "gid":449,
+                 "height":16,
+                 "id":39,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":16,
+                 "x":480,
+                 "y":432
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":17,
+         "name":"beartraps",
+         "objects":[
+                {
+                 "class":"",
+                 "gid":525,
+                 "height":16,
+                 "id":40,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":16,
+                 "x":240,
+                 "y":128
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":18,
+         "name":"firetraps",
+         "objects":[
+                {
+                 "class":"",
+                 "gid":524,
+                 "height":16,
+                 "id":41,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":16,
+                 "x":96,
+                 "y":688
+                }, 
+                {
+                 "class":"",
+                 "gid":524,
+                 "height":16,
+                 "id":42,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":16,
+                 "x":304,
+                 "y":736
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
          "id":10,
          "name":"raycast",
          "objects":[
@@ -823,8 +1021,8 @@
                  "rotation":0,
                  "visible":true,
                  "width":16,
-                 "x":128,
-                 "y":176
+                 "x":224,
+                 "y":688
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -847,7 +1045,7 @@
                  "visible":true,
                  "width":16,
                  "x":144,
-                 "y":64
+                 "y":176
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -855,8 +1053,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":13,
- "nextobjectid":32,
+ "nextlayerid":19,
+ "nextobjectid":43,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.9.2",
