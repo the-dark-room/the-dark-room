@@ -1,27 +1,27 @@
 import Phaser from 'phaser'
 
-enum Direction
-{
-	UP,
-	DOWN,
-	LEFT,
-	RIGHT
-}
+// enum Direction
+// {
+// 	UP,
+// 	DOWN,
+// 	LEFT,
+// 	RIGHT
+// }
 
-const randomDirection = (exclude: Direction) => {
-	let newDirection = Phaser.Math.Between(0, 3)
-	while (newDirection === exclude)
-	{
-		newDirection = Phaser.Math.Between(0, 3)
-	}
+// const randomDirection = (exclude: Direction) => {
+// 	let newDirection = Phaser.Math.Between(0, 3)
+// 	while (newDirection === exclude)
+// 	{
+// 		newDirection = Phaser.Math.Between(0, 3)
+// 	}
 
-	return newDirection
-}
+// 	return newDirection
+// }
 
 export default class Ghost extends Phaser.Physics.Arcade.Sprite
 {
-	private direction = Direction.RIGHT
-	private moveEvent: Phaser.Time.TimerEvent
+	// private direction = Direction.RIGHT
+	// private moveEvent: Phaser.Time.TimerEvent
 
 	constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string | number)
 	{
@@ -29,57 +29,57 @@ export default class Ghost extends Phaser.Physics.Arcade.Sprite
 
 		this.anims.play('ghost-float')
 
-		scene.physics.world.on(Phaser.Physics.Arcade.Events.TILE_COLLIDE, this.handleTileCollision, this)
+		// scene.physics.world.on(Phaser.Physics.Arcade.Events.TILE_COLLIDE, this.handleTileCollision, this)
 
-		this.moveEvent = scene.time.addEvent({
-			delay: Phaser.Math.Between(2000,4000),
-			callback: () => {
-				this.direction = randomDirection(this.direction)
-			},
-			loop: true
-		})
+		// this.moveEvent = scene.time.addEvent({
+		// 	delay: Phaser.Math.Between(2000,4000),
+		// 	callback: () => {
+		// 		this.direction = randomDirection(this.direction)
+		// 	},
+		// 	loop: true
+		// })
 	}
 
 	destroy(fromScene?: boolean)
 	{
-		this.moveEvent.destroy()
+		// this.moveEvent.destroy()
 
 		super.destroy(fromScene)
 	}
 
-	private handleTileCollision(go: Phaser.GameObjects.GameObject, tile: Phaser.Tilemaps.Tile)
-	{
-		if (go !== this)
-		{
-			return
-		}
+	// private handleTileCollision(go: Phaser.GameObjects.GameObject, tile: Phaser.Tilemaps.Tile)
+	// {
+	// 	if (go !== this)
+	// 	{
+	// 		return
+	// 	}
 
-		this.direction = randomDirection(this.direction)
-	}
+	// 	this.direction = randomDirection(this.direction)
+	// }
 
-	preUpdate(t: number, dt: number)
-	{
-		super.preUpdate(t, dt)
+	// preUpdate(t: number, dt: number)
+	// {
+	// 	super.preUpdate(t, dt)
 
-		const speed = 5
+	// 	const speed = 5
 
-		switch (this.direction)
-		{
-			case Direction.UP:
-				this.setVelocity(0, -speed)
-				break
+	// 	switch (this.direction)
+	// 	{
+	// 		case Direction.UP:
+	// 			this.setVelocity(0, -speed)
+	// 			break
 
-			case Direction.DOWN:
-				this.setVelocity(0, speed)
-				break
+	// 		case Direction.DOWN:
+	// 			this.setVelocity(0, speed)
+	// 			break
 
-			case Direction.LEFT:
-				this.setVelocity(-speed, 0)
-				break
+	// 		case Direction.LEFT:
+	// 			this.setVelocity(-speed, 0)
+	// 			break
 
-			case Direction.RIGHT:
-				this.setVelocity(speed, 0)
-				break
-		}
-	}
+	// 		case Direction.RIGHT:
+	// 			this.setVelocity(speed, 0)
+	// 			break
+	// 	}
+	// }
 }

@@ -19,7 +19,7 @@ export default class Menu extends Phaser.Scene {
   constructor() {
     super('menu');
   }
-  
+
   preload() {
     this.cursors = this.input.keyboard.createCursorKeys()
   }
@@ -27,6 +27,12 @@ export default class Menu extends Phaser.Scene {
   create() { // creating the menu screen
 
     createCharacterAnims(this.anims)
+
+		// this.knives = this.physics.add.group({
+		// 	classType: Phaser.Physics.Arcade.Image,
+		// 	maxSize: 200
+		// })
+
 
     let playButton = this.add.text((this.game.renderer.width / 2) *.35, this.game.renderer.height * 0.20, 'Start Game', {fontSize: 30}).setDepth(1)
     let aboutButton = this.add.text((this.game.renderer.width / 2) *.55, this.game.renderer.height * 0.35, 'About Us', {fontSize: 20}).setDepth(1)
@@ -47,7 +53,7 @@ export default class Menu extends Phaser.Scene {
     const tileset = map.addTilesetImage('watabou_pixel_dungeon_spritesheet', 'tiles')
     map.createLayer('background', tileset)
 
-    
+
 
     // interactivity
     playButton.setInteractive();
@@ -73,16 +79,17 @@ export default class Menu extends Phaser.Scene {
     // this.faune = this.add.faune(128, 128, 'faune')
     // this.faune.setCollideWorldBounds(true) // collides with the world's border
     // this.faune.setDepth(999) // sets the z-index for the player sprite, (putting it above everything else)
+
     // this.faune.setKnives(this.knives)
     // this.cameras.main.startFollow(this.faune, true)
-    
+
     const wallsLayer = map.createLayer('Walls', tileset)
 		wallsLayer.setCollisionByProperty({ collides: true })
     // this.physics.add.collider(this.faune, wallsLayer)
 
-    
+
 	}
-  
+
   update(t: number, dt: number) {
 		// if (this.faune) {
 		// 	this.faune.update(this.cursors)

@@ -5,6 +5,8 @@ import Preloader from "./scenes/Preloader";
 import Game from "./scenes/Game";
 import GameUI from "./scenes/GameUI";
 import Menu from "./scenes/Menu";
+import Winner from './scenes/Winner'
+import Loser from "./scenes/Loser";
 
 import PhaserRaycaster from "phaser-raycaster";
 
@@ -21,10 +23,12 @@ export default new Phaser.Game({
     },
   },
   scene: [
-		Preloader, 
-		Game, 
+		Preloader,
+		Game,
 		GameUI,
 		Menu,
+    Winner,
+    Loser
 	],
   scale: {
     mode: Phaser.Scale.FIT,
