@@ -19,6 +19,13 @@ import Faune from '../characters/Faune'
 import { sceneEvents } from '../events/EventsCenter'
 import Chest from '../items/Chest'
 
+let map;
+let mapCount = 0;
+let mapArr = ['map_jail', 'map_hallway', 'map_maze', 'map_cultists', 'map_bigEmpty']
+
+// timer 
+let currentTime = 0;
+
 export default class Game extends Phaser.Scene {
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
 	private faune!: Faune
@@ -68,7 +75,6 @@ export default class Game extends Phaser.Scene {
 	blackRectangle;
 	mapWidth;
 	mapHeight;
-	startNextMap;
 
 
 	/*
@@ -76,7 +82,7 @@ export default class Game extends Phaser.Scene {
 	*/
 	private gameTimer
 	private MAXTIME = 60 //IN SECONDS
-	private currentTime = 0
+	// private currentTime = 0
 	private keyQ
 	/*
 	** GAME TIMER
@@ -98,21 +104,22 @@ export default class Game extends Phaser.Scene {
 		** GAME TIMER
 		*/
 		function updateGameTime(){
-			this.currentTime += 1
+			currentTime += 1
 			// console.log(this.currentTime)
 			sceneEvents.emit('gameTimer-changed', {
 				MAXTIME: this.MAXTIME,
-				currentTime: this.currentTime
+				currentTime: currentTime
 			})
-			if(this.currentTime >= this.MAXTIME){
-				this.scene.start('loser', { currentTime: this.currentTime }) //LOSER
+			if(currentTime >= this.MAXTIME){
+				this.scene.start('loser', { currentTime: currentTime }) //LOSER
 			}
 		}
 
 		this.gameTimer = this.time.addEvent({
 			delay: 1000,
 			callback: updateGameTime,
-			repeat: 60,
+			// repeat: 60,
+			loop: true,
 			callbackScope: this
 		})
 
@@ -142,9 +149,10 @@ export default class Game extends Phaser.Scene {
 
 
 		// adds the map and the tiles for it
-		let map = this.make.tilemap({ key: 'map_maze' })
+		// we need it like this so we can optionally take in a new map when we change maps
+		map = map || this.make.tilemap({ key: 'map_jail' })
 		const tileset = map.addTilesetImage('watabou_pixel_dungeon_spritesheet', 'tiles')
-
+		
 		map.createLayer('background', tileset)
 
 		// @ts-ignore
@@ -182,7 +190,6 @@ export default class Game extends Phaser.Scene {
 		for(let i=0; i<shapeArr[0].polygon.length; i++) {
 			please.push(shapeArr[0].polygon[i].x, shapeArr[0].polygon[i].y)
 		}
-		// console.log(please);
 
 		// up stairs
 		const stairUp = map.getObjectLayer('stairUp')
@@ -190,6 +197,10 @@ export default class Game extends Phaser.Scene {
 		stairUp.objects.forEach(stairObj => {
 			stairUpGroup.get(stairObj.x! + stairObj.width! * 0.5, stairObj.y! - stairObj.height! * 0.5, 'stair-down')
 		})
+		// assigning names for map switching purposes
+		stairUpGroup.name = stairUp.objects[0].name
+		// console.log(stairUp.objects[0].name);
+		console.log(stairUpGroup);
 
 		// down stairs
 		const stairDown = map.getObjectLayer('stairDown')
@@ -257,6 +268,7 @@ export default class Game extends Phaser.Scene {
     );
 		// actually draw it
     this.fogOfWar.draw(this.blackRectangle, map.widthInPixels*0.5, map.heightInPixels*0.5);
+		this.fogOfWar.setDepth(10)
 		// using the same function we made for our raycasting to draw the fogOfWar
 		this.draw();
 
@@ -319,6 +331,7 @@ export default class Game extends Phaser.Scene {
 			obstacle = scene.add
 				.polygon(map.widthInPixels / 2, map.heightInPixels / 2, please)
 				.setStrokeStyle(1, 0xff0000)
+				.setDepth(99)
 			obstacles.add(obstacle)
 
 
@@ -388,45 +401,45 @@ export default class Game extends Phaser.Scene {
 			this.ghosts.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, 'ghost').setScale(0.8)
 		})
 
-		// const bodsLayer = map.getObjectLayer('bods')
-		// bodsLayer.objects.forEach(e => {
-		// 	this.bods.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, 'bod').setScale(0.5)
-		// })
+		const bodsLayer = map.getObjectLayer('bods')
+		bodsLayer.objects.forEach(e => {
+			this.bods.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, 'bod').setScale(0.5)
+		})
 
-		// const frogsLayer = map.getObjectLayer('frogs')
-		// frogsLayer.objects.forEach(e => {
-		// 	this.frogs.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, 'frog')
-		// })
+		const frogsLayer = map.getObjectLayer('frogs')
+		frogsLayer.objects.forEach(e => {
+			this.frogs.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, 'frog')
+		})
 
-		// const skeletonsLayer = map.getObjectLayer('skeletons')
-		// skeletonsLayer.objects.forEach(e => {
-		// 	this.skeletons.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, 'skeleton')
-		// })
+		const skeletonsLayer = map.getObjectLayer('skeleton')
+		skeletonsLayer.objects.forEach(e => {
+			this.skeletons.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, 'skeleton')
+		})
 
-		// const batsLayer = map.getObjectLayer('bats')
-		// batsLayer.objects.forEach(e => {
-		// 	this.bats.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, 'bat')
-		// })
+		const batsLayer = map.getObjectLayer('bats')
+		batsLayer.objects.forEach(e => {
+			this.bats.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, 'bat')
+		})
 
-		// const cultistsLayer = map.getObjectLayer('cultists')
-		// cultistsLayer.objects.forEach(e => {
-		// 	this.cultists.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, 'cultist').setScale(0.6)
-		// })
+		const cultistsLayer = map.getObjectLayer('cultists')
+		cultistsLayer.objects.forEach(e => {
+			this.cultists.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, 'cultist').setScale(0.6)
+		})
 
-		// const chrispsLayer = map.getObjectLayer('chrisps')
-		// chrispsLayer.objects.forEach(e => {
-		// 	this.chrisps.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, 'chrisp')
-		// })
+		const chrispsLayer = map.getObjectLayer('chrisps')
+		chrispsLayer.objects.forEach(e => {
+			this.chrisps.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, 'chrisp')
+		})
 
-		// const beartrapsLayer = map.getObjectLayer('beartraps')
-		// beartrapsLayer.objects.forEach(e => {
-		// 	this.beartraps.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, 'beartrap').visible = false
-		// })
+		const beartrapsLayer = map.getObjectLayer('beartraps')
+		beartrapsLayer.objects.forEach(e => {
+			this.beartraps.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, 'beartrap').visible = false
+		})
 
-		// const firetrapsLayer = map.getObjectLayer('firetraps')
-		// firetrapsLayer.objects.forEach(e => {
-		// 	this.firetraps.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, 'firetrap').visible = false
-		// })
+		const firetrapsLayer = map.getObjectLayer('firetraps')
+		firetrapsLayer.objects.forEach(e => {
+			this.firetraps.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, 'firetrap').visible = false
+		})
 
 
 
@@ -466,7 +479,7 @@ export default class Game extends Phaser.Scene {
 		this.physics.add.collider(this.faune, chests, this.handlePlayerChestCollision, undefined, this)
 		//stairs
 		this.physics.add.collider(this.faune, stairUpGroup, this.handleStairsUpCollision, undefined, this)
-		this.physics.add.collider(this.faune, stairDownGroup, this.handleStairsDownCollision)
+		this.physics.add.collider(this.faune, stairDownGroup, this.handleStairsDownCollision, undefined, this)
 
 		// melee-enemy collisions
 		this.physics.add.overlap(this.meleeHitbox, this.ghosts, this.handleSwordGhostCollision, undefined, this)
@@ -626,24 +639,52 @@ export default class Game extends Phaser.Scene {
 	}
 
 	// for the stairs / map-scene transition
-	private handleStairsUpCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
-		console.log(this.scene);
-		// console.log('collide up');
-		this.scene.start('menu')
+	private handleStairsDownCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
+		mapCount--; // increment the map counter
+		console.log(mapCount);
+
+		// ensures we don't destroy the current map if there's not another one to call
+		if(mapCount < 0) { 
+			console.log('no more maps :(');
+			// reset the map counter incase this gets called (we need this because we're incrementing it outside of this )
+			mapCount = 0; 
+			return
+		} else {
+			map.destroy(); // destroy the current map
+			map = this.make.tilemap({ key: mapArr[mapCount] }) // add a new one
+
+			// restart the scene, including the new map as a parameter so we can carry it over
+			this.scene.restart(map) 
+		}
 	}
 
-	private handleStairsDownCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
-		console.log('collide down');
+	private handleStairsUpCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
+		mapCount++; // increment the map counter
+
+		// ensures we don't destroy the current map if there's not another one to call
+		if(mapCount > mapArr.length - 1) { 
+			console.log('no more maps :(');
+			// reset the map counter incase this gets called (we need this because we're incrementing it outside of this )
+			mapCount = mapArr.length - 1; 
+			return
+		} else {
+			map.destroy(); // destroy the current map
+			map = this.make.tilemap({ key: mapArr[mapCount] }) // add a new one
+
+			// restart the scene, including the new map as a parameter so we can carry it over
+			this.scene.restart(map) 
+		}
 	}
 
 
 	update(t: number, dt: number) {
+		console.log(currentTime);
 
 
 		if (this.keyQ.isDown)
 		{
 			this.scene.stop('game-ui')
-			this.scene.start('winner', { currentTime: this.currentTime }) //WINNER
+			this.scene.start('winner', { currentTime: currentTime }) //WINNER
 		}
 
 
