@@ -1,15 +1,14 @@
 import Phaser from "phaser";
 
-export default class Loser extends Phaser.Scene {
+export default class LeaderBoard extends Phaser.Scene {
   private exitTime = 0;
 
   constructor() {
-    super("loser");
-    // console.log(this)
+    super("leaderboard");
   }
 
   preload() {
-    // console.log(this)
+    this.load.html("nameform", "nameForm.html");
   }
 
   create() {
@@ -17,14 +16,18 @@ export default class Loser extends Phaser.Scene {
       this.cameras.main.worldView.x + this.cameras.main.width / 2;
     const screenCenterY =
       this.cameras.main.worldView.y + this.cameras.main.height / 2;
-    // const loadingText = this.add.text(screenCenterX, screenCenterY, 'Loading: 0%').setOrigin(0.5);
 
     this.exitTime = this.scene.settings.data.currentTime;
 
     const text1 = this.add
-      .text(screenCenterX, screenCenterY, `You done lost son`)
+      .text(screenCenterX, screenCenterY, `Your score was ${this.exitTime}`)
       .setOrigin(0.5);
     text1.setTint(0xff00ff, 0xff0000, 0xff00ff, 0xff0000);
+    // let element = this.add
+    //   .dom(400, 300)
+    //   .createFromCache("nameform")
+    //   .setDepth(10);
+    // console.log(this.scene)
   }
 
   update() {}
