@@ -142,8 +142,6 @@ export default class Game extends Phaser.Scene {
 
 		this.scene.run('game-ui')
 
-
-
 		loadAllAnims(this.anims)
 
 
