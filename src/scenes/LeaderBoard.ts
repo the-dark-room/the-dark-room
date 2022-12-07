@@ -28,6 +28,7 @@ export default class LeaderBoard extends Phaser.Scene {
     //   .createFromCache("nameform")
     //   .setDepth(10);
     // console.log(this.scene)
+    // console.log(hello)
   }
 
   update() {}
