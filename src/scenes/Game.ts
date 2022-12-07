@@ -678,9 +678,6 @@ export default class Game extends Phaser.Scene {
 
 
 	update(t: number, dt: number) {
-		console.log(currentTime);
-
-
 		if (this.keyQ.isDown)
 		{
 			this.scene.stop('game-ui')
