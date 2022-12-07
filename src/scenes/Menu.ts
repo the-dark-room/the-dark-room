@@ -1,10 +1,10 @@
 import Phaser from "phaser";
-import { createLizardAnims } from '../anims/EnemyAnims'
+// import { createLizardAnims } from '../anims/EnemyAnims'
 import { createCharacterAnims } from '../anims/CharacterAnims'
 import { createChestAnims } from '../anims/TreasureAnims'
 import '../characters/Faune'
 import Faune from '../characters/Faune'
-import Lizard from '../enemies/Lizard'
+// import Lizard from '../enemies/Lizard'
 import Chest from '../items/Chest'
 import { sceneEvents } from '../events/EventsCenter'
 
@@ -32,6 +32,7 @@ export default class Menu extends Phaser.Scene {
 		// 	classType: Phaser.Physics.Arcade.Image,
 		// 	maxSize: 200
 		// })
+
 
     let playButton = this.add.text((this.game.renderer.width / 2) *.35, this.game.renderer.height * 0.20, 'Start Game', {fontSize: 30}).setDepth(1)
     let aboutButton = this.add.text((this.game.renderer.width / 2) *.55, this.game.renderer.height * 0.35, 'About Us', {fontSize: 20}).setDepth(1)
@@ -75,22 +76,23 @@ export default class Menu extends Phaser.Scene {
     })
 
     // initialize the player
-    this.faune = this.add.faune(128, 128, 'faune')
-    this.faune.setCollideWorldBounds(true) // collides with the world's border
-    this.faune.setDepth(999) // sets the z-index for the player sprite, (putting it above everything else)
+    // this.faune = this.add.faune(128, 128, 'faune')
+    // this.faune.setCollideWorldBounds(true) // collides with the world's border
+    // this.faune.setDepth(999) // sets the z-index for the player sprite, (putting it above everything else)
+
     // this.faune.setKnives(this.knives)
     // this.cameras.main.startFollow(this.faune, true)
 
     const wallsLayer = map.createLayer('Walls', tileset)
 		wallsLayer.setCollisionByProperty({ collides: true })
-    this.physics.add.collider(this.faune, wallsLayer)
+    // this.physics.add.collider(this.faune, wallsLayer)
 
 
 	}
 
   update(t: number, dt: number) {
-		if (this.faune) {
-			this.faune.update(this.cursors)
-		}
+		// if (this.faune) {
+		// 	this.faune.update(this.cursors)
+		// }
 	}
 }
