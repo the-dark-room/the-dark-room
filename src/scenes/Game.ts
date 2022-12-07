@@ -82,7 +82,6 @@ export default class Game extends Phaser.Scene {
 	*/
 	private gameTimer
 	private MAXTIME = 60 //IN SECONDS
-	// private currentTime = 0
 	private keyQ
 	/*
 	** GAME TIMER
@@ -328,35 +327,13 @@ export default class Game extends Phaser.Scene {
 			// 	.setStrokeStyle(1, 0xff0000)
 			// obstacles.add(obstacle)
 
+			// draw in the polygon for the raycasting to interact with
 			obstacle = scene.add
 				.polygon(map.widthInPixels / 2, map.heightInPixels / 2, please)
 				.setStrokeStyle(1, 0xff0000)
 				.setDepth(99)
 			obstacles.add(obstacle)
 
-
-      // LEFT OUTER WALL
-      obstacle = scene.add
-        .rectangle(8, 800, 16, 1600) // (x, y) = (tile-coords * 16) / 2
-        .setStrokeStyle(1, 0xff0000); // the MIDDLE of the shape is what the (x, y) refers to, that's why
-      obstacles.add(obstacle, true); // we do this weird shiz.
-
-      // TOP OUTER WALL
-      obstacle = scene.add
-        .rectangle(800, 8, 1600, 16) // (x, y) = (tile-coords * 16) / 2
-        .setStrokeStyle(1, 0xff0000); // the MIDDLE of the shape is what the (x, y) refers to, that's why
-      obstacles.add(obstacle, true); // we do this weird shiz.
-
-      // RIGHT OUTER WALL
-      obstacle = scene.add
-        .rectangle(1592, 800, 16, 1600) // (x, y) = (tile-coords * 16) / 2
-        .setStrokeStyle(1, 0xff0000); // the MIDDLE of the shape is what the (x, y) refers to, that's why
-      obstacles.add(obstacle, true); // we do this weird shiz.
-
-      obstacle = scene.add
-        .rectangle(800, 1592, 1600, 16) // (x, y) = (tile-coords * 16) / 2
-        .setStrokeStyle(1, 0xff0000); // the MIDDLE of the shape is what the (x, y) refers to, that's why
-      obstacles.add(obstacle, true);
     }
 
 
@@ -473,170 +450,352 @@ export default class Game extends Phaser.Scene {
 		this.physics.add.collider(this.bats, wallsLayer)  //BAT
 		this.physics.add.collider(this.cultists, wallsLayer)  //CULTIST
 		this.physics.add.collider(this.chrisps, wallsLayer)  //CHRISP
-		this.physics.add.collider(this.knives, wallsLayer, this.handleKnifeWallCollision, undefined, this) //knives
-		
-		//chest-faune collisions
-		this.physics.add.collider(this.faune, chests, this.handlePlayerChestCollision, undefined, this)
-		//stairs
-		this.physics.add.collider(this.faune, stairUpGroup, this.handleStairsUpCollision, undefined, this)
-		this.physics.add.collider(this.faune, stairDownGroup, this.handleStairsDownCollision, undefined, this)
+		this.physics.add.collider(
+      this.knives,
+      wallsLayer,
+      this.handleKnifeWallCollision,
+      undefined,
+      this
+    ); //knives
 
-		// melee-enemy collisions
-		this.physics.add.overlap(this.meleeHitbox, this.ghosts, this.handleSwordGhostCollision, undefined, this)
-		this.physics.add.overlap(this.meleeHitbox, this.bods, this.handleSwordEnemyCollision, undefined, this)
-		this.physics.add.overlap(this.meleeHitbox, this.frogs, this.handleSwordEnemyCollision, undefined, this)
-		this.physics.add.overlap(this.meleeHitbox, this.skeletons, this.handleSwordEnemyCollision, undefined, this)
-		this.physics.add.overlap(this.meleeHitbox, this.chrisps, this.handleSwordEnemyCollision, undefined, this)
-		this.physics.add.overlap(this.meleeHitbox, this.cultists, this.handleSwordEnemyCollision, undefined, this)
-		this.physics.add.overlap(this.meleeHitbox, this.bats, this.handleSwordEnemyCollision, undefined, this)
+    //chest-faune collisions
+    this.physics.add.collider(
+      this.faune,
+      chests,
+      this.handlePlayerChestCollision,
+      undefined,
+      this
+    );
+    //stairs
+    this.physics.add.collider(
+      this.faune,
+      stairUpGroup,
+      this.handleStairsUpCollision,
+      undefined,
+      this
+    );
+    this.physics.add.collider(
+      this.faune,
+      stairDownGroup,
+      this.handleStairsDownCollision
+    );
 
-		// knife-enemy collisions
-		this.physics.add.collider(this.knives, this.ghosts, this.handleKnifeGhostCollision, undefined, this)
-		this.physics.add.collider(this.knives, this.bods, this.handleKnifeEnemyCollision, undefined, this)
-		this.physics.add.collider(this.knives, this.frogs, this.handleKnifeEnemyCollision, undefined, this)
-		this.physics.add.collider(this.knives, this.skeletons, this.handleKnifeEnemyCollision, undefined, this)
-		this.physics.add.collider(this.knives, this.chrisps, this.handleKnifeEnemyCollision, undefined, this)
-		this.physics.add.collider(this.knives, this.cultists, this.handleKnifeEnemyCollision, undefined, this)
-		this.physics.add.collider(this.knives, this.bats, this.handleKnifeEnemyCollision, undefined, this)
+    // melee-enemy collisions
+    this.physics.add.overlap(
+      this.meleeHitbox,
+      this.ghosts,
+      this.handleSwordGhostCollision,
+      undefined,
+      this
+    );
+    this.physics.add.overlap(
+      this.meleeHitbox,
+      this.bods,
+      this.handleSwordEnemyCollision,
+      undefined,
+      this
+    );
+    this.physics.add.overlap(
+      this.meleeHitbox,
+      this.frogs,
+      this.handleSwordEnemyCollision,
+      undefined,
+      this
+    );
+    this.physics.add.overlap(
+      this.meleeHitbox,
+      this.skeletons,
+      this.handleSwordEnemyCollision,
+      undefined,
+      this
+    );
+    this.physics.add.overlap(
+      this.meleeHitbox,
+      this.chrisps,
+      this.handleSwordEnemyCollision,
+      undefined,
+      this
+    );
+    this.physics.add.overlap(
+      this.meleeHitbox,
+      this.cultists,
+      this.handleSwordEnemyCollision,
+      undefined,
+      this
+    );
+    this.physics.add.overlap(
+      this.meleeHitbox,
+      this.bats,
+      this.handleSwordEnemyCollision,
+      undefined,
+      this
+    );
 
-		this.playerGhostsCollider = this.physics.add.collider(this.ghosts, this.faune, this.handlePlayerEnemyCollision, undefined, this)
-		this.playerBodsCollider = this.physics.add.collider(this.bods, this.faune, this.handlePlayerEnemyCollision, undefined, this)
-		this.playerFrogsCollider = this.physics.add.collider(this.frogs, this.faune, this.handlePlayerEnemyCollision, undefined, this)
-		this.playerSkeletonsCollider = this.physics.add.collider(this.skeletons, this.faune, this.handlePlayerEnemyCollision, undefined, this)
-		this.playerChrispsCollider = this.physics.add.collider(this.chrisps, this.faune, this.handlePlayerEnemyCollision, undefined, this)
-		this.playerCultistsCollider = this.physics.add.collider(this.cultists, this.faune, this.handlePlayerEnemyCollision, undefined, this)
-		this.playerBatsCollider = this.physics.add.collider(this.bats, this.faune, this.handlePlayerEnemyCollision, undefined, this)
+    // knife-enemy collisions
+    this.physics.add.collider(
+      this.knives,
+      this.ghosts,
+      this.handleKnifeGhostCollision,
+      undefined,
+      this
+    );
+    this.physics.add.collider(
+      this.knives,
+      this.bods,
+      this.handleKnifeEnemyCollision,
+      undefined,
+      this
+    );
+    this.physics.add.collider(
+      this.knives,
+      this.frogs,
+      this.handleKnifeEnemyCollision,
+      undefined,
+      this
+    );
+    this.physics.add.collider(
+      this.knives,
+      this.skeletons,
+      this.handleKnifeEnemyCollision,
+      undefined,
+      this
+    );
+    this.physics.add.collider(
+      this.knives,
+      this.chrisps,
+      this.handleKnifeEnemyCollision,
+      undefined,
+      this
+    );
+    this.physics.add.collider(
+      this.knives,
+      this.cultists,
+      this.handleKnifeEnemyCollision,
+      undefined,
+      this
+    );
+    this.physics.add.collider(
+      this.knives,
+      this.bats,
+      this.handleKnifeEnemyCollision,
+      undefined,
+      this
+    );
 
-		this.playerBeartrapsCollider = this.physics.add.collider(this.beartraps, this.faune, this.handlePlayerBearTrapsCollision, undefined, this)
-		this.playerFiretrapsCollider = this.physics.add.collider(this.firetraps, this.faune, this.handlePlayerFireTrapsCollision, undefined, this)
-	}
+    this.playerGhostsCollider = this.physics.add.collider(
+      this.ghosts,
+      this.faune,
+      this.handlePlayerEnemyCollision,
+      undefined,
+      this
+    );
+    this.playerBodsCollider = this.physics.add.collider(
+      this.bods,
+      this.faune,
+      this.handlePlayerEnemyCollision,
+      undefined,
+      this
+    );
+    this.playerFrogsCollider = this.physics.add.collider(
+      this.frogs,
+      this.faune,
+      this.handlePlayerEnemyCollision,
+      undefined,
+      this
+    );
+    this.playerSkeletonsCollider = this.physics.add.collider(
+      this.skeletons,
+      this.faune,
+      this.handlePlayerEnemyCollision,
+      undefined,
+      this
+    );
+    this.playerChrispsCollider = this.physics.add.collider(
+      this.chrisps,
+      this.faune,
+      this.handlePlayerEnemyCollision,
+      undefined,
+      this
+    );
+    this.playerCultistsCollider = this.physics.add.collider(
+      this.cultists,
+      this.faune,
+      this.handlePlayerEnemyCollision,
+      undefined,
+      this
+    );
+    this.playerBatsCollider = this.physics.add.collider(
+      this.bats,
+      this.faune,
+      this.handlePlayerEnemyCollision,
+      undefined,
+      this
+    );
 
-	private handleSwordEnemyCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject)
-	{
-		obj2.destroy()
-	}
+    this.playerBeartrapsCollider = this.physics.add.collider(
+      this.beartraps,
+      this.faune,
+      this.handlePlayerBearTrapsCollision,
+      undefined,
+      this
+    );
+    this.playerFiretrapsCollider = this.physics.add.collider(
+      this.firetraps,
+      this.faune,
+      this.handlePlayerFireTrapsCollision,
+      undefined,
+      this
+    );
+  }
 
-	private handlePlayerChestCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
-		const chest = obj2 as Chest
-		this.faune.setChest(chest)
-	}
+	private handleSwordEnemyCollision(
+    obj1: Phaser.GameObjects.GameObject,
+    obj2: Phaser.GameObjects.GameObject
+  ) {
+    obj2.destroy();
+  }
 
-	private handleKnifeWallCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
-		obj1.destroy()
-	}
+  private handlePlayerChestCollision(
+    obj1: Phaser.GameObjects.GameObject,
+    obj2: Phaser.GameObjects.GameObject
+  ) {
+    const chest = obj2 as Chest;
+    this.faune.setChest(chest);
+  }
 
-	private handleKnifeEnemyCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
-		obj1.destroy()
-		obj2.destroy()
-		// this.lizards.remove(obj2) // removes the sprite from the group, rendering it harmless
-	}
+  private handleKnifeWallCollision(
+    obj1: Phaser.GameObjects.GameObject,
+    obj2: Phaser.GameObjects.GameObject
+  ) {
+    obj1.destroy();
+  }
 
+  private handleKnifeEnemyCollision(
+    obj1: Phaser.GameObjects.GameObject,
+    obj2: Phaser.GameObjects.GameObject
+  ) {
+    obj1.destroy();
+    obj2.destroy();
+    // this.lizards.remove(obj2) // removes the sprite from the group, rendering it harmless
+  }
 
-	// PAUSE GHOST WHEN HIT WITH KNIFE
-	private handleKnifeGhostCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject){
-		obj2.body.velocity = obj1.body.velocity || new Phaser.Math.Vector2(0,0).normalize().scale(400)
-		obj1.destroy()
-	}
+  // PAUSE GHOST WHEN HIT WITH KNIFE
+  private handleKnifeGhostCollision(
+    obj1: Phaser.GameObjects.GameObject,
+    obj2: Phaser.GameObjects.GameObject
+  ) {
+    obj2.body.velocity =
+      obj1.body.velocity ||
+      new Phaser.Math.Vector2(0, 0).normalize().scale(400);
+    obj1.destroy();
+  }
 
-	// PAUSE GHOST WHEN HIT WITH SWORD
-	private handleSwordGhostCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject){
-		obj2.body.velocity = new Phaser.Math.Vector2(0,0)
-	}
+  // PAUSE GHOST WHEN HIT WITH SWORD
+  private handleSwordGhostCollision(
+    obj1: Phaser.GameObjects.GameObject,
+    obj2: Phaser.GameObjects.GameObject
+  ) {
+    obj2.body.velocity = new Phaser.Math.Vector2(0, 0);
+  }
 
+  // TRAPS ARE INVISIBLE UNTIL STEPPED ON
+  private handlePlayerBearTrapsCollision(
+    obj1: Phaser.GameObjects.GameObject,
+    obj2: Phaser.GameObjects.GameObject
+  ) {
+    obj2.visible = true;
+    obj2.close();
+    this.beartraps.remove(obj2);
 
-	// TRAPS ARE INVISIBLE UNTIL STEPPED ON
-	private handlePlayerBearTrapsCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
+    const dx = this.faune.x;
+    const dy = this.faune.y;
 
-		obj2.visible = true
-		obj2.close()
-		this.beartraps.remove(obj2)
+    const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(0);
 
-		const dx = this.faune.x
-		const dy = this.faune.y
+    this.faune.handleDamage(dir);
+    // damage sound
+    this.sound.play("hurt-sound", {
+      volume: 0.2,
+    });
 
-		const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(0)
+    sceneEvents.emit("player-health-changed", this.faune.health);
 
-		this.faune.handleDamage(dir)
-		// damage sound
-		this.sound.play('hurt-sound', {
-			volume: 0.2
-		})
+    if (this.faune.health <= 0) {
+      const deathSound = this.sound.add("game-over", {
+        volume: 2,
+      });
+      setTimeout(() => {
+        deathSound.play();
+        this.scene.start("loser", { currentTime: currentTime }); //LOSER
+      }, 600);
+    }
+  }
 
-		sceneEvents.emit('player-health-changed', this.faune.health)
+  // TRAPS ARE INVISIBLE UNTIL STEPPED ON
+  private handlePlayerFireTrapsCollision(
+    obj1: Phaser.GameObjects.GameObject,
+    obj2: Phaser.GameObjects.GameObject
+  ) {
+    obj2.visible = true;
+    obj2.start();
+    this.firetraps.remove(obj2);
 
-		if (this.faune.health <= 0){
-			const deathSound = this.sound.add('game-over', {
-				volume: 2
-			})
-			setTimeout(() => {
-				deathSound.play()
-				this.scene.start('loser', { currentTime: currentTime }) //LOSER
-			}, 600)
+    const dx = this.faune.x;
+    const dy = this.faune.y;
 
-		}
-	}
+    const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(0);
 
-	// TRAPS ARE INVISIBLE UNTIL STEPPED ON
-	private handlePlayerFireTrapsCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
+    this.faune.handleDamage(dir);
+    // damage sound
+    this.sound.play("hurt-sound", {
+      volume: 0.2,
+    });
 
-		obj2.visible = true
-		obj2.start()
-		this.firetraps.remove(obj2)
+    sceneEvents.emit("player-health-changed", this.faune.health);
 
-		const dx = this.faune.x
-		const dy = this.faune.y
+    if (this.faune.health <= 0) {
+      const deathSound = this.sound.add("game-over", {
+        volume: 2,
+      });
+      setTimeout(() => {
+        deathSound.play();
+        this.scene.start("loser", { currentTime: currentTime }); //LOSER
+      }, 600);
+    }
+  }
 
-		const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(0)
+  private handlePlayerEnemyCollision(
+    obj1: Phaser.GameObjects.GameObject,
+    obj2: Phaser.GameObjects.GameObject
+  ) {
+    const enemyX = Math.floor(obj2.x);
+    const enemyY = Math.floor(obj2.y);
 
-		this.faune.handleDamage(dir)
-		// damage sound
-		this.sound.play('hurt-sound', {
-			volume: 0.2
-		})
+    const dx = this.faune.x - enemyX;
+    const dy = this.faune.y - enemyY;
 
-		sceneEvents.emit('player-health-changed', this.faune.health)
+    const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(200);
 
-		if (this.faune.health <= 0){
-			const deathSound = this.sound.add('game-over', {
-				volume: 2
-			})
-			setTimeout(() => {
-				deathSound.play()
-				this.scene.start('loser', { currentTime: currentTime }) //LOSER
-			}, 600)
+    this.faune.handleDamage(dir);
+    // damage sound
+    this.sound.play("hurt-sound", {
+      volume: 0.2,
+    });
 
-		}
-	}
+    sceneEvents.emit("player-health-changed", this.faune.health);
 
-	private handlePlayerEnemyCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
-		const enemyX = Math.floor(obj2.x)
-		const enemyY = Math.floor(obj2.y)
+    if (this.faune.health <= 0) {
+      const deathSound = this.sound.add("game-over", {
+        volume: 2,
+      });
+      setTimeout(() => {
+        deathSound.play();
+        this.scene.start("loser", { currentTime: currentTime }); //LOSER
+      }, 600);
 
-		const dx = this.faune.x - enemyX
-		const dy = this.faune.y - enemyY
-
-		const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(200)
-
-		this.faune.handleDamage(dir)
-		// damage sound
-		this.sound.play('hurt-sound', {
-			volume: 0.2
-		})
-
-		sceneEvents.emit('player-health-changed', this.faune.health)
-
-		if (this.faune.health <= 0){
-			const deathSound = this.sound.add('game-over', {
-				volume: 2
-			})
-			setTimeout(() => {
-				deathSound.play()
-				this.scene.start('loser', { currentTime: currentTime }) //LOSER
-			}, 600)
-
-			// this.playerEnemiesCollider?.destroy()
-		}
-	}
+      // this.playerEnemiesCollider?.destroy()
+    }
+  }
 
 	// for the stairs / map-scene transition
 	private handleStairsDownCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
@@ -720,18 +879,33 @@ export default class Game extends Phaser.Scene {
     this.graphics.fillPoints(this.intersections);
 
 		// redraw the black fogOfWar. If we want this to be a scratch-off thing, comment out the below line
-		this.fogOfWar.draw(this.blackRectangle, this.mapWidth*0.5, this.mapHeight*0.5);
+    this.fogOfWar.draw(
+      this.blackRectangle,
+      this.mapWidth * 0.5,
+      this.mapHeight * 0.5
+    );
+    const player_reveal = new Phaser.GameObjects.Ellipse(
+      this,
+      this.faune.x,
+      this.faune.y,
+      this.faune.width + 4,
+      this.faune.height + 4,
+      0,
+      1
+    );
 
     for (let intersection of this.intersections) {
-			let graph = {
+      let graph = {
         x1: this.faune.x,
         y1: this.faune.y,
         x2: intersection.x,
         y2: intersection.y,
-      }
+      };
       this.graphics.strokeLineShape(graph);
-			// removes the blackness from the area cast by the rays
+      // removes the blackness from the area cast by the rays
       this.fogOfWar.erase(this.graphics);
     }
+    this.fogOfWar.erase(player_reveal);
+    player_reveal.destroy();
   }
 }
