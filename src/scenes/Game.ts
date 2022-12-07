@@ -74,6 +74,8 @@ export default class Game extends Phaser.Scene {
 	mapWidth;
 	mapHeight;
 
+	startNextMap;
+
 	constructor() {
 		super('game')
 	}
@@ -109,7 +111,7 @@ export default class Game extends Phaser.Scene {
 		createChestAnims(this.anims)
 
 		// adds the map and the tiles for it
-		const map = this.make.tilemap({ key: 'dungeon' })
+		let map = this.make.tilemap({ key: 'map_maze' })
 		const tileset = map.addTilesetImage('watabou_pixel_dungeon_spritesheet', 'tiles')
 
 		map.createLayer('background', tileset)
@@ -168,19 +170,33 @@ export default class Game extends Phaser.Scene {
 
 		this.cameras.main.startFollow(this.faune, true)
 
-		// shape bois
-		const shape = map.getObjectLayer('saving')
+		// get the polygon(s) for the walls
+		const shape = map.getObjectLayer('raycast')
 		let shapeArr = [];
 		shape.objects.forEach(shapeObj => {
 			shapeArr.push(shapeObj)
 		})
-		// console.log(shapeArr[0].polygon);
+		// console.log(shapeArr[0]);
 		
 		let please = [];
 		for(let i=0; i<shapeArr[0].polygon.length; i++) {
 			please.push(shapeArr[0].polygon[i].x, shapeArr[0].polygon[i].y)
 		}
 		// console.log(please);
+
+		// up stairs
+		const stairUp = map.getObjectLayer('stairUp')
+		const stairUpGroup = this.physics.add.staticGroup()
+		stairUp.objects.forEach(stairObj => {
+			stairUpGroup.get(stairObj.x! + stairObj.width! * 0.5, stairObj.y! - stairObj.height! * 0.5, 'stair-down')
+		})
+
+		// down stairs
+		const stairDown = map.getObjectLayer('stairDown')
+		const stairDownGroup = this.physics.add.staticGroup()
+		stairDown.objects.forEach(stairObj => {
+			stairDownGroup.get(stairObj.x! + stairObj.width! * 0.5, stairObj.y! - stairObj.height! * 0.5, 'stair-down')
+		})
 
 
 		// Raycaster
@@ -301,7 +317,7 @@ export default class Game extends Phaser.Scene {
 			// obstacles.add(obstacle)
 
 			obstacle = scene.add
-				.polygon(800, 800, please)
+				.polygon(map.widthInPixels / 2, map.heightInPixels / 2, please)
 				.setStrokeStyle(1, 0xff0000)
 			obstacles.add(obstacle)
 
@@ -407,9 +423,12 @@ export default class Game extends Phaser.Scene {
 		this.physics.add.collider(this.cultists, wallsLayer)  //CULTIST
 		this.physics.add.collider(this.chrisps, wallsLayer)  //CHRISP
 		this.physics.add.collider(this.knives, wallsLayer, this.handleKnifeWallCollision, undefined, this) //knives
-
+		
 		//chest-faune collisions
 		this.physics.add.collider(this.faune, chests, this.handlePlayerChestCollision, undefined, this)
+		//stairs
+		this.physics.add.collider(this.faune, stairUpGroup, this.handleStairsUpCollision, undefined, this)
+		this.physics.add.collider(this.faune, stairDownGroup, this.handleStairsDownCollision)
 
 		// melee-enemy collisions
 		this.physics.add.overlap(this.meleeHitbox, this.ghosts, this.handleSwordEnemyCollision, undefined, this)
@@ -541,6 +560,18 @@ export default class Game extends Phaser.Scene {
 			// this.playerEnemiesCollider?.destroy()
 		}
 	}
+
+	// for the stairs / map-scene transition
+	private handleStairsUpCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
+		console.log(this.scene);
+		// console.log('collide up');
+		this.scene.start('menu')
+	}
+
+	private handleStairsDownCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
+		console.log('collide down');
+	}
+
 
 	update(t: number, dt: number) {
 		if (this.faune) {

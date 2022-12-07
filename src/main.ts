@@ -10,6 +10,7 @@ import PhaserRaycaster from "phaser-raycaster";
 
 export default new Phaser.Game({
   type: Phaser.AUTO,
+  parent: 'phaser',
   width: 400,
   height: 250,
   physics: {
