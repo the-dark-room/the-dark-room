@@ -376,9 +376,9 @@ export default class Game extends Phaser.Scene {
 		// firetrapsLayer.objects.forEach(e => {
 		// 	this.firetraps.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, 'firetrap').visible = false
 		// })
-		
 
-		
+
+
 		/*
 		** GHOST CHASING PLAYER
 		*/
@@ -397,7 +397,7 @@ export default class Game extends Phaser.Scene {
 		/*
 		** GHOST CHASING PLAYER
 		*/
-		
+
 
 		// Wall collisions
 		this.physics.add.collider(this.faune, wallsLayer)

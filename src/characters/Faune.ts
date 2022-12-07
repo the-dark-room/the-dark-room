@@ -34,8 +34,9 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 	private _coins = 0
 
 
-	private faceUp = false;
-	private faceDown = true;
+	private faceUp = false
+	private faceDown = true
+	private isAtacking = false
 
 	private knives!: Phaser.Physics.Arcade.Group
 	private meleeHitbox!: Phaser.Types.Physics.Arcade.ImageWithDynamicBody
@@ -77,13 +78,15 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 			],
 			frameRate: 8,
 			repeat: 0
-		});
+		})
 
 		this.scene.sword = this.scene.add.sprite(45, 40, 'sword1').setVisible(false)
 		this.scene.sword.setScale(0.5)
+
 		this.scene.sword.on('animationcomplete', () => {
 			this.scene.meleeHitbox.body.enable = false
 			this.scene.sword.setVisible(false)
+			this.isAtacking = false
 		})
 	}
 
@@ -121,6 +124,7 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 
 	private swingSword(){
 	// TODO: create sword swing hit box
+		this.isAtacking = true
 		this.meleeHitbox.body.enable = true
 		this.scene.sword.setVisible(true)
 		this.scene.sword.play('swing', false)
@@ -209,10 +213,6 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 
 	preUpdate(t: number, dt: number){
 
-		// smaller hitbox
-		// this.setSize(10, 12).setOffset(12,15)
-
-
 		super.preUpdate(t, dt)
 
 		switch (this.healthState){
@@ -256,7 +256,6 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 				}
 				else //sword swing
 				{
-
 					this.swingSword()
 				}
 				return
@@ -277,7 +276,7 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 		const upDown = this.cursors.up?.isDown
 		const downDown = this.cursors.down?.isDown
 
-		if (leftDown){
+		if (leftDown && !this.isAtacking){
 			this.anims.play('faune-run-side', true)
 			this.setVelocity(-speed, 0)
 			this.flipX = true
@@ -286,7 +285,7 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 			this.faceUp = false
 			this.faceDown = false
 		}
-		else if (rightDown){
+		else if (rightDown && !this.isAtacking){
 			this.anims.play('faune-run-side', true)
 			this.setVelocity(speed, 0)
 			this.flipX = false
@@ -295,7 +294,7 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 			this.faceUp = false
 			this.faceDown = false
 		}
-		else if (upDown){
+		else if (upDown && !this.isAtacking){
 			this.anims.play('faune-run-up', true)
 			this.setVelocity(0, -speed)
 
@@ -304,7 +303,7 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 			this.faceUp = true
 			this.faceDown = false
 		}
-		else if (downDown){
+		else if (downDown && !this.isAtacking){
 			this.anims.play('faune-run-down', true)
 			this.setVelocity(0, speed)
 
