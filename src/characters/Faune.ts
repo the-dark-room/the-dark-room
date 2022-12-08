@@ -208,7 +208,9 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 		knife.x += vec.x * 16
 		knife.y += vec.y * 16
 
-		knife.setVelocity(vec.x * 50, vec.y * 50)
+		knife.setVelocity(vec.x * 100, vec.y * 100)
+
+		this.scene.time.delayedCall(150, () => {knife.destroy()})
 	}
 
 	preUpdate(t: number, dt: number){
