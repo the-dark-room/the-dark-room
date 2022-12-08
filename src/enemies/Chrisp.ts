@@ -23,6 +23,8 @@ export default class Chrisp extends Phaser.Physics.Arcade.Sprite
 	private direction = Direction.RIGHT
 	private moveEvent: Phaser.Time.TimerEvent
 
+	private health = 200
+
 	constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string | number)
 	{
 		super(scene, x, y, texture, frame)
@@ -39,6 +41,16 @@ export default class Chrisp extends Phaser.Physics.Arcade.Sprite
 			loop: true
 		})
 	}
+
+	gotHit() {
+    this.health--
+
+    if (this.health <= 0) { this.destroy() }
+  }
+
+  getHealth() {
+    return this.health
+  }
 
 	destroy(fromScene?: boolean)
 	{

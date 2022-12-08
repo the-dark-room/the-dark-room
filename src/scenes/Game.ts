@@ -23,7 +23,7 @@ let map;
 let mapCount = 0;
 let mapArr = ['map_jail', 'map_hallway', 'map_maze', 'map_cultists', 'map_bigEmpty']
 
-// timer 
+// timer
 let currentTime = 0;
 
 export default class Game extends Phaser.Scene {
@@ -127,7 +127,7 @@ export default class Game extends Phaser.Scene {
 
 		// zoom for testing walls
     // this.cameras.main.setZoom(.2)
-		
+
 
     // main music
     const thrillerMusic = this.sound.add("thriller-music", {
@@ -139,12 +139,12 @@ export default class Game extends Phaser.Scene {
     this.scene.run("game-ui");
 
     loadAllAnims(this.anims);
-		
+
 		// adds the map and the tiles for it
 		// we need it like this so we can optionally take in a new map when we change maps
 		map = map || this.make.tilemap({ key: 'map_jail' })
 		const tileset = map.addTilesetImage('watabou_pixel_dungeon_spritesheet', 'tiles')
-		
+
 		map.createLayer('background', tileset)
 
     // @ts-ignore
@@ -180,7 +180,7 @@ export default class Game extends Phaser.Scene {
 			shapeArr.push(shapeObj)
 		})
 		// console.log(shapeArr[0]);
-		
+
 		let please = [];
 		for(let i=0; i<shapeArr[0].polygon.length; i++) {
 			please.push(shapeArr[0].polygon[i].x, shapeArr[0].polygon[i].y)
@@ -514,7 +514,7 @@ export default class Game extends Phaser.Scene {
     this.physics.add.overlap(
       this.meleeHitbox,
       this.chrisps,
-      this.handleSwordEnemyCollision,
+      this.handleWeaponChrispCollision,
       undefined,
       this
     );
@@ -565,7 +565,7 @@ export default class Game extends Phaser.Scene {
     this.physics.add.collider(
       this.knives,
       this.chrisps,
-      this.handleKnifeEnemyCollision,
+      this.handleWeaponChrispCollision,
       undefined,
       this
     );
@@ -679,6 +679,16 @@ export default class Game extends Phaser.Scene {
     obj1.destroy();
     obj2.destroy();
     // this.lizards.remove(obj2) // removes the sprite from the group, rendering it harmless
+  }
+
+	private handleWeaponChrispCollision(
+		obj1: Phaser.GameObjects.GameObject,
+		obj2: Phaser.GameObjects.GameObject
+		) {
+    if (obj1 === this.meleeHitbox) {
+      obj2.gotHit()
+    }
+    else { obj1.destroy() }
   }
 
   // PAUSE GHOST WHEN HIT WITH KNIFE
@@ -805,17 +815,17 @@ export default class Game extends Phaser.Scene {
 		console.log(mapCount);
 
 		// ensures we don't destroy the current map if there's not another one to call
-		if(mapCount < 0) { 
+		if(mapCount < 0) {
 			console.log('no more maps :(');
 			// reset the map counter incase this gets called (we need this because we're incrementing it outside of this )
-			mapCount = 0; 
+			mapCount = 0;
 			return
 		} else {
 			map.destroy(); // destroy the current map
 			map = this.make.tilemap({ key: mapArr[mapCount] }) // add a new one
 
 			// restart the scene, including the new map as a parameter so we can carry it over
-			this.scene.restart(map) 
+			this.scene.restart(map)
 		}
 	}
 
@@ -823,17 +833,17 @@ export default class Game extends Phaser.Scene {
 		mapCount++; // increment the map counter
 
 		// ensures we don't destroy the current map if there's not another one to call
-		if(mapCount > mapArr.length - 1) { 
+		if(mapCount > mapArr.length - 1) {
 			console.log('no more maps :(');
 			// reset the map counter incase this gets called (we need this because we're incrementing it outside of this )
-			mapCount = mapArr.length - 1; 
+			mapCount = mapArr.length - 1;
 			return
 		} else {
 			map.destroy(); // destroy the current map
 			map = this.make.tilemap({ key: mapArr[mapCount] }) // add a new one
 
 			// restart the scene, including the new map as a parameter so we can carry it over
-			this.scene.restart(map) 
+			this.scene.restart(map)
 		}
 	}
 
