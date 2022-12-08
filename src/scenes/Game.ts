@@ -584,6 +584,22 @@ export default class Game extends Phaser.Scene {
       this
     );
 
+    this.physics.add.collider(
+      this.knives,
+      this.beartraps,
+      this.handleKnifeBearTrapsCollision,
+      undefined,
+      this
+    );
+
+    this.physics.add.collider(
+      this.knives,
+      this.firetraps,
+      this.handleKnifeFireTrapsCollision,
+      undefined,
+      this
+    );
+
     this.playerGhostsCollider = this.physics.add.collider(
       this.ghosts,
       this.faune,
@@ -691,7 +707,7 @@ export default class Game extends Phaser.Scene {
     else { obj1.destroy() }
   }
 
-  // PAUSE GHOST WHEN HIT WITH KNIFE
+  // PUSH GHOST WHEN HIT WITH KNIFE
   private handleKnifeGhostCollision(
     obj1: Phaser.GameObjects.GameObject,
     obj2: Phaser.GameObjects.GameObject
@@ -709,6 +725,27 @@ export default class Game extends Phaser.Scene {
   ) {
     obj2.body.velocity = new Phaser.Math.Vector2(0, 0);
   }
+
+
+  // DISABLE TRAPS WITH KNIFE THROW
+  private handleKnifeBearTrapsCollision(
+    obj1: Phaser.GameObjects.GameObject,
+    obj2: Phaser.GameObjects.GameObject
+  ) {
+    obj2.visible = true;
+    obj2.destroy()
+    this.beartraps.remove(obj2);
+  }
+
+  private handleKnifeFireTrapsCollision(
+    obj1: Phaser.GameObjects.GameObject,
+    obj2: Phaser.GameObjects.GameObject
+  ) {
+    obj2.visible = true;
+    obj2.destroy();
+    this.beartraps.remove(obj2);
+  }
+
 
   // TRAPS ARE INVISIBLE UNTIL STEPPED ON
   private handlePlayerBearTrapsCollision(
