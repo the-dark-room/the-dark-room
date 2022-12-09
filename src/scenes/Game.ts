@@ -19,6 +19,7 @@ import Faune from "../characters/Faune";
 import { sceneEvents } from "../events/EventsCenter";
 import Chest from "../items/Chest";
 
+
 let map;
 let mapCount = 0;
 let mapArr = [
