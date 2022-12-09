@@ -11,6 +11,7 @@ import Leaderboard from "./scenes/LeaderBoard";
 import LoreTemplate from "./scenes/LoreTemplate";
 import PhaserRaycaster from "phaser-raycaster";
 
+
 export default new Phaser.Game({
   type: Phaser.AUTO,
   parent: "phaser",
