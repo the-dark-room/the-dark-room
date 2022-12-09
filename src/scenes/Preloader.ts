@@ -59,7 +59,7 @@ export default class Preloader extends Phaser.Scene
 		// create loading bar
     let loadingBar = this.add.graphics({
       fillStyle: {
-        color: 0xffffff // white
+        color: 0xbbbbbb // white
       }
     });
 
@@ -73,8 +73,9 @@ export default class Preloader extends Phaser.Scene
     // }
 
     this.load.on("progress", (percent: number) => {
-      loadingBar.fillRect(0, this.game.renderer.height / 2, this.game.renderer.width * percent, 50)
-      // console.log(percent);
+    //   loadingBar.fillRect(0, this.game.renderer.height / 2, this.game.renderer.width * percent, 50)
+    //   console.log(percent);
+		loadingBar.fillCircle(this.game.renderer.width / 2, this.game.renderer.height / 2, this.game.renderer.width / 2 * percent )
     })
 
 
