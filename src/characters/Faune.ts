@@ -4,6 +4,7 @@
 // @ts-nocheck
 import Phaser from 'phaser'
 import Chest from '../items/Chest'
+import LoreTemplate from '~/scenes/LoreTemplate'
 
 import { sceneEvents } from '../events/EventsCenter'
 
@@ -251,10 +252,8 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 		this.scene.input.on('pointerdown', function (pointer) {
 			if (pointer.leftButtonDown()){
 				if (this.activeChest){
-					const coins = this.activeChest.open()
-					this._coins += coins
-
-					sceneEvents.emit('player-coins-changed', this._coins)
+					this.scene.scene.pause()
+					this.scene.scene.launch('lore', {text: `Eat my socks`})
 				}
 				else //sword swing
 				{
