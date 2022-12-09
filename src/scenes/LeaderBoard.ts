@@ -52,8 +52,8 @@ export default class LeaderBoard extends Phaser.Scene {
       }
     }
 
+  // Firestore stuff returns a promise, so we need async
   async create() {
-    console.log(scores)
     const screenCenterX =
       this.cameras.main.worldView.x + this.cameras.main.width / 2;
     const screenCenterY =
@@ -62,53 +62,57 @@ export default class LeaderBoard extends Phaser.Scene {
     this.exitTime = this.scene.settings.data.currentTime;
 
     const text1 = this.add
-      .text(screenCenterX, screenCenterY, `THIS IS THE LEADERBOARD ${this.exitTime}`)
+      .text(screenCenterX, 20, `LEADERBOARD`)
       .setOrigin(0.5);
     text1.setTint(0xff00ff, 0xff0000, 0xff00ff, 0xff0000);
 
-    // const leaderboardScores = () => {
-    //   for(let i=0; i<11; i++) {
-    //     this.add.text(screenCenterX, screenCenterY, scores[i].name, scores[i].score)
-    //       .setOrigin(i / 2)
-    //   }
-    // }
+    const scoreCollectionRef = collection(db, 'highscore')
+    const q = query(scoreCollectionRef, orderBy('score', 'desc'))
+    const querySnapshot = await getDocs(q)
 
-      const scoreCollectionRef = collection(db, 'highscore')
-      const q = query(scoreCollectionRef, orderBy('score', 'desc'))
-      const querySnapshot = await getDocs(q)
-      let count = 0;
-      querySnapshot.forEach((doc) => {
-        console.log(count)
-        count += 3;
-        // console.log(doc.id, " => ", doc.data())
-        scores.push({ ...doc.data(), id: doc.id })
-        this.add.text(screenCenterX, screenCenterY+count, `NAME: ${doc.data().name}  SCORE: ${doc.data().score}`)
-          // .setOrigin(count)
+    let count = 40; // used to set the X for the leaderboard items
+    querySnapshot.forEach((doc) => {
+      scores.push({ ...doc.data(), id: doc.id })
+    })
+
+    // we only want at most 10 names to display on the board, so in the case that 10 names are not 
+    // present, we'll just use the length of "scores" for the loop
+    if(scores.length <= 10) {
+      for(let i=0; i < scores.length; i++) {
+        count += 15;
+        this.add.text(screenCenterX, count, `${i+1}. ${scores[i].name}  SCORE: ${scores[i].score}`)
+          .setOrigin(0.5)
           .setTint(0xff00ff, 0xff0000, 0xff00ff, 0xff0000);
-      })
-      console.log(scores)
+      }
+    } else {
+      for(let i=0; i < 10; i++) {
+          count += 15;
+          this.add.text(screenCenterX, count, `${i+1}. ${scores[i].name}  SCORE: ${scores[i].score}`)
+            .setOrigin(0.5)
+            .setTint(0xff00ff, 0xff0000, 0xff00ff, 0xff0000);
+        }
+    }
 
-
-      // onSnapshot(q, (snapshot) => {
-      //   snapshot.docs.forEach((doc) => {
-      //     // console.log(doc.data())
-      //     scores.push({ ...doc.data(), id: doc.id })
-      //   })
-      // })
+    // playagain button that takes them to the menu
+    let playAgainButton = `
+        <button name="playAgainButton" style="font-size: 5% 
+        style={{background: "linear-gradient(0xff00ff, 0xff0000)"}}
+        ">Play Again?</button>
+      `
     
+    let element = this.add
+      .dom(screenCenterX, count+15)
+      .createFromHTML(playAgainButton);
 
-    // const leaderboardScores = () => {
-    //   for(let i=0; i<11; i++) {
-    //     this.add.text(screenCenterX, screenCenterY, scores[i].name, scores[i].score)
-    //       .setOrigin(i / 2)
-    //   }
-    // }
+    const scenePasser = this.scene;
 
-    // let element = this.add
-    //   .dom(400, 300)
-    //   .createFromCache("nameform")
-    //   .setDepth(10);
-    // console.log(this.scene)
+    element.addListener("click");
+    element.on('click', function (evt) {
+      console.log('clicked');
+      console.log(scenePasser);
+      scenePasser.start('menu')
+    })
+
   }
 
   update() {}

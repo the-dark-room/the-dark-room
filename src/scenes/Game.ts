@@ -22,6 +22,7 @@ import Chest from "../items/Chest";
 
 let map;
 let mapCount = 0;
+console.log(mapCount);
 let mapArr = [
   "map_jail",
   "map_hallway",
@@ -161,6 +162,16 @@ export default class Game extends Phaser.Scene {
 
     //wall setup
     const wallsLayer = map.createLayer("Walls", tileset);
+
+    // so we can replay the game
+    if(!wallsLayer) {
+      map.destroy(); // destroy the current map
+      map = this.make.tilemap({ key: mapArr[0] }); // add a new one
+
+      // restart the scene, including the new map as a parameter so we can carry it over
+      this.scene.restart(map);
+      return
+    }
 
     wallsLayer.setCollisionByProperty({ collides: true });
 
