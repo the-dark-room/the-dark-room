@@ -55,10 +55,11 @@
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
          "height":50,
          "id":2,
+         "locked":true,
          "name":"background",
          "opacity":1,
          "type":"tilelayer",
-         "visible":true,
+         "visible":false,
          "width":20,
          "x":0,
          "y":0
@@ -116,6 +117,7 @@
             290, 3221225666, 3221225666, 3221225666, 194, 3221225666, 3221225666, 3221225666, 3221225666, 3221225666, 3221225666, 3221225666, 3221225666, 3221225666, 3221225666, 3221225666, 3221225666, 3221225666, 3221225666, 3221225666],
          "height":50,
          "id":1,
+         "locked":true,
          "name":"Walls",
          "opacity":1,
          "type":"tilelayer",
@@ -127,6 +129,7 @@
         {
          "draworder":"topdown",
          "id":5,
+         "locked":true,
          "name":"chests",
          "objects":[
                 {
@@ -155,13 +158,14 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
          "id":6,
+         "locked":true,
          "name":"Lizards",
          "objects":[
                 {
@@ -178,13 +182,14 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
          "id":7,
+         "locked":true,
          "name":"cultists",
          "objects":[
                 {
@@ -213,13 +218,14 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
          "id":8,
+         "locked":true,
          "name":"ghosts",
          "objects":[
                 {
@@ -236,13 +242,14 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
          "id":9,
+         "locked":true,
          "name":"skeleton",
          "objects":[
                 {
@@ -259,13 +266,14 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
          "id":11,
+         "locked":true,
          "name":"spectre",
          "objects":[
                 {
@@ -294,13 +302,14 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
          "id":4,
+         "locked":true,
          "name":"slimes",
          "objects":[
                 {
@@ -329,7 +338,7 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }, 
@@ -346,294 +355,294 @@
                  "polygon":[
                         {
                          "x":0,
-                         "y":784
+                         "y":792
                         }, 
                         {
-                         "x":64,
-                         "y":784
+                         "x":72,
+                         "y":792
                         }, 
                         {
-                         "x":64,
-                         "y":768
+                         "x":72,
+                         "y":776
                         }, 
                         {
-                         "x":80,
-                         "y":768
+                         "x":72,
+                         "y":776
                         }, 
                         {
-                         "x":80,
-                         "y":784
+                         "x":72,
+                         "y":792
                         }, 
                         {
-                         "x":304,
-                         "y":784
+                         "x":312,
+                         "y":792
                         }, 
                         {
-                         "x":304,
-                         "y":656
+                         "x":312,
+                         "y":648
                         }, 
                         {
-                         "x":208,
-                         "y":656
+                         "x":200,
+                         "y":648
                         }, 
                         {
-                         "x":208,
-                         "y":752
+                         "x":200,
+                         "y":744
                         }, 
                         {
-                         "x":192,
-                         "y":752
+                         "x":200,
+                         "y":744
                         }, 
                         {
-                         "x":192,
-                         "y":640
+                         "x":200,
+                         "y":648
                         }, 
                         {
-                         "x":304,
-                         "y":640
+                         "x":312,
+                         "y":648
                         }, 
                         {
-                         "x":304,
-                         "y":16
+                         "x":312,
+                         "y":8
                         }, 
                         {
-                         "x":192,
-                         "y":16
+                         "x":184,
+                         "y":8
                         }, 
                         {
-                         "x":192,
-                         "y":240
+                         "x":184,
+                         "y":232
                         }, 
                         {
-                         "x":128,
-                         "y":240
+                         "x":120,
+                         "y":232
                         }, 
                         {
-                         "x":128,
-                         "y":320
+                         "x":120,
+                         "y":328
                         }, 
                         {
-                         "x":224,
-                         "y":320
+                         "x":232,
+                         "y":328
                         }, 
                         {
-                         "x":224,
-                         "y":224
+                         "x":232,
+                         "y":232
                         }, 
                         {
-                         "x":240,
-                         "y":224
+                         "x":232,
+                         "y":232
                         },
                     
                         {
-                         "x":240,
-                         "y":464
+                         "x":232,
+                         "y":456
                         }, 
                         {
-                         "x":224,
-                         "y":464
+                         "x":232,
+                         "y":456
                         }, 
                         {
-                         "x":224,
-                         "y":336
+                         "x":232,
+                         "y":328
                         }, 
                         {
-                         "x":128,
-                         "y":336
+                         "x":120,
+                         "y":328
                         }, 
                         {
-                         "x":128,
-                         "y":512
+                         "x":120,
+                         "y":520
                         }, 
                         {
-                         "x":224,
-                         "y":512
+                         "x":232,
+                         "y":520
                         }, 
                         {
-                         "x":224,
-                         "y":496
+                         "x":232,
+                         "y":504
                         }, 
                         {
-                         "x":240,
-                         "y":496
+                         "x":232,
+                         "y":504
                         }, 
                         {
-                         "x":240,
-                         "y":528
+                         "x":232,
+                         "y":520
                         }, 
                         {
-                         "x":128,
-                         "y":528
+                         "x":120,
+                         "y":520
                         }, 
                         {
-                         "x":128,
-                         "y":752
+                         "x":120,
+                         "y":744
                         }, 
                         {
-                         "x":112,
-                         "y":752
+                         "x":120,
+                         "y":744
                         }, 
                         {
-                         "x":112,
+                         "x":120,
                          "y":240
                         }, 
                         {
-                         "x":112,
-                         "y":224
+                         "x":120,
+                         "y":232
                         }, 
                         {
-                         "x":176,
-                         "y":224
+                         "x":184,
+                         "y":232
                         }, 
                         {
-                         "x":176,
-                         "y":16
+                         "x":184,
+                         "y":8
                         }, 
                         {
-                         "x":16,
-                         "y":16
+                         "x":8,
+                         "y":8
                         }, 
                         {
-                         "x":16,
-                         "y":224
+                         "x":8,
+                         "y":232
                         }, 
                         {
-                         "x":80,
-                         "y":224
+                         "x":72,
+                         "y":232
                         }, 
                         {
-                         "x":80,
-                         "y":272
+                         "x":72,
+                         "y":264
                         },
                     
                         {
-                         "x":64,
-                         "y":272
+                         "x":72,
+                         "y":264
                         }, 
                         {
-                         "x":64,
-                         "y":240
+                         "x":72,
+                         "y":232
                         }, 
                         {
-                         "x":16,
-                         "y":240
+                         "x":8,
+                         "y":232
                         }, 
                         {
-                         "x":16,
-                         "y":352
+                         "x":8,
+                         "y":360
                         }, 
                         {
-                         "x":64,
-                         "y":352
+                         "x":72,
+                         "y":360
                         }, 
                         {
-                         "x":64,
-                         "y":304
+                         "x":72,
+                         "y":312
                         }, 
                         {
-                         "x":80,
-                         "y":304
+                         "x":72,
+                         "y":312
                         }, 
                         {
-                         "x":80,
-                         "y":368
+                         "x":72,
+                         "y":360
                         }, 
                         {
-                         "x":16,
-                         "y":368
+                         "x":8,
+                         "y":360
                         }, 
                         {
-                         "x":16,
-                         "y":480
+                         "x":8,
+                         "y":488
                         }, 
                         {
-                         "x":64,
-                         "y":480
+                         "x":72,
+                         "y":488
                         }, 
                         {
-                         "x":64,
-                         "y":400
+                         "x":72,
+                         "y":408
                         }, 
                         {
-                         "x":80,
-                         "y":400
+                         "x":72,
+                         "y":408
                         }, 
                         {
-                         "x":80,
-                         "y":496
+                         "x":72,
+                         "y":488
                         }, 
                         {
-                         "x":16,
-                         "y":496
+                         "x":8,
+                         "y":488
                         }, 
                         {
-                         "x":16,
-                         "y":592
+                         "x":8,
+                         "y":600
                         }, 
                         {
-                         "x":64,
-                         "y":592
+                         "x":72,
+                         "y":600
                         }, 
                         {
-                         "x":64,
-                         "y":528
+                         "x":72,
+                         "y":536
                         }, 
                         {
-                         "x":80,
-                         "y":528
+                         "x":72,
+                         "y":536
                         }, 
                         {
-                         "x":80,
-                         "y":608
+                         "x":72,
+                         "y":600
                         },
                     
                         {
-                         "x":16,
-                         "y":608
+                         "x":8,
+                         "y":600
                         }, 
                         {
-                         "x":16,
-                         "y":720
+                         "x":8,
+                         "y":728
                         }, 
                         {
                          "x":32,
-                         "y":736
+                         "y":728
                         }, 
                         {
                          "x":32,
+                         "y":728
+                        }, 
+                        {
+                         "x":72,
+                         "y":728
+                        }, 
+                        {
+                         "x":72,
+                         "y":648
+                        }, 
+                        {
+                         "x":72,
+                         "y":648
+                        }, 
+                        {
+                         "x":72,
                          "y":720
                         }, 
                         {
-                         "x":64,
-                         "y":720
+                         "x":72,
+                         "y":728
                         }, 
                         {
-                         "x":64,
-                         "y":640
+                         "x":8,
+                         "y":728
                         }, 
                         {
-                         "x":80,
-                         "y":640
-                        }, 
-                        {
-                         "x":80,
-                         "y":720
-                        }, 
-                        {
-                         "x":80,
-                         "y":736
-                        }, 
-                        {
-                         "x":16,
-                         "y":736
-                        }, 
-                        {
-                         "x":16,
-                         "y":784
+                         "x":8,
+                         "y":792
                         }, 
                         {
                          "x":0,
-                         "y":784
+                         "y":792
                         }, 
                         {
                          "x":0,
@@ -670,6 +679,7 @@
         {
          "draworder":"topdown",
          "id":13,
+         "locked":true,
          "name":"bods",
          "objects":[
                 {
@@ -698,13 +708,14 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
          "id":14,
+         "locked":true,
          "name":"frogs",
          "objects":[
                 {
@@ -733,13 +744,14 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
          "id":15,
+         "locked":true,
          "name":"bats",
          "objects":[
                 {
@@ -780,13 +792,14 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
          "id":16,
+         "locked":true,
          "name":"chrisps",
          "objects":[
                 {
@@ -815,13 +828,14 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
          "id":17,
+         "locked":true,
          "name":"beartraps",
          "objects":[
                 {
@@ -850,13 +864,14 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
          "id":18,
+         "locked":true,
          "name":"firetraps",
          "objects":[
                 {
@@ -885,13 +900,14 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
          "id":3,
+         "locked":true,
          "name":"stairUp",
          "objects":[
                 {
@@ -908,13 +924,14 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
          "id":12,
+         "locked":true,
          "name":"stairDown",
          "objects":[
                 {
@@ -931,7 +948,7 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }],
@@ -945,7 +962,7 @@
         {
          "columns":48,
          "firstgid":1,
-         "image":"..\/..\/..\/phaser.template\/dist\/tiles\/watabou_pixel_dungeon_spritesheet.png",
+         "image":"watabou_pixel_dungeon_spritesheet.png",
          "imageheight":748,
          "imagewidth":768,
          "margin":0,
@@ -1442,6 +1459,19 @@
                          "value":"down"
                         }]
                 }],
+         "tilewidth":16
+        }, 
+        {
+         "columns":48,
+         "firstgid":2209,
+         "image":"watabou_pixel_dungeon_spritesheet.png",
+         "imageheight":748,
+         "imagewidth":768,
+         "margin":0,
+         "name":"watabou_pixel_dungeon_spritesheet",
+         "spacing":0,
+         "tilecount":2208,
+         "tileheight":16,
          "tilewidth":16
         }],
  "tilewidth":16,
