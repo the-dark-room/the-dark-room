@@ -50,7 +50,7 @@ export default class Chrisp extends Phaser.Physics.Arcade.Sprite
 
 
   swing() {
-	this.anims.play('chrisp-swing')
+	// this.anims.play('chrisp-swing')
   }
 
 
@@ -60,7 +60,7 @@ export default class Chrisp extends Phaser.Physics.Arcade.Sprite
 
 	destroy(fromScene?: boolean)
 	{
-		this.anims.play('chrisp-death')
+		// this.anims.play('chrisp-death')
 		
 		this.moveEvent.destroy()
 
