@@ -16,17 +16,22 @@ let playerInitials;
 let scores = [];
 
 function getLeaderboard() {
-  console.log('in it');
   const scoreCollectionRef = collection(db, 'highscore')
   const q = query(scoreCollectionRef, orderBy('score', 'desc'))
   onSnapshot(q, (snapshot) => {
     snapshot.docs.forEach((doc) => {
-      console.log(doc.data())
+      // console.log(doc.data())
       scores.push({ ...doc.data(), id: doc.id })
     })
   })
   return scores;
   // console.log(scores);
+}
+
+// have to do this roundabout way of passing the scene around because Firestore expects to be using React,
+// so I'm tricking it (not really; just passing "this.scene" into the function so we can use it)
+const handleSceneChange = (scene, time) => {
+  scene.start('leaderboard', { currentTime: time })
 }
 
 export default class EnterName extends Phaser.Scene {
@@ -77,6 +82,8 @@ export default class EnterName extends Phaser.Scene {
 
     element.addListener("click");
 
+    const scenePasser = this.scene;
+
     element.on("click", function (event) {
       if (event.target.name === "playButton") {
         let inputText = this.getChildByName('nameField')
@@ -90,17 +97,20 @@ export default class EnterName extends Phaser.Scene {
       }
     });
     function handleNamePost(time) {
-      console.log(playerInitials, time);
       const playerRef = collection(db, 'highscore')
       setDoc(doc(playerRef), {
         name: playerInitials,
         score: time,
-      })
+      }).then(handleSceneChange(scenePasser, time))
     }
 
 
   }
 
   update() {}
+
+  // handleSceneChange() {
+  //   this.scene.start('leaderboard')
+  // }
 
 }
