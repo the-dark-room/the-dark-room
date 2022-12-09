@@ -726,8 +726,12 @@ export default class Game extends Phaser.Scene {
     obj2: Phaser.GameObjects.GameObject
   ) {
     if (obj1 === this.meleeHitbox) {
+      // MOVE FAUNE WHEN HITTING CRISP
       obj2.gotHit();
-    } else {
+    } else { // PUSH CHRISP WHEN HIT WITH KNIFE
+      obj2.body.velocity =
+        obj1.body.velocity ||
+        new Phaser.Math.Vector2(0, 0).normalize().scale(100);
       obj1.destroy();
     }
   }
