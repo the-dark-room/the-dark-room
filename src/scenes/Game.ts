@@ -437,7 +437,8 @@ export default class Game extends Phaser.Scene {
 
     const chrispsLayer = map.getObjectLayer("chrisps");
     chrispsLayer.objects.forEach((e) => {
-      this.chrisps.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, "chrisp");
+      this.chrisps.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, "chrisp")
+      .setSize(15, 15);
     });
 
     const beartrapsLayer = map.getObjectLayer("beartraps");
@@ -759,15 +760,15 @@ export default class Game extends Phaser.Scene {
   ) {
     if (obj1 === this.meleeHitbox) {
 
-      // MOVE FAUNE WHEN HITTING CRISP
-      const enemyX = Math.floor(obj2.x);
-      const enemyY = Math.floor(obj2.y);
+      // MOVE FAUNE WHEN HITTING CRISP // TODO
+      // const enemyX = Math.floor(obj2.x);
+      // const enemyY = Math.floor(obj2.y);
 
-      const dx = this.faune.x - enemyX;
-      const dy = this.faune.y - enemyY;
+      // const dx = this.faune.x - enemyX;
+      // const dy = this.faune.y - enemyY;
 
-      const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(200);
-      this.faune.setVelocity(dir)
+      // const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(200);
+      // this.faune.setVelocity(dir)
       obj2.gotHit();
     } else { // PUSH CHRISP WHEN HIT WITH KNIFE
       obj2.body.velocity =
