@@ -53,8 +53,10 @@ export default class Game extends Phaser.Scene {
   private firetraps!: Phaser.Physics.Arcade.StaticGroup; //FIRE TRAP
 
   private ghostTrackTimer; //TIMER TO UPDATE GHOST CHASING PLAYER
+  private chrispTrackTimer;//TIMER TO UPDATE CHRISP CHASING PLAYER
   private GHOSTSPEED = 4; //HOW MANY PIXELS PER SECOND THE GHOST MOVES
   private GHOSTSTUN = 2000; //HOW OFTEN THE GHOST UPDATES ITS DIRECTION / ALSO IS STUN DURATION
+  private CHRISPEED = 10  //HOW MANY PIXELS PER SECOND THE CHRISPS MOVES
 
   private playerGhostsCollider?: Phaser.Physics.Arcade.Collider;
   private playerBodsCollider?: Phaser.Physics.Arcade.Collider;
@@ -468,11 +470,30 @@ export default class Game extends Phaser.Scene {
 
     function ghostTracker() {
       this.ghosts.children.entries.forEach((e) => {
-        this.physics.moveToObject(e, this.faune, this.GHOSTSPEED);
+      this.physics.moveToObject(e, this.faune, this.GHOSTSPEED);
       });
     }
     /*
-     ** GHOST CHASING PLAYER
+    ** GHOST CHASING PLAYER
+    */
+
+    /*
+     ** CHRISP CHASING PLAYER
+     */
+    this.chrispTrackTimer = this.time.addEvent({
+      delay: this.GHOSTSTUN,
+      callback: chrispTracker,
+      loop: true,
+      callbackScope: this,
+    });
+
+    function chrispTracker() {
+      this.chrisps.children.entries.forEach((e) => {
+      this.physics.moveToObject(e, this.faune, this.CHRISPEED);
+      });
+    }
+    /*
+     ** CHRISP CHASING PLAYER
      */
 
     // Wall collisions
@@ -737,8 +758,21 @@ export default class Game extends Phaser.Scene {
     obj2: Phaser.GameObjects.GameObject
   ) {
     if (obj1 === this.meleeHitbox) {
+
+      // MOVE FAUNE WHEN HITTING CRISP
+      const enemyX = Math.floor(obj2.x);
+      const enemyY = Math.floor(obj2.y);
+
+      const dx = this.faune.x - enemyX;
+      const dy = this.faune.y - enemyY;
+
+      const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(200);
+      this.faune.setVelocity(dir)
       obj2.gotHit();
-    } else {
+    } else { // PUSH CHRISP WHEN HIT WITH KNIFE
+      obj2.body.velocity =
+        obj1.body.velocity ||
+        new Phaser.Math.Vector2(0, 0).normalize().scale(100);
       obj1.destroy();
     }
   }

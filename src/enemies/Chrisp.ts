@@ -44,9 +44,15 @@ export default class Chrisp extends Phaser.Physics.Arcade.Sprite
 
 	gotHit() {
     this.health--
-
+	this.anims.play('chrisp-damage')
     if (this.health <= 0) { this.destroy() }
   }
+
+
+  swing() {
+	this.anims.play('chrisp-swing')
+  }
+
 
   getHealth() {
     return this.health
@@ -54,6 +60,8 @@ export default class Chrisp extends Phaser.Physics.Arcade.Sprite
 
 	destroy(fromScene?: boolean)
 	{
+		this.anims.play('chrisp-death')
+		
 		this.moveEvent.destroy()
 
 		super.destroy(fromScene)
