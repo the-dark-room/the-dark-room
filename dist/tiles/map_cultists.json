@@ -58,7 +58,7 @@
          "name":"background",
          "opacity":1,
          "type":"tilelayer",
-         "visible":true,
+         "visible":false,
          "width":50,
          "x":0,
          "y":0
@@ -116,10 +116,11 @@
             197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197],
          "height":50,
          "id":2,
+         "locked":true,
          "name":"Walls",
          "opacity":1,
          "type":"tilelayer",
-         "visible":true,
+         "visible":false,
          "width":50,
          "x":0,
          "y":0
@@ -127,6 +128,7 @@
         {
          "draworder":"topdown",
          "id":3,
+         "locked":true,
          "name":"chests",
          "objects":[
                 {
@@ -167,13 +169,14 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
          "id":4,
+         "locked":true,
          "name":"Lizards",
          "objects":[
                 {
@@ -202,13 +205,14 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
          "id":5,
+         "locked":true,
          "name":"cultists",
          "objects":[
                 {
@@ -357,13 +361,14 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
          "id":6,
+         "locked":true,
          "name":"ghosts",
          "objects":[
                 {
@@ -404,13 +409,14 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
          "id":7,
+         "locked":true,
          "name":"skeleton",
          "objects":[
                 {
@@ -427,13 +433,14 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
          "id":8,
+         "locked":true,
          "name":"spectre",
          "objects":[
                 {
@@ -462,13 +469,14 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
          "id":9,
+         "locked":true,
          "name":"slimes",
          "objects":[
                 {
@@ -497,13 +505,14 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
          "id":13,
+         "locked":true,
          "name":"bods",
          "objects":[
                 {
@@ -532,13 +541,14 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
          "id":14,
+         "locked":true,
          "name":"frogs",
          "objects":[
                 {
@@ -567,13 +577,14 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
          "id":15,
+         "locked":true,
          "name":"bats",
          "objects":[
                 {
@@ -602,13 +613,14 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
          "id":16,
+         "locked":true,
          "name":"chrisps",
          "objects":[
                 {
@@ -637,13 +649,14 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
          "id":17,
+         "locked":true,
          "name":"beartraps",
          "objects":[
                 {
@@ -660,13 +673,14 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
          "id":18,
+         "locked":true,
          "name":"firetraps",
          "objects":[
                 {
@@ -695,7 +709,7 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }, 
@@ -720,268 +734,268 @@
                         }, 
                         {
                          "x":800,
-                         "y":16
+                         "y":8
                         }, 
                         {
-                         "x":304,
-                         "y":16
+                         "x":296,
+                         "y":8
                         }, 
                         {
-                         "x":304,
-                         "y":64
+                         "x":296,
+                         "y":72
                         }, 
                         {
-                         "x":320,
-                         "y":64
+                         "x":312,
+                         "y":72
                         }, 
                         {
-                         "x":320,
-                         "y":112
+                         "x":312,
+                         "y":104
                         }, 
                         {
-                         "x":272,
-                         "y":112
+                         "x":280,
+                         "y":104
                         }, 
                         {
-                         "x":272,
-                         "y":64
+                         "x":280,
+                         "y":72
                         }, 
                         {
-                         "x":288,
-                         "y":64
+                         "x":296,
+                         "y":72
                         }, 
                         {
-                         "x":288,
-                         "y":16
+                         "x":296,
+                         "y":8
                         }, 
                         {
-                         "x":176,
-                         "y":16
+                         "x":168,
+                         "y":8
                         }, 
                         {
-                         "x":176,
-                         "y":128
+                         "x":168,
+                         "y":136
                         }, 
                         {
-                         "x":320,
-                         "y":128
+                         "x":312,
+                         "y":136
                         }, 
                         {
-                         "x":320,
-                         "y":144
+                         "x":312,
+                         "y":136
                         }, 
                         {
-                         "x":176,
-                         "y":144
+                         "x":168,
+                         "y":136
                         }, 
                         {
-                         "x":176,
-                         "y":176
+                         "x":168,
+                         "y":184
                         }, 
                         {
-                         "x":704,
-                         "y":176
+                         "x":696,
+                         "y":184
                         }, 
                         {
-                         "x":704,
-                         "y":192
+                         "x":696,
+                         "y":184
                         }, 
                         {
-                         "x":224,
-                         "y":192
+                         "x":216,
+                         "y":184
                         }, 
                         {
-                         "x":224,
-                         "y":240
+                         "x":216,
+                         "y":232
                         }, 
                         {
-                         "x":208,
-                         "y":240
+                         "x":216,
+                         "y":232
                         }, 
                         {
-                         "x":208,
-                         "y":192
+                         "x":216,
+                         "y":184
                         }, 
                         {
-                         "x":48,
-                         "y":192
+                         "x":56,
+                         "y":184
                         }, 
                         {
-                         "x":48,
-                         "y":176
+                         "x":56,
+                         "y":184
                         }, 
                         {
-                         "x":160,
-                         "y":176
+                         "x":168,
+                         "y":184
                         }, 
                         {
-                         "x":160,
-                         "y":16
+                         "x":168,
+                         "y":8
                         }, 
                         {
-                         "x":16,
-                         "y":16
+                         "x":8,
+                         "y":8
                         }, 
                         {
-                         "x":16,
-                         "y":272
+                         "x":8,
+                         "y":280
                         }, 
                         {
-                         "x":160,
-                         "y":272
+                         "x":168,
+                         "y":280
                         }, 
                         {
-                         "x":160,
-                         "y":224
+                         "x":168,
+                         "y":232
                         }, 
                         {
-                         "x":176,
-                         "y":224
+                         "x":168,
+                         "y":232
                         }, 
                         {
-                         "x":176,
-                         "y":464
+                         "x":168,
+                         "y":456
                         }, 
                         {
-                         "x":160,
-                         "y":464
+                         "x":168,
+                         "y":456
                         }, 
                         {
-                         "x":160,
-                         "y":288
+                         "x":168,
+                         "y":280
                         }, 
                         {
-                         "x":16,
-                         "y":288
+                         "x":8,
+                         "y":280
                         }, 
                         {
-                         "x":16,
-                         "y":384
+                         "x":8,
+                         "y":392
                         }, 
                         {
-                         "x":112,
-                         "y":384
+                         "x":104,
+                         "y":392
                         }, 
                         {
-                         "x":112,
-                         "y":400
+                         "x":104,
+                         "y":392
                         }, 
                         {
-                         "x":16,
-                         "y":400
+                         "x":8,
+                         "y":392
                         }, 
                         {
-                         "x":16,
-                         "y":512
+                         "x":8,
+                         "y":520
                         }, 
                         {
-                         "x":176,
-                         "y":512
+                         "x":168,
+                         "y":520
                         }, 
                         {
-                         "x":176,
-                         "y":752
+                         "x":168,
+                         "y":744
                         }, 
                         {
-                         "x":160,
-                         "y":752
+                         "x":168,
+                         "y":744
                         }, 
                         {
-                         "x":160,
-                         "y":720
+                         "x":168,
+                         "y":712
                         }, 
                         {
-                         "x":48,
-                         "y":720
+                         "x":56,
+                         "y":712
                         }, 
                         {
-                         "x":48,
-                         "y":704
+                         "x":56,
+                         "y":712
                         }, 
                         {
-                         "x":160,
-                         "y":704
+                         "x":168,
+                         "y":712
                         }, 
                         {
-                         "x":160,
-                         "y":528
+                         "x":168,
+                         "y":520
                         }, 
                         {
-                         "x":16,
-                         "y":528
+                         "x":8,
+                         "y":520
                         },
                     
                         {
-                         "x":16,
-                         "y":592
+                         "x":8,
+                         "y":600
                         }, 
                         {
-                         "x":128,
-                         "y":592
+                         "x":120,
+                         "y":600
                         }, 
                         {
-                         "x":128,
-                         "y":608
+                         "x":120,
+                         "y":600
                         }, 
                         {
-                         "x":16,
-                         "y":608
+                         "x":8,
+                         "y":600
                         }, 
                         {
-                         "x":16,
-                         "y":784
+                         "x":8,
+                         "y":792
                         }, 
                         {
-                         "x":208,
-                         "y":784
+                         "x":216,
+                         "y":792
                         }, 
                         {
-                         "x":208,
-                         "y":272
+                         "x":216,
+                         "y":280
                         }, 
                         {
-                         "x":224,
-                         "y":272
+                         "x":216,
+                         "y":280
                         }, 
                         {
-                         "x":224,
-                         "y":656
+                         "x":216,
+                         "y":664
                         }, 
                         {
-                         "x":720,
-                         "y":656
+                         "x":728,
+                         "y":664
                         }, 
                         {
-                         "x":720,
-                         "y":176
+                         "x":728,
+                         "y":184
                         }, 
                         {
-                         "x":736,
-                         "y":176
+                         "x":728,
+                         "y":184
                         }, 
                         {
-                         "x":736,
-                         "y":672
+                         "x":728,
+                         "y":664
                         }, 
                         {
-                         "x":224,
-                         "y":672
+                         "x":216,
+                         "y":664
                         }, 
                         {
-                         "x":224,
-                         "y":784
+                         "x":216,
+                         "y":792
                         }, 
                         {
-                         "x":784,
-                         "y":784
+                         "x":792,
+                         "y":792
                         }, 
                         {
-                         "x":784,
-                         "y":16
+                         "x":792,
+                         "y":8
                         }, 
                         {
                          "x":800,
-                         "y":16
+                         "y":8
                         }, 
                         {
                          "x":800,
@@ -1010,6 +1024,7 @@
         {
          "draworder":"topdown",
          "id":11,
+         "locked":true,
          "name":"stairUp",
          "objects":[
                 {
@@ -1026,13 +1041,14 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
          "id":12,
+         "locked":true,
          "name":"stairDown",
          "objects":[
                 {
@@ -1049,7 +1065,7 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }],
@@ -1069,7 +1085,7 @@
          "margin":0,
          "name":"watabou_pixel_dungeon_spritesheet",
          "spacing":0,
-         "tilecount":2208,
+         "tilecount":54,
          "tileheight":16,
          "tiles":[
                 {
@@ -1559,6 +1575,19 @@
                          "value":"down"
                         }]
                 }],
+         "tilewidth":16
+        }, 
+        {
+         "columns":48,
+         "firstgid":778,
+         "image":"watabou_pixel_dungeon_spritesheet.png",
+         "imageheight":748,
+         "imagewidth":768,
+         "margin":0,
+         "name":"watabou_pixel_dungeon_spritesheet",
+         "spacing":0,
+         "tilecount":2208,
+         "tileheight":16,
          "tilewidth":16
         }],
  "tilewidth":16,
