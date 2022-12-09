@@ -8,6 +8,7 @@ import Winner from "./scenes/Winner";
 import Loser from "./scenes/Loser";
 import EnterName from "./scenes/EnterName";
 import LeaderBoard from "./scenes/LeaderBoard";
+import About from "./scenes/About";
 
 import PhaserRaycaster from "phaser-raycaster";
 
@@ -23,7 +24,17 @@ export default new Phaser.Game({
       debug: true,
     },
   },
-  scene: [Preloader, Game, GameUI, Menu, Winner, Loser, EnterName, LeaderBoard],
+  scene: [
+    Preloader,
+    Game,
+    GameUI,
+    Menu,
+    Winner,
+    Loser,
+    EnterName,
+    LeaderBoard,
+    About,
+  ],
   scale: {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,

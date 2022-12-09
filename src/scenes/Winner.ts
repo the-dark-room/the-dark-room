@@ -31,7 +31,8 @@ export default class Winner extends Phaser.Scene {
     text1.setTint(0xff00ff, 0xffff00, 0x0000ff, 0xff0000);
     // console.log(this.scene)
     setTimeout(() => {
-      this.scene.start("entername", { currentTime: this.exitTime });
+      // this.scene.start("entername", { currentTime: this.exitTime });
+      this.scene.start("about", { currentTime: this.exitTime });
     }, 4000);
   }
 
