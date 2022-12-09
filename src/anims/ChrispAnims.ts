@@ -7,6 +7,13 @@ const createChrispAnims = (anims: Phaser.Animations.AnimationManager) => {
 		repeat: -1,
 		frameRate: 10
 	})
+
+	anims.create({
+		key: 'chrisp-death',
+		frames: anims.generateFrameNames('chrisp-death', { start: 13, end: 25, prefix: 'chrisp-death-', suffix: '.png' }),
+		repeat: -1,
+		frameRate: 10
+	})
 }
 
 export default createChrispAnims
