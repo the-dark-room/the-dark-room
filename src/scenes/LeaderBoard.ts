@@ -95,9 +95,8 @@ export default class LeaderBoard extends Phaser.Scene {
 
     // playagain button that takes them to the menu
     let playAgainButton = `
-        <button name="playAgainButton" style="font-size: 5% 
-        style={{background: "linear-gradient(0xff00ff, 0xff0000)"}}
-        ">Play Again?</button>
+        <button name="playAgainButton" style="font-size: 5%; color: #00e7ff; background-color:black"
+        >Play Again?</button>
       `
     
     let element = this.add

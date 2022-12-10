@@ -167,6 +167,7 @@ export default class Game extends Phaser.Scene {
 
     // so we can replay the game
     if(!wallsLayer) {
+      currentTime = 0;
       map.destroy(); // destroy the current map
       map = this.make.tilemap({ key: mapArr[0] }); // add a new one
 
