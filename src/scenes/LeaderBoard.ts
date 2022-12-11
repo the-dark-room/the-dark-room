@@ -11,18 +11,18 @@ import {
 
 let scores = [];
 
-// function getLeaderboard() {
-//   const scoreCollectionRef = collection(db, 'highscore')
-//   const q = query(scoreCollectionRef, orderBy('score', 'desc'))
-//   onSnapshot(q, (snapshot) => {
-//     snapshot.docs.forEach((doc) => {
-//       // console.log(doc.data())
-//       scores.push({ ...doc.data(), id: doc.id })
-//     })
-//   })
-//   return scores;
-//   // console.log(scores);
-// }
+function getLeaderboard() {
+  const scoreCollectionRef = collection(db, 'highscore')
+  const q = query(scoreCollectionRef, orderBy('score', 'desc'))
+  onSnapshot(q, (snapshot) => {
+    snapshot.docs.forEach((doc) => {
+      // console.log(doc.data())
+      scores.push({ ...doc.data(), id: doc.id })
+    })
+  })
+  return scores;
+  // console.log(scores);
+}
 
 // const leaderboardScores = (scene, screenX, screenY, scores) => {
 //   for(let i=0; i<11; i++) {
@@ -41,7 +41,7 @@ export default class LeaderBoard extends Phaser.Scene {
 
   preload() {
     this.load.html("nameform", "nameForm.html");
-    // getLeaderboard()
+    getLeaderboard()
   }
 
   leaderboardScores(x, y, score) {
@@ -95,9 +95,8 @@ export default class LeaderBoard extends Phaser.Scene {
 
     // playagain button that takes them to the menu
     let playAgainButton = `
-        <button name="playAgainButton" style="font-size: 5% 
-        style={{background: "linear-gradient(0xff00ff, 0xff0000)"}}
-        ">Play Again?</button>
+        <button name="playAgainButton" style="font-size: 5%; color: #00e7ff; background-color:black"
+        >Play Again?</button>
       `
     
     let element = this.add

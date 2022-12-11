@@ -22,7 +22,6 @@ import Chest from "../items/Chest";
 
 let map;
 let mapCount = 0;
-console.log(mapCount);
 let mapArr = [
   "map_jail",
   "map_hallway",
@@ -167,6 +166,7 @@ export default class Game extends Phaser.Scene {
 
     // so we can replay the game
     if(!wallsLayer) {
+      currentTime = 0;
       map.destroy(); // destroy the current map
       map = this.make.tilemap({ key: mapArr[0] }); // add a new one
 
@@ -346,7 +346,7 @@ export default class Game extends Phaser.Scene {
       // draw in the polygon for the raycasting to interact with
       obstacle = scene.add
         .polygon(map.widthInPixels / 2, map.heightInPixels / 2, please)
-        .setStrokeStyle(1, 0xff0000);
+        .setStrokeStyle(0, 0xff0000);
       // .setDepth(99)
       obstacles.add(obstacle);
     }
@@ -927,11 +927,9 @@ export default class Game extends Phaser.Scene {
     obj2: Phaser.GameObjects.GameObject
   ) {
     mapCount--; // increment the map counter
-    console.log(mapCount);
 
     // ensures we don't destroy the current map if there's not another one to call
     if (mapCount < 0) {
-      console.log("no more maps :(");
       // reset the map counter incase this gets called (we need this because we're incrementing it outside of this )
       mapCount = 0;
       return;
@@ -952,7 +950,6 @@ export default class Game extends Phaser.Scene {
 
     // ensures we don't destroy the current map if there's not another one to call
     if (mapCount > mapArr.length - 1) {
-      console.log("no more maps :(");
       // reset the map counter incase this gets called (we need this because we're incrementing it outside of this )
       mapCount = mapArr.length - 1;
       return;
