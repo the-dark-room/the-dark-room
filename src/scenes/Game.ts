@@ -734,8 +734,14 @@ export default class Game extends Phaser.Scene {
     obj1: Phaser.GameObjects.GameObject,
     obj2: Phaser.GameObjects.GameObject
   ) {
-    const chest = obj2 as Chest;
-    this.faune.setChest(chest);
+    this.input.on('pointerdown', function (pointer) {
+			if (pointer.leftButtonDown()){
+        this.scene.pause()
+        this.scene.launch('lore', {text: `Eat my socks`})
+      }
+    }, this)
+
+
   }
 
   private handleKnifeWallCollision(

@@ -3,7 +3,7 @@
 
 // @ts-nocheck
 import Phaser from 'phaser'
-import Chest from '../items/Chest'
+// import Chest from '../items/Chest'
 import LoreTemplate from '~/scenes/LoreTemplate'
 
 import { sceneEvents } from '../events/EventsCenter'
@@ -41,7 +41,7 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 
 	private knives!: Phaser.Physics.Arcade.Group
 	private meleeHitbox!: Phaser.Types.Physics.Arcade.ImageWithDynamicBody
-	private activeChest?: Chest
+	// private activeChest?: Chest
 
 	get health()
 	{
@@ -91,10 +91,10 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 		})
 	}
 
-	setChest(chest: Chest)
-	{
-		this.activeChest = chest
-	}
+	// setChest(chest: Chest)
+	// {
+	// 	this.activeChest = chest
+	// }
 
 	handleDamage(dir: Phaser.Math.Vector2) {
 		if (this._health <= 0){
@@ -251,14 +251,14 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 
 		this.scene.input.on('pointerdown', function (pointer) {
 			if (pointer.leftButtonDown()){
-				if (this.activeChest){
-					this.scene.scene.pause()
-					this.scene.scene.launch('lore', {text: `Eat my socks`})
-				}
-				else //sword swing
-				{
+				// if (this.activeChest){
+				// 	this.scene.scene.pause()
+				// 	this.scene.scene.launch('lore', {text: `Eat my socks`})
+				// }
+				// else //sword swing
+				// {
 					this.swingSword()
-				}
+				// }
 				return
 			}
 		}, this);
@@ -320,9 +320,9 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 			this.setVelocity(0, 0)
 		}
 
-		if (leftDown || rightDown || upDown || downDown){
-			this.activeChest = undefined
-		}
+		// if (leftDown || rightDown || upDown || downDown){
+		// 	this.activeChest = undefined
+		// }
 	}
 }
 
