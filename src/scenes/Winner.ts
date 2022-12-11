@@ -1,7 +1,9 @@
 import Phaser from "phaser";
 
 export default class Winner extends Phaser.Scene {
+  private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
   private exitTime = 0;
+
 
   constructor() {
     super("winner");
@@ -9,7 +11,6 @@ export default class Winner extends Phaser.Scene {
   }
 
   preload() {
-    // console.log(this)
   }
 
   create() {

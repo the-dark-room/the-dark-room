@@ -2,8 +2,8 @@ import Phaser from "phaser";
 
 // firestore stuff
 import { db } from '../firebaseConfig'
-import { 
-  getFirestore, collection, onSnapshot, 
+import {
+  getFirestore, collection, onSnapshot,
   addDoc, deleteDoc, doc, setDoc,
   query, where,
   orderBy, serverTimestamp,
@@ -47,6 +47,8 @@ export default class EnterName extends Phaser.Scene {
   }
 
   create() {
+    this.input.keyboard.clearCaptures()
+
     const screenCenterX =
       this.cameras.main.worldView.x + this.cameras.main.width / 2;
     const screenCenterY =
@@ -54,7 +56,7 @@ export default class EnterName extends Phaser.Scene {
 
     this.exitTime = this.scene.settings.data.currentTime;
     let scoreTime = this.exitTime; // so we don't have "this" shadowing problems (just accept that we need this and then no touchie)
-    
+
     let form = `
       <input type="text" name="nameField" placeholder="Initials" maxLength="3" style="font-size: 5%">
       <input type="button" name="playButton" value="Submit" style="font-size: 5% ">
