@@ -892,6 +892,8 @@ export default class Game extends Phaser.Scene {
     obj1: Phaser.GameObjects.GameObject,
     obj2: Phaser.GameObjects.GameObject
   ) {
+    if (this.faune.health <= 0) { return }
+
     const enemyX = Math.floor(obj2.x);
     const enemyY = Math.floor(obj2.y);
 

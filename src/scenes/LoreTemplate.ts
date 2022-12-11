@@ -20,7 +20,6 @@ export default class LoreTemplate extends Phaser.Scene {
         text1.setTint(0xff00ff, 0xff0000, 0xff00ff, 0xff0000);
 
         this.input.on('pointerdown', function (pointer) {
-            console.log("In the pointerdown")
             this.scene.resume('game')
             this.scene.stop()
         }, this)

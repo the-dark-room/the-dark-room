@@ -15,7 +15,7 @@ export default class Loser extends Phaser.Scene {
 	}
 
 	create() {
-        console.log(`I'm in the create of the loser scene`)
+        // console.log(`I'm in the create of the loser scene`)
         const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
         const screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
         // const loadingText = this.add.text(screenCenterX, screenCenterY, 'Loading: 0%').setOrigin(0.5);
