@@ -22,7 +22,6 @@ import Chest from "../items/Chest";
 
 let map;
 let mapCount = 0;
-console.log(mapCount);
 let mapArr = [
   "map_jail",
   "map_hallway",
@@ -347,7 +346,7 @@ export default class Game extends Phaser.Scene {
       // draw in the polygon for the raycasting to interact with
       obstacle = scene.add
         .polygon(map.widthInPixels / 2, map.heightInPixels / 2, please)
-        .setStrokeStyle(1, 0xff0000);
+        .setStrokeStyle(0, 0xff0000);
       // .setDepth(99)
       obstacles.add(obstacle);
     }
@@ -438,7 +437,8 @@ export default class Game extends Phaser.Scene {
 
     const chrispsLayer = map.getObjectLayer("chrisps");
     chrispsLayer.objects.forEach((e) => {
-      this.chrisps.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, "chrisp");
+      this.chrisps.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, "chrisp")
+      .setSize(15, 15);
     });
 
     const beartrapsLayer = map.getObjectLayer("beartraps");
@@ -760,15 +760,15 @@ export default class Game extends Phaser.Scene {
   ) {
     if (obj1 === this.meleeHitbox) {
 
-      // MOVE FAUNE WHEN HITTING CRISP
-      const enemyX = Math.floor(obj2.x);
-      const enemyY = Math.floor(obj2.y);
+      // MOVE FAUNE WHEN HITTING CRISP // TODO
+      // const enemyX = Math.floor(obj2.x);
+      // const enemyY = Math.floor(obj2.y);
 
-      const dx = this.faune.x - enemyX;
-      const dy = this.faune.y - enemyY;
+      // const dx = this.faune.x - enemyX;
+      // const dy = this.faune.y - enemyY;
 
-      const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(200);
-      this.faune.setVelocity(dir)
+      // const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(200);
+      // this.faune.setVelocity(dir)
       obj2.gotHit();
     } else { // PUSH CHRISP WHEN HIT WITH KNIFE
       obj2.body.velocity =
@@ -921,11 +921,9 @@ export default class Game extends Phaser.Scene {
     obj2: Phaser.GameObjects.GameObject
   ) {
     mapCount--; // increment the map counter
-    console.log(mapCount);
 
     // ensures we don't destroy the current map if there's not another one to call
     if (mapCount < 0) {
-      console.log("no more maps :(");
       // reset the map counter incase this gets called (we need this because we're incrementing it outside of this )
       mapCount = 0;
       return;
@@ -946,7 +944,6 @@ export default class Game extends Phaser.Scene {
 
     // ensures we don't destroy the current map if there's not another one to call
     if (mapCount > mapArr.length - 1) {
-      console.log("no more maps :(");
       // reset the map counter incase this gets called (we need this because we're incrementing it outside of this )
       mapCount = mapArr.length - 1;
       return;

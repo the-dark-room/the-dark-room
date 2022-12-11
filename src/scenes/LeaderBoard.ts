@@ -11,18 +11,18 @@ import {
 
 let scores = [];
 
-// function getLeaderboard() {
-//   const scoreCollectionRef = collection(db, 'highscore')
-//   const q = query(scoreCollectionRef, orderBy('score', 'desc'))
-//   onSnapshot(q, (snapshot) => {
-//     snapshot.docs.forEach((doc) => {
-//       // console.log(doc.data())
-//       scores.push({ ...doc.data(), id: doc.id })
-//     })
-//   })
-//   return scores;
-//   // console.log(scores);
-// }
+function getLeaderboard() {
+  const scoreCollectionRef = collection(db, 'highscore')
+  const q = query(scoreCollectionRef, orderBy('score', 'desc'))
+  onSnapshot(q, (snapshot) => {
+    snapshot.docs.forEach((doc) => {
+      // console.log(doc.data())
+      scores.push({ ...doc.data(), id: doc.id })
+    })
+  })
+  return scores;
+  // console.log(scores);
+}
 
 // const leaderboardScores = (scene, screenX, screenY, scores) => {
 //   for(let i=0; i<11; i++) {
@@ -41,7 +41,7 @@ export default class LeaderBoard extends Phaser.Scene {
 
   preload() {
     this.load.html("nameform", "nameForm.html");
-    // getLeaderboard()
+    getLeaderboard()
   }
 
   leaderboardScores(x, y, score) {
