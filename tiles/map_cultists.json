@@ -135,6 +135,12 @@
                  "height":16,
                  "id":1,
                  "name":"",
+                 "properties":[
+                        {
+                         "name":"lore",
+                         "type":"string",
+                         "value":"...and even if I spared him, we would both just end up dead. Killing him was the best option; at least one of us would survive. Tears streaming down my face underneath my mask, screaming, I brought the knife down into his heart. The room erupted into cheers as the man breathed his last. I managed to sneak away into a side room, saying I needed to compose myself, and here I write this note, and my confession."
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":16,
@@ -147,23 +153,35 @@
                  "height":16,
                  "id":2,
                  "name":"",
-                 "rotation":0,
-                 "visible":true,
-                 "width":16,
-                 "x":188,
-                 "y":44
-                }, 
-                {
-                 "class":"",
-                 "gid":545,
-                 "height":16,
-                 "id":3,
-                 "name":"",
+                 "properties":[
+                        {
+                         "name":"lore",
+                         "type":"string",
+                         "value":"...was shocked to see everyone looking at me expectantly. I looked at the man who had handed me the dagger, and he gestured towards the man, as if saying \u201cGo on. Stab him\u201d. I looked at the crowd; they had begun chanting in some tongue I didn't understand. I wanted to throw the knife away, but I feared what would happen if they realized I wasn\u2019t who they thought I was. As their chanting increased in both volume and urgency, I looked at the man on the altar. It was my life or his..."
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":16,
                  "x":512,
                  "y":464
+                }, 
+                {
+                 "class":"",
+                 "gid":545,
+                 "height":16,
+                 "id":60,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"lore",
+                         "type":"string",
+                         "value":"...I was surprised to find him tied-down and struggling against his restraints. I didn\u2019t know what this was all about, but I certainly wasn\u2019t going to say something and become the center of attention. As I stared through my mask at the man, I was handed a ceremonious-looking dagger. I took it without realizing it, and..."
+                        }],
+                 "rotation":0,
+                 "visible":true,
+                 "width":16,
+                 "x":128,
+                 "y":160
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1218,7 +1236,7 @@
          "y":0
         }],
  "nextlayerid":19,
- "nextobjectid":57,
+ "nextobjectid":61,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.9.2",
