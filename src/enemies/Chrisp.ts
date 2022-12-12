@@ -29,6 +29,10 @@ export default class Chrisp extends Phaser.Physics.Arcade.Sprite
 	{
 		super(scene, x, y, texture, frame)
 
+		// this.scene.chrispSwingBox = this.scene.add.rectangle(0, 0, 40, 70, 0xffffff, 0) as unknown as Phaser.Types.Physics.Arcade.ImageWithDynamicBody
+		// this.scene.physics.add.existing(this.scene.chrispSwingBox)
+		// this.scene.chrispSwingBox.body.enable = false
+
 		this.anims.play('chrisp-walk')
 
 		// scene.physics.world.on(Phaser.Physics.Arcade.Events.TILE_COLLIDE, this.handleTileCollision, this)
@@ -50,7 +54,15 @@ export default class Chrisp extends Phaser.Physics.Arcade.Sprite
 
 
   swing() {
-	// this.anims.play('chrisp-swing')
+		console.log('Chrisp swung')
+
+		this.setSize(50,50)
+		// this.scene.chrispSwingBox.body.enable = true
+
+		// this.scene.chrispSwingBox!.y = this.y
+		// this.scene.chrispSwingBox!.x = this.x
+
+		// this.anims.play('chrisp-swing')
   }
 
 
@@ -61,7 +73,7 @@ export default class Chrisp extends Phaser.Physics.Arcade.Sprite
 	destroy(fromScene?: boolean)
 	{
 		// this.anims.play('chrisp-death')
-		
+
 		// this.moveEvent.destroy()
 
 		super.destroy(fromScene)

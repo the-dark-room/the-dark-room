@@ -40,6 +40,7 @@ export default class Game extends Phaser.Scene {
   private sword!: Phaser.Physics.Arcade.Sprite;
   private knives!: Phaser.Physics.Arcade.Group;
   private meleeHitbox!: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
+  // private chrispSwingBox: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
 
   private ghosts!: Phaser.Physics.Arcade.Group; //GHOST
   private bods!: Phaser.Physics.Arcade.Group; //BOD
@@ -438,7 +439,7 @@ export default class Game extends Phaser.Scene {
     const chrispsLayer = map.getObjectLayer("chrisps");
     chrispsLayer.objects.forEach((e) => {
       this.chrisps.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, "chrisp")
-      .setSize(15, 15);
+      .setSize(30, 30);
     });
 
     const beartrapsLayer = map.getObjectLayer("beartraps");
@@ -491,6 +492,8 @@ export default class Game extends Phaser.Scene {
     function chrispTracker() {
       this.chrisps.children.entries.forEach((e) => {
       this.physics.moveToObject(e, this.faune, this.CHRISPEED);
+
+      if (Math.abs( e.x - this.faune.x ) <= 20 || Math.abs( e.y - this.faune.y ) <= 20){ e.swing() }
       });
     }
     /*
@@ -692,6 +695,13 @@ export default class Game extends Phaser.Scene {
       undefined,
       this
     );
+    // this.chrispswingboxPlayerCollider = this.physics.add.collider(
+    //   this.chrispSwingBox,
+    //   this.faune,
+    //   this.handlePlayerEnemyCollision,
+    //   undefined,
+    //   this
+    // );
     this.playerCultistsCollider = this.physics.add.collider(
       this.cultists,
       this.faune,
