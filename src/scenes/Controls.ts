@@ -57,6 +57,14 @@ export default class Controls extends Phaser.Scene {
                 flex-direction: column;
                 align-items: center;
               }
+              .level {
+                display: flex;
+                flex-direction: row;
+                gap: 4%;
+                align-items: center;
+                justify-content: space-between;
+                align-content: center;
+              }
               .image-text {
                 display: flex;
                 flex-direction: row;
@@ -101,18 +109,20 @@ export default class Controls extends Phaser.Scene {
                   </div>
                 </div>
               </div>
-              <div class="sub">
-                <h4>Visibility</h4>
-                <div class="image-text">
-                  <img src="https://freesvg.org/img/HandTorch.png"/>
-                  <p>Move your mouse cursor around the player to direct your torch.</p>
+              <div class="level">
+                <div class="sub">
+                  <h4>Visibility</h4>
+                  <div class="image-text">
+                    <img src="https://freesvg.org/img/HandTorch.png"/>
+                    <p>Move your mouse cursor around the player to direct your torch.</p>
+                  </div>
                 </div>
-              </div>
-              <div class="sub">
-                <h4>Chests</h4>
-                <div class="image-text">
-                  <img src="https://freesvg.org/img/melwe-trunk.png" />
-                  <p>Interact with chests by clicking on them. Each chest holds a scrape of those who came before you.</p>
+                <div class="sub">
+                  <h4>Chests</h4>
+                  <div class="image-text">
+                    <img src="https://freesvg.org/img/melwe-trunk.png" />
+                    <p>Interact with chests by clicking on them. Each chest holds a scrap of those who came before you.</p>
+                  </div>
                 </div>
               </div>
             <button name="back" id="back" type="button" >BACK</button>
