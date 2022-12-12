@@ -19,6 +19,7 @@ import Faune from "../characters/Faune";
 import { sceneEvents } from "../events/EventsCenter";
 import Chest from "../items/Chest";
 
+
 let map;
 let mapCount = 0;
 let mapArr = [
@@ -51,8 +52,10 @@ export default class Game extends Phaser.Scene {
   private firetraps!: Phaser.Physics.Arcade.StaticGroup; //FIRE TRAP
 
   private ghostTrackTimer; //TIMER TO UPDATE GHOST CHASING PLAYER
+  private chrispTrackTimer;//TIMER TO UPDATE CHRISP CHASING PLAYER
   private GHOSTSPEED = 4; //HOW MANY PIXELS PER SECOND THE GHOST MOVES
   private GHOSTSTUN = 2000; //HOW OFTEN THE GHOST UPDATES ITS DIRECTION / ALSO IS STUN DURATION
+  private CHRISPEED = 10  //HOW MANY PIXELS PER SECOND THE CHRISPS MOVES
 
   private playerGhostsCollider?: Phaser.Physics.Arcade.Collider;
   private playerBodsCollider?: Phaser.Physics.Arcade.Collider;
@@ -161,20 +164,41 @@ export default class Game extends Phaser.Scene {
     //wall setup
     const wallsLayer = map.createLayer("Walls", tileset);
 
+    // so we can replay the game
+    if(!wallsLayer) {
+      currentTime = 0;
+      map.destroy(); // destroy the current map
+      map = this.make.tilemap({ key: mapArr[0] }); // add a new one
+
+      // restart the scene, including the new map as a parameter so we can carry it over
+      this.scene.restart(map);
+      return
+    }
+
     wallsLayer.setCollisionByProperty({ collides: true });
 
     const chests = this.physics.add.staticGroup({
       classType: Chest,
     });
     const chestsLayer = map.getObjectLayer("chests");
+    let loreArr = []
+
     chestsLayer.objects.forEach((chestObj) => {
       chests.get(
         chestObj.x! + chestObj.width! * 0.5,
         chestObj.y! - chestObj.height! * 0.5,
-        "treasure"
+        "treasure",
       );
+      loreArr.push(chestObj.properties[0].value)
     });
+    // chests.children.entries[0].lore = 'maybe?'
+    // chests.children.entries[1].lore = '???????'
+    
+    for(let i=0; i < chests.children.entries.length; i++) {
+      chests.children.entries[i].lore = loreArr[i]
+    }
 
+    // camera follows the player
     this.cameras.main.startFollow(this.faune, true);
 
     // get the polygon(s) for the walls
@@ -213,6 +237,20 @@ export default class Game extends Phaser.Scene {
         "stair-down"
       );
     });
+
+    // exit door/staircase
+    const exitDoor = map.getObjectLayer("exit");
+    const exitDoorGroup = this.physics.add.staticGroup();
+
+    if(exitDoor){
+      exitDoor.objects.forEach((exitObj) => {
+        exitDoorGroup.get(
+          exitObj.x! + exitObj.width! * 0.5,
+          exitObj.y! - exitObj.height! * 0.5,
+          "stair-down"
+        );
+      });
+  }
 
     // Raycaster
     // sets the bounding box for the rays
@@ -285,35 +323,10 @@ export default class Game extends Phaser.Scene {
 
     //map obstacles
     this.raycaster.mapGameObjects(obstacles.getChildren());
-    // this.raycaster.mapGameObjects(wallsLayer, false, {
-    //   collisionTiles: [248, 244, 294],
-    // });
 
     // creating obstacles
     function createObstacles(scene) {
       let obstacle;
-
-      //create line obstacle
-      // let obstacle = scene.add
-      //   .line(400, 100, 0, 0, 200, 50)
-      //   .setStrokeStyle(1, 0xff0000);
-      // obstacles.add(obstacle);
-
-      //create polygon obstacle
-      // obstacle = scene.add
-      //   .polygon(650, 500, [0, 0, 50, 50, 100, 0, 100, 75, 50, 100, 0, 50])
-      //   .setStrokeStyle(1, 0xff0000);
-      // obstacles.add(obstacle);
-
-      // [0,0, 192,0, 192,240, 128,240, 128,656, 112,656, 112,240, 0,240]
-
-      //create overlapping obstacles
-      // for (let i = 0; i < 5; i++) {
-      //   obstacle = scene.add
-      //     .rectangle(350 + 30 * i, 550 - 30 * i, 50, 50)
-      //     .setStrokeStyle(1, 0xff0000);
-      //   obstacles.add(obstacle, true);
-      // }
 
       //create image obstacle
       // obstacle = scene.add.image(800, 800, "mapImage");
@@ -332,7 +345,7 @@ export default class Game extends Phaser.Scene {
       // draw in the polygon for the raycasting to interact with
       obstacle = scene.add
         .polygon(map.widthInPixels / 2, map.heightInPixels / 2, please)
-        .setStrokeStyle(1, 0xff0000);
+        .setStrokeStyle(0, 0xff0000);
       // .setDepth(99)
       obstacles.add(obstacle);
     }
@@ -423,7 +436,8 @@ export default class Game extends Phaser.Scene {
 
     const chrispsLayer = map.getObjectLayer("chrisps");
     chrispsLayer.objects.forEach((e) => {
-      this.chrisps.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, "chrisp");
+      this.chrisps.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, "chrisp")
+      .setSize(15, 15);
     });
 
     const beartrapsLayer = map.getObjectLayer("beartraps");
@@ -456,11 +470,30 @@ export default class Game extends Phaser.Scene {
 
     function ghostTracker() {
       this.ghosts.children.entries.forEach((e) => {
-        this.physics.moveToObject(e, this.faune, this.GHOSTSPEED);
+      this.physics.moveToObject(e, this.faune, this.GHOSTSPEED);
       });
     }
     /*
-     ** GHOST CHASING PLAYER
+    ** GHOST CHASING PLAYER
+    */
+
+    /*
+     ** CHRISP CHASING PLAYER
+     */
+    this.chrispTrackTimer = this.time.addEvent({
+      delay: this.GHOSTSTUN,
+      callback: chrispTracker,
+      loop: true,
+      callbackScope: this,
+    });
+
+    function chrispTracker() {
+      this.chrisps.children.entries.forEach((e) => {
+      this.physics.moveToObject(e, this.faune, this.CHRISPEED);
+      });
+    }
+    /*
+     ** CHRISP CHASING PLAYER
      */
 
     // Wall collisions
@@ -501,6 +534,13 @@ export default class Game extends Phaser.Scene {
       this.faune,
       stairDownGroup,
       this.handleStairsDownCollision,
+      undefined,
+      this
+    );
+    this.physics.add.collider(
+      this.faune,
+      exitDoorGroup,
+      this.handleExitCollision,
       undefined,
       this
     );
@@ -700,8 +740,24 @@ export default class Game extends Phaser.Scene {
     obj1: Phaser.GameObjects.GameObject,
     obj2: Phaser.GameObjects.GameObject
   ) {
-    const chest = obj2 as Chest;
-    this.faune.setChest(chest);
+    obj2.setInteractive()
+    const objScene = this.scene
+    obj2.on('pointerdown', function () {
+      console.log(obj2.lore);
+      objScene.pause()
+      objScene.launch('lore', {text: obj2.lore})
+      obj2.removeInteractive()
+    })
+
+    // this.input.on('pointerdown', function (pointer) {
+    //   console.log('in pointerdown');
+		// 	if (pointer.leftButtonDown()){
+    //     this.scene.pause()
+    //     this.scene.launch('lore', {text: `Eat my socks`})
+    //   }
+    // }, this)
+
+
   }
 
   private handleKnifeWallCollision(
@@ -725,8 +781,21 @@ export default class Game extends Phaser.Scene {
     obj2: Phaser.GameObjects.GameObject
   ) {
     if (obj1 === this.meleeHitbox) {
+
+      // MOVE FAUNE WHEN HITTING CRISP // TODO
+      // const enemyX = Math.floor(obj2.x);
+      // const enemyY = Math.floor(obj2.y);
+
+      // const dx = this.faune.x - enemyX;
+      // const dy = this.faune.y - enemyY;
+
+      // const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(200);
+      // this.faune.setVelocity(dir)
       obj2.gotHit();
-    } else {
+    } else { // PUSH CHRISP WHEN HIT WITH KNIFE
+      obj2.body.velocity =
+        obj1.body.velocity ||
+        new Phaser.Math.Vector2(0, 0).normalize().scale(100);
       obj1.destroy();
     }
   }
@@ -874,11 +943,9 @@ export default class Game extends Phaser.Scene {
     obj2: Phaser.GameObjects.GameObject
   ) {
     mapCount--; // increment the map counter
-    console.log(mapCount);
 
     // ensures we don't destroy the current map if there's not another one to call
     if (mapCount < 0) {
-      console.log("no more maps :(");
       // reset the map counter incase this gets called (we need this because we're incrementing it outside of this )
       mapCount = 0;
       return;
@@ -899,7 +966,6 @@ export default class Game extends Phaser.Scene {
 
     // ensures we don't destroy the current map if there's not another one to call
     if (mapCount > mapArr.length - 1) {
-      console.log("no more maps :(");
       // reset the map counter incase this gets called (we need this because we're incrementing it outside of this )
       mapCount = mapArr.length - 1;
       return;
@@ -910,6 +976,14 @@ export default class Game extends Phaser.Scene {
       // restart the scene, including the new map as a parameter so we can carry it over
       this.scene.restart(map);
     }
+  }
+
+  private handleExitCollision(
+    obj1: Phaser.GameObjects.GameObject,
+    obj2: Phaser.GameObjects.GameObject
+  ) {
+    this.scene.stop("game-ui");
+    this.scene.start("winner", { currentTime: currentTime }); //WINNER
   }
 
   update(t: number, dt: number) {

@@ -7,11 +7,14 @@ import Menu from "./scenes/Menu";
 import Winner from "./scenes/Winner";
 import Loser from "./scenes/Loser";
 import EnterName from "./scenes/EnterName";
+
 import LeaderBoard from "./scenes/LeaderBoard";
 import About from "./scenes/About";
 import Controls from "./scenes/Controls";
+import LoreTemplate from "./scenes/LoreTemplate";
 
 import PhaserRaycaster from "phaser-raycaster";
+
 
 export default new Phaser.Game({
   type: Phaser.AUTO,
@@ -25,6 +28,7 @@ export default new Phaser.Game({
       debug: true,
     },
   },
+
   scene: [
     Preloader,
     Game,
@@ -36,11 +40,14 @@ export default new Phaser.Game({
     LeaderBoard,
     About,
     Controls,
+    LoreTemplate,
   ],
+
   scale: {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
   },
+  pixelArt: true, // looks better no touch
   dom: {
     createContainer: true,
   },

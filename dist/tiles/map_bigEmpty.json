@@ -10,8 +10,8 @@
             633, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 680,
             628, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 679,
             680, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 626,
-            631, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 632,
-            630, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 678,
+            631, 589, 589, 589, 589, 589, 589, 589, 589, 589, 580, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 632,
+            630, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 580, 589, 678,
             631, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 626,
             628, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 629,
             678, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 681,
@@ -49,17 +49,16 @@
             628, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 578,
             678, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 630,
             632, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 673,
-            631, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 678,
+            631, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 580, 589, 589, 589, 589, 589, 589, 589, 678,
             674, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 630,
             633, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 589, 679,
             680, 629, 631, 679, 626, 680, 678, 674, 681, 628, 673, 578, 680, 632, 627, 678, 627, 673, 630, 578, 626, 674, 673, 627, 631, 578, 681, 628, 673, 629, 674, 632, 626, 626, 681, 629, 631, 680, 674, 678, 673, 627, 679, 578, 632, 626, 627, 631, 631, 628],
          "height":50,
          "id":1,
-         "locked":true,
          "name":"background",
          "opacity":1,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":50,
          "x":0,
          "y":0
@@ -117,11 +116,10 @@
             197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197, 197],
          "height":50,
          "id":2,
-         "locked":true,
          "name":"Walls",
          "opacity":1,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":50,
          "x":0,
          "y":0
@@ -129,7 +127,6 @@
         {
          "draworder":"topdown",
          "id":3,
-         "locked":true,
          "name":"chests",
          "objects":[
                 {
@@ -138,22 +135,63 @@
                  "height":16,
                  "id":2,
                  "name":"",
+                 "properties":[
+                        {
+                         "name":"lore",
+                         "type":"string",
+                         "value":"...I wonder if anyone\u2019s looking for me. Does Jeanne wonder why I haven't been by in a week? Maybe someone is looking for me right now, maybe it\u2019s Jeanne himself, bringing me a basket of croissants\u2026 I hear footsteps down the hall, coming towards me now. Could that be him? Or is it those filthy cultists\u2026 I can hear them talking now, and I can recognize the voices. Any hope I had is now dead, and I will soon join it\u2026 The voices belong to the cultists.\n"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":16,
-                 "x":704,
-                 "y":160
+                 "x":80,
+                 "y":720
+                }, 
+                {
+                 "class":"",
+                 "gid":545,
+                 "height":16,
+                 "id":37,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"lore",
+                         "type":"string",
+                         "value":"I don\u2019t know what I\u2019m doing here. I don\u2019t even know where here is. I was just on my afternoon stroll into the market, in search of my favorite merchant, Jeanne la Fouaci\u00e8re. He knows me by name and is always polite, even when I ask him for twenty croissants. He knows I can\u2019t resist them, and by now he knows my routine, and even has my order ready for me by the time I get there. God, what I would do for even a bite of one of those croissants. But alas, here I am in this God forsaken place. Alone, or so I think..."
+                        }],
+                 "rotation":0,
+                 "visible":true,
+                 "width":16,
+                 "x":240,
+                 "y":48
+                }, 
+                {
+                 "class":"",
+                 "gid":545,
+                 "height":16,
+                 "id":38,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"lore",
+                         "type":"string",
+                         "value":"...For a while, I could hear the tortured screams of the \u201cchosen\u201d; people, kidnapped like me, sacrificed in the hopes of awakening whatever god or demon their cult worships. But for three days, I haven\u2019t heard so much as a whisper. I must be the last sacrifice needed for their ritual. Or maybe, just maybe, they forgot about me. Maybe they grabbed one more person than they needed? Could it be that I\u2019ll be set free? The chances are low, but maybe I\u2019ll finally be able to get that croissant\u2026"
+                        }],
+                 "rotation":0,
+                 "visible":true,
+                 "width":16,
+                 "x":752,
+                 "y":48
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
          "id":4,
-         "locked":true,
          "name":"Lizards",
          "objects":[
                 {
@@ -182,14 +220,13 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
          "id":5,
-         "locked":true,
          "name":"cultists",
          "objects":[
                 {
@@ -242,14 +279,13 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
          "id":6,
-         "locked":true,
          "name":"ghosts",
          "objects":[
                 {
@@ -278,14 +314,13 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
          "id":8,
-         "locked":true,
          "name":"skeleton",
          "objects":[
                 {
@@ -302,14 +337,13 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
          "id":9,
-         "locked":true,
          "name":"spectre",
          "objects":[
                 {
@@ -386,14 +420,13 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
          "id":10,
-         "locked":true,
          "name":"slimes",
          "objects":[
                 {
@@ -422,14 +455,13 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
          "id":14,
-         "locked":true,
          "name":"bods",
          "objects":[
                 {
@@ -458,14 +490,13 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
          "id":15,
-         "locked":true,
          "name":"frogs",
          "objects":[
                 {
@@ -494,14 +525,13 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
          "id":16,
-         "locked":true,
          "name":"bats",
          "objects":[
                 {
@@ -590,14 +620,13 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
          "id":17,
-         "locked":true,
          "name":"chrisps",
          "objects":[
                 {
@@ -614,14 +643,13 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
          "id":18,
-         "locked":true,
          "name":"beartraps",
          "objects":[
                 {
@@ -638,14 +666,13 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
          "id":19,
-         "locked":true,
          "name":"firetraps",
          "objects":[
                 {
@@ -674,7 +701,7 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }, 
@@ -876,7 +903,6 @@
         {
          "draworder":"topdown",
          "id":12,
-         "locked":true,
          "name":"stairDown",
          "objects":[
                 {
@@ -888,19 +914,18 @@
                  "rotation":0,
                  "visible":true,
                  "width":16,
-                 "x":128,
-                 "y":144
+                 "x":828,
+                 "y":200
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
          "id":13,
-         "locked":true,
          "name":"stairUp",
          "objects":[
                 {
@@ -912,17 +937,40 @@
                  "rotation":0,
                  "visible":true,
                  "width":16,
+                 "x":816,
+                 "y":752
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":20,
+         "name":"exit",
+         "objects":[
+                {
+                 "class":"",
+                 "gid":776,
+                 "height":16,
+                 "id":39,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":16,
                  "x":752,
                  "y":768
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }],
- "nextlayerid":20,
- "nextobjectid":37,
+ "nextlayerid":21,
+ "nextobjectid":40,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.9.2",
@@ -937,7 +985,7 @@
          "margin":0,
          "name":"watabou_pixel_dungeon_spritesheet",
          "spacing":0,
-         "tilecount":54,
+         "tilecount":2208,
          "tileheight":16,
          "tiles":[
                 {
