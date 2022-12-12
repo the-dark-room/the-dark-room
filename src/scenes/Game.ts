@@ -20,6 +20,7 @@ import { sceneEvents } from "../events/EventsCenter";
 import Chest from "../items/Chest";
 
 
+// let isChrispDead = false;
 let map;
 let mapCount = 0;
 let mapArr = [
@@ -82,6 +83,7 @@ export default class Game extends Phaser.Scene {
   blackRectangle;
   mapWidth;
   mapHeight;
+  isChrispDead = false;
 
   /*
    ** GAME TIMER
@@ -166,6 +168,7 @@ export default class Game extends Phaser.Scene {
 
     // so we can replay the game
     if(!wallsLayer) {
+      this.isChrispDead = false;
       currentTime = 0;
       map.destroy(); // destroy the current map
       map = this.make.tilemap({ key: mapArr[0] }); // add a new one
@@ -215,28 +218,28 @@ export default class Game extends Phaser.Scene {
     }
 
     // up stairs
-    // const stairUp = map.getObjectLayer("stairUp");
-    // const stairUpGroup = this.physics.add.staticGroup();
-    // stairUp.objects.forEach((stairObj) => {
-    //   stairUpGroup.get(
-    //     stairObj.x! + stairObj.width! * 0.5,
-    //     stairObj.y! - stairObj.height! * 0.5,
-    //     "stair-down"
-    //   );
-    // });
-    // // assigning names for map switching purposes
-    // stairUpGroup.name = stairUp.objects[0].name;
-
-    // down stairs
-    const stairDown = map.getObjectLayer("stairDown");
-    const stairDownGroup = this.physics.add.staticGroup();
-    stairDown.objects.forEach((stairObj) => {
-      stairDownGroup.get(
+    const stairUp = map.getObjectLayer("stairUp");
+    const stairUpGroup = this.physics.add.staticGroup();
+    stairUp.objects.forEach((stairObj) => {
+      stairUpGroup.get(
         stairObj.x! + stairObj.width! * 0.5,
         stairObj.y! - stairObj.height! * 0.5,
         "stair-down"
       );
     });
+    // assigning names for map switching purposes
+    stairUpGroup.name = stairUp.objects[0].name;
+
+    // down stairs
+    // const stairDown = map.getObjectLayer("stairDown");
+    // const stairDownGroup = this.physics.add.staticGroup();
+    // stairDown.objects.forEach((stairObj) => {
+    //   stairDownGroup.get(
+    //     stairObj.x! + stairObj.width! * 0.5,
+    //     stairObj.y! - stairObj.height! * 0.5,
+    //     "stair-down"
+    //   );
+    // });
 
     // exit door/staircase
     const exitDoor = map.getObjectLayer("exit");
@@ -525,20 +528,20 @@ export default class Game extends Phaser.Scene {
       this
     );
     //stairs
-    // this.physics.add.collider(
-    //   this.faune,
-    //   stairUpGroup,
-    //   this.handleStairsUpCollision,
-    //   undefined,
-    //   this
-    // );
     this.physics.add.collider(
       this.faune,
-      stairDownGroup,
-      this.handleStairsDownCollision,
+      stairUpGroup,
+      this.handleStairsUpCollision,
       undefined,
       this
     );
+    // this.physics.add.collider(
+    //   this.faune,
+    //   stairDownGroup,
+    //   this.handleStairsDownCollision,
+    //   undefined,
+    //   this
+    // );
     this.physics.add.collider(
       this.faune,
       exitDoorGroup,
@@ -745,21 +748,10 @@ export default class Game extends Phaser.Scene {
     obj2.setInteractive()
     const objScene = this.scene
     obj2.on('pointerdown', function () {
-      console.log(obj2.lore);
       objScene.pause()
       objScene.launch('lore', {text: obj2.lore})
       obj2.removeInteractive()
     })
-
-    // this.input.on('pointerdown', function (pointer) {
-    //   console.log('in pointerdown');
-		// 	if (pointer.leftButtonDown()){
-    //     this.scene.pause()
-    //     this.scene.launch('lore', {text: `Eat my socks`})
-    //   }
-    // }, this)
-
-
   }
 
   private handleKnifeWallCollision(
@@ -984,11 +976,23 @@ export default class Game extends Phaser.Scene {
     obj1: Phaser.GameObjects.GameObject,
     obj2: Phaser.GameObjects.GameObject
   ) {
-    this.scene.stop("game-ui");
-    this.scene.start("winner", { currentTime: currentTime }); //WINNER
+    if(this.isChrispDead === true) {
+      this.scene.stop("game-ui");
+      this.scene.start("winner", { currentTime: currentTime }); //WINNER
+    } else {
+      this.scene.pause();
+      this.scene.launch('exit')
+    }
   }
 
   update(t: number, dt: number) {
+    // only open the exit door if chrisp is dead
+    if(!this.chrisps.children.entries[0]) {
+      this.isChrispDead = true;
+    } else {
+      this.isChrispDead = false;
+    }
+
     if (this.keyQ.isDown) {
       this.scene.stop("game-ui");
       this.scene.start("winner", { currentTime: currentTime }); //WINNER

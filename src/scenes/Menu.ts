@@ -93,7 +93,7 @@ export default class Menu extends Phaser.Scene {
     });
 
     aboutButton.on("pointerup", () => {
-      // this.scene.start('game')
+      menuMusic.stop();
       this.sound.play("click", {
         volume: 0.4,
       });
@@ -101,7 +101,7 @@ export default class Menu extends Phaser.Scene {
     });
 
     controlsButton.on("pointerup", () => {
-      // this.scene.start('game')
+      menuMusic.stop();
       this.sound.play("click", {
         volume: 0.4,
       });
