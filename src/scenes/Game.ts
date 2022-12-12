@@ -146,7 +146,7 @@ export default class Game extends Phaser.Scene {
 
     // adds the map and the tiles for it
     // we need it like this so we can optionally take in a new map when we change maps
-    map = map || this.make.tilemap({ key: "map_bigEmpty" });
+    map = map || this.make.tilemap({ key: "map_jail" });
     const tileset = map.addTilesetImage(
       "watabou_pixel_dungeon_spritesheet",
       "tiles"
@@ -435,12 +435,10 @@ export default class Game extends Phaser.Scene {
     });
 
     const chrispsLayer = map.getObjectLayer("chrisps");
-    if(chrispsLayer) {
-      chrispsLayer.objects.forEach((e) => {
-        this.chrisps.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, "chrisp")
-        .setSize(15, 15);
-      });
-    }
+    chrispsLayer.objects.forEach((e) => {
+      this.chrisps.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, "chrisp")
+      .setSize(15, 15);
+    });
 
     const beartrapsLayer = map.getObjectLayer("beartraps");
     beartrapsLayer.objects.forEach((e) => {
