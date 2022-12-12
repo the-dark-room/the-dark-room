@@ -9,6 +9,7 @@ import Loser from "./scenes/Loser";
 import EnterName from "./scenes/EnterName";
 import LeaderBoard from "./scenes/LeaderBoard";
 import About from "./scenes/About";
+import Controls from "./scenes/Controls";
 
 import PhaserRaycaster from "phaser-raycaster";
 
@@ -34,6 +35,7 @@ export default new Phaser.Game({
     EnterName,
     LeaderBoard,
     About,
+    Controls,
   ],
   scale: {
     mode: Phaser.Scale.FIT,

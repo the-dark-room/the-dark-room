@@ -22,6 +22,16 @@ export default class About extends Phaser.Scene {
     let element = this.add
       .dom(screenCenterX, screenCenterX)
       .createFromHTML(html);
+
+    element.addListener("click");
+    // Used the pass on this context to the function
+    const game = this;
+
+    element.on("click", function (event) {
+      if (event.target.name === "back") {
+        game.scene.start("menu");
+      }
+    });
   }
 
   about(height, width) {
@@ -29,7 +39,7 @@ export default class About extends Phaser.Scene {
             <style>
               #about {
                 font-size: 50%;
-                height: ${height - 50}px;
+                height: ${height - 10}px;
                 width: ${width}px;
                 display: flex;
                 flex-direction: column;
@@ -66,6 +76,13 @@ export default class About extends Phaser.Scene {
               a:hover {
                 color: transparent;
                 transition: 500ms ease;
+              }
+              #back {
+                background-color: antiquewhite;
+                padding: 2%;
+                font-size: 3%;
+                align-self: flex-start;
+                margin: 3%;
               }
             </style>
             <div id="about">
@@ -118,6 +135,7 @@ export default class About extends Phaser.Scene {
                   " target="_blank">LinkedIn</a>
                 </div>
               </div>
+              <button name="back" id="back" type="button" >BACK</button>
             </div>
     `;
   }
