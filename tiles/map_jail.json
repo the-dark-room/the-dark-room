@@ -139,13 +139,13 @@
                         {
                          "name":"lore",
                          "type":"string",
-                         "value":"first"
+                         "value":"...\u201cLet us go then, you and I, when the evening is spread out against the sky.\u201d....How I wish this gasping flashlight could resemble the setting sun. I wish it could look like that weary, orange orb sinking beyond the horizon, the sea sparkling with diamonds using the last rays of light\u2026\u2026I wish it could give me as much hope as Gatsby had when he saw the green light across the harbor longing for Daisy\u2026..I wish I could be like the Hunchback, and gaze into the eyes of..."
                         }],
                  "rotation":0,
                  "visible":true,
                  "width":16,
-                 "x":32,
-                 "y":288
+                 "x":256,
+                 "y":704
                 }, 
                 {
                  "class":"",
@@ -157,13 +157,31 @@
                         {
                          "name":"lore",
                          "type":"string",
-                         "value":"second"
+                         "value":"This will be my final piece, and understandably, not my best work. I am alone with a broken leg and a flickering flashlight. No one is coming, and the only help that could come would be the thief who got us out of that cell. I wonder how he is now. Probably dead. I hope it was quick\u2026..In my final moments, to my disbelief, I can\u2019t help but think about Gary, the insufferable poet from college who always recited T.S. Eliot's famous poem at parties..."
                         }],
                  "rotation":0,
                  "visible":true,
                  "width":16,
-                 "x":32,
-                 "y":336
+                 "x":144,
+                 "y":208
+                }, 
+                {
+                 "class":"",
+                 "gid":545,
+                 "height":16,
+                 "id":38,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"lore",
+                         "type":"string",
+                         "value":"...Notre Dame, or die like Esmeralda in that marvelous chapel instead of its catacombs below. Paris, so brilliant and breathtaking right above me, so many people unaware.\u2026..I wish they could understand the evil I have seen. I wish the cult hunters knew what was happening. I wish the Dread Lord hadn\u2019t created death, disease, and suffering\u2026I wish I was crazy. I wish there was food. I wish I was in my bed. I wish this were a dream. I wish I would wake up.I wish\u2026\u2026..I wish I wasn\u2019t alone.\n--Christie Jupiter Engatron\n"
+                        }],
+                 "rotation":0,
+                 "visible":true,
+                 "width":16,
+                 "x":176,
+                 "y":304
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -798,41 +816,6 @@
         }, 
         {
          "draworder":"topdown",
-         "id":16,
-         "name":"chrisps",
-         "objects":[
-                {
-                 "class":"",
-                 "gid":449,
-                 "height":16,
-                 "id":31,
-                 "name":"",
-                 "rotation":0,
-                 "visible":true,
-                 "width":16,
-                 "x":32,
-                 "y":688
-                }, 
-                {
-                 "class":"",
-                 "gid":449,
-                 "height":16,
-                 "id":32,
-                 "name":"",
-                 "rotation":0,
-                 "visible":true,
-                 "width":16,
-                 "x":48,
-                 "y":784
-                }],
-         "opacity":1,
-         "type":"objectgroup",
-         "visible":true,
-         "x":0,
-         "y":0
-        }, 
-        {
-         "draworder":"topdown",
          "id":17,
          "name":"beartraps",
          "objects":[
@@ -948,7 +931,7 @@
          "y":0
         }],
  "nextlayerid":19,
- "nextobjectid":38,
+ "nextobjectid":39,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.9.2",
