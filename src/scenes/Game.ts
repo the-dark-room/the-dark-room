@@ -146,7 +146,7 @@ export default class Game extends Phaser.Scene {
 
     // adds the map and the tiles for it
     // we need it like this so we can optionally take in a new map when we change maps
-    map = map || this.make.tilemap({ key: "map_jail" });
+    map = map || this.make.tilemap({ key: "map_bigEmpty" });
     const tileset = map.addTilesetImage(
       "watabou_pixel_dungeon_spritesheet",
       "tiles"
@@ -215,17 +215,17 @@ export default class Game extends Phaser.Scene {
     }
 
     // up stairs
-    const stairUp = map.getObjectLayer("stairUp");
-    const stairUpGroup = this.physics.add.staticGroup();
-    stairUp.objects.forEach((stairObj) => {
-      stairUpGroup.get(
-        stairObj.x! + stairObj.width! * 0.5,
-        stairObj.y! - stairObj.height! * 0.5,
-        "stair-down"
-      );
-    });
-    // assigning names for map switching purposes
-    stairUpGroup.name = stairUp.objects[0].name;
+    // const stairUp = map.getObjectLayer("stairUp");
+    // const stairUpGroup = this.physics.add.staticGroup();
+    // stairUp.objects.forEach((stairObj) => {
+    //   stairUpGroup.get(
+    //     stairObj.x! + stairObj.width! * 0.5,
+    //     stairObj.y! - stairObj.height! * 0.5,
+    //     "stair-down"
+    //   );
+    // });
+    // // assigning names for map switching purposes
+    // stairUpGroup.name = stairUp.objects[0].name;
 
     // down stairs
     const stairDown = map.getObjectLayer("stairDown");
@@ -435,10 +435,12 @@ export default class Game extends Phaser.Scene {
     });
 
     const chrispsLayer = map.getObjectLayer("chrisps");
-    chrispsLayer.objects.forEach((e) => {
-      this.chrisps.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, "chrisp")
-      .setSize(15, 15);
-    });
+    if(chrispsLayer) {
+      chrispsLayer.objects.forEach((e) => {
+        this.chrisps.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, "chrisp")
+        .setSize(15, 15);
+      });
+    }
 
     const beartrapsLayer = map.getObjectLayer("beartraps");
     beartrapsLayer.objects.forEach((e) => {
@@ -523,13 +525,13 @@ export default class Game extends Phaser.Scene {
       this
     );
     //stairs
-    this.physics.add.collider(
-      this.faune,
-      stairUpGroup,
-      this.handleStairsUpCollision,
-      undefined,
-      this
-    );
+    // this.physics.add.collider(
+    //   this.faune,
+    //   stairUpGroup,
+    //   this.handleStairsUpCollision,
+    //   undefined,
+    //   this
+    // );
     this.physics.add.collider(
       this.faune,
       stairDownGroup,
