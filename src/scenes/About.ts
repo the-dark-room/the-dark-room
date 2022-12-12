@@ -28,8 +28,8 @@ export default class About extends Phaser.Scene {
     return `
             <style>
               #about {
-                font-size: 5%;
-                height: ${height - 150}px;
+                font-size: 50%;
+                height: ${height - 50}px;
                 width: ${width}px;
                 display: flex;
                 flex-direction: column;
@@ -47,8 +47,9 @@ export default class About extends Phaser.Scene {
                 gap: 5%;
               }
               .profile_pic {
-                height: 5%;
-                width: 5%;
+                height: 4rem;
+                width: 4rem;
+                border-radius: 50%;
               }
               #team > div {
                 display: flex;
@@ -56,16 +57,22 @@ export default class About extends Phaser.Scene {
                 gap: 2%;
                 align-items: center;
               }
-              h1 {
-                text-size: 3px;
-              }
               a {
+                color: blue;
+                background: linear-gradient(90deg, blue, purple, red, orange );
+                background-clip: text;
+                -webkit-background-clip: text;
+              }
+              a:hover {
+                color: transparent;
+                transition: 500ms ease;
               }
             </style>
             <div id="about">
               <div id="info">
                 <h1>About the Game</h1>
                 <a href="https://github.com/the-dark-room/the-dark-room" id="github"
+                  target="_blank"
                   >Project Github</a
                 >
                 <p>
@@ -80,34 +87,35 @@ export default class About extends Phaser.Scene {
                 <div>
                   <img
                     class="profile_pic"
-                    src="https://live.staticflickr.com/7024/6671465981_84bf3d94b0_b.jpg"
+                    src="https://upload.wikimedia.org/wikipedia/commons/a/a8/Phoenix_bird_pattern.svg"
                   />
-                  <h3>Name Here</h3>
-                  <a href="https://www.linkedin.com/">LinkedIn</a>
+                  <h5>Joaquin (Jake) Lim</h5>
+                  <a href="https://www.linkedin.com/in/joaquin-lim/" target="_blank">LinkedIn</a>
                 </div>
                 <div>
                   <img
                     class="profile_pic"
-                    src="https://live.staticflickr.com/7024/6671465981_84bf3d94b0_b.jpg"
+                    src="https://live.staticflickr.com/5570/14781131062_157632f51d_b.jpg"
                   />
-                  <h3>Name Here</h3>
-                  <a href="https://www.linkedin.com/">LinkedIn</a>
+                  <h5>James Johnson</h5>
+                  <a href="https://www.linkedin.com/in/-jamesjohnson/" target="_blank">LinkedIn</a>
                 </div>
                 <div>
                   <img
                     class="profile_pic"
-                    src="https://live.staticflickr.com/7024/6671465981_84bf3d94b0_b.jpg"
+                    src="https://www.classicist.org/wp-content/uploads/2013/06/_pagebody/Chambers.jpg"
                   />
-                  <h3>Name Here</h3>
-                  <a href="https://www.linkedin.com/">LinkedIn</a>
+                  <h5>Daniel Lukonis</h5>
+                  <a href="https://www.linkedin.com/in/daniellukonis/" target="_blank">LinkedIn</a>
                 </div>
                 <div>
                   <img
                     class="profile_pic"
-                    src="https://live.staticflickr.com/7024/6671465981_84bf3d94b0_b.jpg"
+                    src="https://cdn18.picryl.com/photo/2019/10/05/fox-and-two-hares-655124-1024.jpg"
                   />
-                  <h3>Name Here</h3>
-                  <a href="https://www.linkedin.com/">LinkedIn</a>
+                  <h5>Elijah Rhinehardt</h5>
+                  <a href="https://www.linkedin.com/in/elijah-rhinehardt
+                  " target="_blank">LinkedIn</a>
                 </div>
               </div>
             </div>
