@@ -25,7 +25,7 @@ export default class LoreTemplate extends Phaser.Scene {
             text: obj.text,
             origin: { x: 0.5, y: 0.5 },
             style: {
-                wordWrap: { width: this.cameras.main.width - 15 }
+                wordWrap: { width: this.cameras.main.width - 5 }
             }
         })
         text1.setTint(0xff00ff, 0xff0000, 0xff00ff, 0xff0000);
