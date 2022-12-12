@@ -43,7 +43,7 @@ export default class EnterName extends Phaser.Scene {
 
   preload() {
     this.load.html("nameform", "/nameForm.html");
-    getLeaderboard()
+    // getLeaderboard()
   }
 
   create() {
@@ -55,7 +55,8 @@ export default class EnterName extends Phaser.Scene {
       this.cameras.main.worldView.y + this.cameras.main.height / 2;
 
     this.exitTime = this.scene.settings.data.currentTime;
-    let scoreTime = this.exitTime; // so we don't have "this" shadowing problems (just accept that we need this and then no touchie)
+    // 600 = MAXTIME
+    let scoreTime = 600 - this.exitTime; // so we don't have "this" shadowing problems (just accept that we need this and then no touchie)
 
     let form = `
       <input type="text" name="nameField" placeholder="Initials" maxLength="3" style="font-size: 5%">
@@ -66,7 +67,7 @@ export default class EnterName extends Phaser.Scene {
       .text(
         screenCenterX,
         screenCenterY - screenCenterY / 4,
-        `Your score was ${this.exitTime}`
+        `Your score was ${scoreTime}`
       )
       .setOrigin(0.5);
     text1.setTint(0xff00ff, 0xff0000, 0xff00ff, 0xff0000);

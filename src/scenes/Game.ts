@@ -181,14 +181,24 @@ export default class Game extends Phaser.Scene {
       classType: Chest,
     });
     const chestsLayer = map.getObjectLayer("chests");
+    let loreArr = []
+
     chestsLayer.objects.forEach((chestObj) => {
       chests.get(
         chestObj.x! + chestObj.width! * 0.5,
         chestObj.y! - chestObj.height! * 0.5,
-        "treasure"
+        "treasure",
       );
+      loreArr.push(chestObj.properties[0].value)
     });
+    // chests.children.entries[0].lore = 'maybe?'
+    // chests.children.entries[1].lore = '???????'
+    
+    for(let i=0; i < chests.children.entries.length; i++) {
+      chests.children.entries[i].lore = loreArr[i]
+    }
 
+    // camera follows the player
     this.cameras.main.startFollow(this.faune, true);
 
     // get the polygon(s) for the walls
@@ -227,6 +237,20 @@ export default class Game extends Phaser.Scene {
         "stair-down"
       );
     });
+
+    // exit door/staircase
+    const exitDoor = map.getObjectLayer("exit");
+    const exitDoorGroup = this.physics.add.staticGroup();
+
+    if(exitDoor){
+      exitDoor.objects.forEach((exitObj) => {
+        exitDoorGroup.get(
+          exitObj.x! + exitObj.width! * 0.5,
+          exitObj.y! - exitObj.height! * 0.5,
+          "stair-down"
+        );
+      });
+  }
 
     // Raycaster
     // sets the bounding box for the rays
@@ -299,35 +323,10 @@ export default class Game extends Phaser.Scene {
 
     //map obstacles
     this.raycaster.mapGameObjects(obstacles.getChildren());
-    // this.raycaster.mapGameObjects(wallsLayer, false, {
-    //   collisionTiles: [248, 244, 294],
-    // });
 
     // creating obstacles
     function createObstacles(scene) {
       let obstacle;
-
-      //create line obstacle
-      // let obstacle = scene.add
-      //   .line(400, 100, 0, 0, 200, 50)
-      //   .setStrokeStyle(1, 0xff0000);
-      // obstacles.add(obstacle);
-
-      //create polygon obstacle
-      // obstacle = scene.add
-      //   .polygon(650, 500, [0, 0, 50, 50, 100, 0, 100, 75, 50, 100, 0, 50])
-      //   .setStrokeStyle(1, 0xff0000);
-      // obstacles.add(obstacle);
-
-      // [0,0, 192,0, 192,240, 128,240, 128,656, 112,656, 112,240, 0,240]
-
-      //create overlapping obstacles
-      // for (let i = 0; i < 5; i++) {
-      //   obstacle = scene.add
-      //     .rectangle(350 + 30 * i, 550 - 30 * i, 50, 50)
-      //     .setStrokeStyle(1, 0xff0000);
-      //   obstacles.add(obstacle, true);
-      // }
 
       //create image obstacle
       // obstacle = scene.add.image(800, 800, "mapImage");
@@ -538,6 +537,13 @@ export default class Game extends Phaser.Scene {
       undefined,
       this
     );
+    this.physics.add.collider(
+      this.faune,
+      exitDoorGroup,
+      this.handleExitCollision,
+      undefined,
+      this
+    );
 
     // melee-enemy collisions
     this.physics.add.overlap(
@@ -734,12 +740,22 @@ export default class Game extends Phaser.Scene {
     obj1: Phaser.GameObjects.GameObject,
     obj2: Phaser.GameObjects.GameObject
   ) {
-    this.input.on('pointerdown', function (pointer) {
-			if (pointer.leftButtonDown()){
-        this.scene.pause()
-        this.scene.launch('lore', {text: `Eat my socks`})
-      }
-    }, this)
+    obj2.setInteractive()
+    const objScene = this.scene
+    obj2.on('pointerdown', function () {
+      console.log(obj2.lore);
+      objScene.pause()
+      objScene.launch('lore', {text: obj2.lore})
+      obj2.removeInteractive()
+    })
+
+    // this.input.on('pointerdown', function (pointer) {
+    //   console.log('in pointerdown');
+		// 	if (pointer.leftButtonDown()){
+    //     this.scene.pause()
+    //     this.scene.launch('lore', {text: `Eat my socks`})
+    //   }
+    // }, this)
 
 
   }
@@ -960,6 +976,14 @@ export default class Game extends Phaser.Scene {
       // restart the scene, including the new map as a parameter so we can carry it over
       this.scene.restart(map);
     }
+  }
+
+  private handleExitCollision(
+    obj1: Phaser.GameObjects.GameObject,
+    obj2: Phaser.GameObjects.GameObject
+  ) {
+    this.scene.stop("game-ui");
+    this.scene.start("winner", { currentTime: currentTime }); //WINNER
   }
 
   update(t: number, dt: number) {
