@@ -135,6 +135,12 @@
                  "height":16,
                  "id":1,
                  "name":"",
+                 "properties":[
+                        {
+                         "name":"lore",
+                         "type":"string",
+                         "value":"...and even if I spared him, we would both just end up dead. Killing him was the best option; at least one of us would survive. Tears streaming down my face underneath my mask, screaming, I brought the knife down into his heart. The room erupted into cheers as the man breathed his last. I managed to sneak away into a side room, saying I needed to compose myself, and here I write this note, and my confession."
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":16,
@@ -147,23 +153,35 @@
                  "height":16,
                  "id":2,
                  "name":"",
-                 "rotation":0,
-                 "visible":true,
-                 "width":16,
-                 "x":188,
-                 "y":44
-                }, 
-                {
-                 "class":"",
-                 "gid":545,
-                 "height":16,
-                 "id":3,
-                 "name":"",
+                 "properties":[
+                        {
+                         "name":"lore",
+                         "type":"string",
+                         "value":"...was shocked to see everyone looking at me expectantly. I looked at the man who had handed me the dagger, and he gestured towards the man, as if saying \u201cGo on. Stab him\u201d. I looked at the crowd; they had begun chanting in some tongue I didn't understand. I wanted to throw the knife away, but I feared what would happen if they realized I wasn\u2019t who they thought I was. As their chanting increased in both volume and urgency, I looked at the man on the altar. It was my life or his..."
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":16,
                  "x":512,
                  "y":464
+                }, 
+                {
+                 "class":"",
+                 "gid":545,
+                 "height":16,
+                 "id":60,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"lore",
+                         "type":"string",
+                         "value":"...I was surprised to find him tied-down and struggling against his restraints. I didn\u2019t know what this was all about, but I certainly wasn\u2019t going to say something and become the center of attention. As I stared through my mask at the man, I was handed a ceremonious-looking dagger. I took it without realizing it, and..."
+                        }],
+                 "rotation":0,
+                 "visible":true,
+                 "width":16,
+                 "x":128,
+                 "y":160
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -354,6 +372,210 @@
                  "width":16,
                  "x":288,
                  "y":592
+                }, 
+                {
+                 "class":"",
+                 "gid":22,
+                 "height":16,
+                 "id":61,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":16,
+                 "x":368,
+                 "y":256
+                }, 
+                {
+                 "class":"",
+                 "gid":22,
+                 "height":16,
+                 "id":62,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":16,
+                 "x":496,
+                 "y":256
+                }, 
+                {
+                 "class":"",
+                 "gid":22,
+                 "height":16,
+                 "id":63,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":16,
+                 "x":448,
+                 "y":128
+                }, 
+                {
+                 "class":"",
+                 "gid":22,
+                 "height":16,
+                 "id":64,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":16,
+                 "x":224,
+                 "y":176
+                }, 
+                {
+                 "class":"",
+                 "gid":22,
+                 "height":16,
+                 "id":65,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":16,
+                 "x":192,
+                 "y":96
+                }, 
+                {
+                 "class":"",
+                 "gid":22,
+                 "height":16,
+                 "id":66,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":16,
+                 "x":32,
+                 "y":688
+                }, 
+                {
+                 "class":"",
+                 "gid":22,
+                 "height":16,
+                 "id":67,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":16,
+                 "x":112,
+                 "y":656
+                }, 
+                {
+                 "class":"",
+                 "gid":22,
+                 "height":16,
+                 "id":68,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":16,
+                 "x":464,
+                 "y":624
+                }, 
+                {
+                 "class":"",
+                 "gid":22,
+                 "height":16,
+                 "id":69,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":16,
+                 "x":448,
+                 "y":336
+                }, 
+                {
+                 "class":"",
+                 "gid":22,
+                 "height":16,
+                 "id":70,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":16,
+                 "x":576,
+                 "y":112
+                }, 
+                {
+                 "class":"",
+                 "gid":22,
+                 "height":16,
+                 "id":71,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":16,
+                 "x":736,
+                 "y":112
+                }, 
+                {
+                 "class":"",
+                 "gid":22,
+                 "height":16,
+                 "id":72,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":16,
+                 "x":672,
+                 "y":752
+                }, 
+                {
+                 "class":"",
+                 "gid":22,
+                 "height":16,
+                 "id":73,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":16,
+                 "x":464,
+                 "y":736
+                }, 
+                {
+                 "class":"",
+                 "gid":22,
+                 "height":16,
+                 "id":74,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":16,
+                 "x":368,
+                 "y":752
+                }, 
+                {
+                 "class":"",
+                 "gid":22,
+                 "height":16,
+                 "id":75,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":16,
+                 "x":128,
+                 "y":416
+                }, 
+                {
+                 "class":"",
+                 "gid":22,
+                 "height":16,
+                 "id":76,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":16,
+                 "x":80,
+                 "y":352
+                }, 
+                {
+                 "class":"",
+                 "gid":22,
+                 "height":16,
+                 "id":77,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":16,
+                 "x":128,
+                 "y":256
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -776,41 +998,6 @@
         }, 
         {
          "draworder":"topdown",
-         "id":16,
-         "name":"chrisps",
-         "objects":[
-                {
-                 "class":"",
-                 "gid":449,
-                 "height":16,
-                 "id":38,
-                 "name":"",
-                 "rotation":0,
-                 "visible":true,
-                 "width":16,
-                 "x":464,
-                 "y":432
-                }, 
-                {
-                 "class":"",
-                 "gid":449,
-                 "height":16,
-                 "id":39,
-                 "name":"",
-                 "rotation":0,
-                 "visible":true,
-                 "width":16,
-                 "x":480,
-                 "y":432
-                }],
-         "opacity":1,
-         "type":"objectgroup",
-         "visible":true,
-         "x":0,
-         "y":0
-        }, 
-        {
-         "draworder":"topdown",
          "id":17,
          "name":"beartraps",
          "objects":[
@@ -1218,7 +1405,7 @@
          "y":0
         }],
  "nextlayerid":19,
- "nextobjectid":57,
+ "nextobjectid":78,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.9.2",

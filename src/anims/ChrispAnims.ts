@@ -25,7 +25,7 @@ const createChrispAnims = (anims: Phaser.Animations.AnimationManager) => {
 	anims.create({
 		key: 'chrisp-swing',
 		frames: anims.generateFrameNames('chrisp-swing', { start: 0, end: 12, prefix: 'chrisp-swing-', suffix: '.png' }),
-		// repeat: -1,
+		repeat: -1,
 		frameRate: 10
 	})
 }

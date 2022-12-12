@@ -39,18 +39,18 @@ export default class LeaderBoard extends Phaser.Scene {
     super("leaderboard");
   }
 
-  preload() {
-    this.load.html("nameform", "nameForm.html");
-    getLeaderboard()
-  }
+  // preload() {
+  //   this.load.html("nameform", "nameForm.html");
+  //   getLeaderboard()
+  // }
 
-  leaderboardScores(x, y, score) {
-    console.log(score)
-      for(let i=0; i<11; i++) {
-        this.add.text(x, y, score[i]?.name, score[i]?.score)
-          .setOrigin(i / 2)
-      }
-    }
+  // leaderboardScores(x, y, score) {
+  //   console.log(score)
+  //     for(let i=0; i<11; i++) {
+  //       this.add.text(x, y, score[i]?.name, score[i]?.score)
+  //         .setOrigin(i / 2)
+  //     }
+  //   }
 
   // Firestore stuff returns a promise, so we need async
   async create() {
