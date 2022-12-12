@@ -16,12 +16,10 @@ function getLeaderboard() {
   const q = query(scoreCollectionRef, orderBy('score', 'desc'))
   onSnapshot(q, (snapshot) => {
     snapshot.docs.forEach((doc) => {
-      // console.log(doc.data())
       scores.push({ ...doc.data(), id: doc.id })
     })
   })
   return scores;
-  // console.log(scores);
 }
 
 // const leaderboardScores = (scene, screenX, screenY, scores) => {
@@ -107,8 +105,6 @@ export default class LeaderBoard extends Phaser.Scene {
 
     element.addListener("click");
     element.on('click', function (evt) {
-      console.log('clicked');
-      console.log(scenePasser);
       scenePasser.start('menu')
     })
 

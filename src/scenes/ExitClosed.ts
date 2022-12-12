@@ -1,15 +1,15 @@
 import Phaser from "phaser";
 
-export default class LoreTemplate extends Phaser.Scene {
+export default class ExitClosed extends Phaser.Scene {
 
     constructor() {
-		super('lore')
+		super('exit')
 	}
 
 	preload() {
 	}
 
-	create(obj) {
+	create() {
         this.cameras.main.transparent = false
         this.cameras.main.setBackgroundColor('#000000')
 
@@ -22,7 +22,7 @@ export default class LoreTemplate extends Phaser.Scene {
         const text1 = this.make.text({
             x: screenCenterX,
             y: screenCenterY,
-            text: obj.text,
+            text: 'An undead force prevents you from moving forward...',
             origin: { x: 0.5, y: 0.5 },
             style: {
                 wordWrap: { width: this.cameras.main.width - 5 }

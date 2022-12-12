@@ -7,6 +7,7 @@ import Menu from "./scenes/Menu";
 import Winner from "./scenes/Winner";
 import Loser from "./scenes/Loser";
 import EnterName from "./scenes/EnterName";
+import ExitClosed from "./scenes/ExitClosed";
 
 import LeaderBoard from "./scenes/LeaderBoard";
 import About from "./scenes/About";
@@ -41,6 +42,7 @@ export default new Phaser.Game({
     About,
     Controls,
     LoreTemplate,
+    ExitClosed,
   ],
 
   scale: {
