@@ -816,41 +816,6 @@
         }, 
         {
          "draworder":"topdown",
-         "id":16,
-         "name":"chrisps",
-         "objects":[
-                {
-                 "class":"",
-                 "gid":449,
-                 "height":16,
-                 "id":31,
-                 "name":"",
-                 "rotation":0,
-                 "visible":true,
-                 "width":16,
-                 "x":32,
-                 "y":688
-                }, 
-                {
-                 "class":"",
-                 "gid":449,
-                 "height":16,
-                 "id":32,
-                 "name":"",
-                 "rotation":0,
-                 "visible":true,
-                 "width":16,
-                 "x":48,
-                 "y":784
-                }],
-         "opacity":1,
-         "type":"objectgroup",
-         "visible":true,
-         "x":0,
-         "y":0
-        }, 
-        {
-         "draworder":"topdown",
          "id":17,
          "name":"beartraps",
          "objects":[
