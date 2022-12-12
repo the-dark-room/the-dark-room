@@ -93,11 +93,9 @@ export default class About extends Phaser.Scene {
                   >Project Github</a
                 >
                 <p>
-                  The Dark Room is a dungeon exploration game created using phaser. The
-                  player is is lost in a cultist dungeon and has to find their way out
-                  by reading all the secret notes and finding the exit. The game is
-                  created using phaser with the flash light using ray casting to detect
-                  walls.
+                  The Dark Room is a dungeon exploration game created using Phaser and ray casting. The
+                  player is lost in a cultist dungeon and has to find their way out
+                  by reading all the secret notes and finding the exit.
                 </p>
               </div>
               <div id="team">
