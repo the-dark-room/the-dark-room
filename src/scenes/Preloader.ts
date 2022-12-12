@@ -72,6 +72,24 @@ export default class Preloader extends Phaser.Scene
     //   });
     // }
 
+		this.cameras.main.transparent = false
+		this.cameras.main.setBackgroundColor('#000000')
+
+		const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
+		const screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
+
+		const text1 = this.make.text({
+			x: screenCenterX,
+			y: screenCenterY,
+			text: 'Loading...',
+			origin: { x: 0.5, y: 0.5 },
+			scale: 2.5,
+			style: {
+					wordWrap: { width: this.cameras.main.width - 5 }
+			}
+		})
+		text1.setTint(0x000000);
+
     this.load.on("progress", (percent: number) => {
     //   loadingBar.fillRect(0, this.game.renderer.height / 2, this.game.renderer.width * percent, 50)
     //   console.log(percent);
@@ -86,7 +104,6 @@ export default class Preloader extends Phaser.Scene
 
 	create()
 	{
-		// this.scene.start('game')
 		this.scene.start('menu')
 	}
 }
