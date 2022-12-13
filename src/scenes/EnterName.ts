@@ -1,13 +1,21 @@
 import Phaser from "phaser";
 
 // firestore stuff
-import { db } from '../firebaseConfig'
+import { db } from "../firebaseConfig";
 import {
-  getFirestore, collection, onSnapshot,
-  addDoc, deleteDoc, doc, setDoc,
-  query, where,
-  orderBy, serverTimestamp,
-  getDoc, updateDoc,
+  getFirestore,
+  collection,
+  onSnapshot,
+  addDoc,
+  deleteDoc,
+  doc,
+  setDoc,
+  query,
+  where,
+  orderBy,
+  serverTimestamp,
+  getDoc,
+  updateDoc,
 } from "firebase/firestore";
 
 // global playerinitials here...
@@ -16,14 +24,14 @@ let playerInitials;
 let scores = [];
 
 function getLeaderboard() {
-  const scoreCollectionRef = collection(db, 'highscore')
-  const q = query(scoreCollectionRef, orderBy('score', 'desc'))
+  const scoreCollectionRef = collection(db, "highscore");
+  const q = query(scoreCollectionRef, orderBy("score", "desc"));
   onSnapshot(q, (snapshot) => {
     snapshot.docs.forEach((doc) => {
       // console.log(doc.data())
-      scores.push({ ...doc.data(), id: doc.id })
-    })
-  })
+      scores.push({ ...doc.data(), id: doc.id });
+    });
+  });
   return scores;
   // console.log(scores);
 }
@@ -31,8 +39,8 @@ function getLeaderboard() {
 // have to do this roundabout way of passing the scene around because Firestore expects to be using React,
 // so I'm tricking it (not really; just passing "this.scene" into the function so we can use it)
 const handleSceneChange = (scene, time) => {
-  scene.start('leaderboard', { currentTime: time })
-}
+  scene.start("leaderboard", { currentTime: time });
+};
 
 export default class EnterName extends Phaser.Scene {
   exitTime = 0;
@@ -47,7 +55,7 @@ export default class EnterName extends Phaser.Scene {
   }
 
   create() {
-    this.input.keyboard.clearCaptures()
+    this.input.keyboard.clearCaptures();
 
     const screenCenterX =
       this.cameras.main.worldView.x + this.cameras.main.width / 2;
@@ -59,8 +67,26 @@ export default class EnterName extends Phaser.Scene {
     let scoreTime = 600 - this.exitTime; // so we don't have "this" shadowing problems (just accept that we need this and then no touchie)
 
     let form = `
-      <input type="text" name="nameField" placeholder="Initials" maxLength="3" style="font-size: 5%">
-      <input type="button" name="playButton" value="Submit" style="font-size: 5% ">
+              <style>
+                div {
+                  display: flex;
+                }
+                #sub {
+                background-color: antiquewhite;
+                padding: 2%;
+                font-size: 3%;
+                margin: 3%;
+                }
+                #loc {
+                  background-color: antiquewhite;
+                  font-size: 5%;
+                  text-align: center;
+                }
+              </style>
+              <div>
+                <input type="text" name="nameField" id='loc' placeholder="Initials" maxLength="3">
+                <input type="button" id='sub' name="playButton" value="Submit" >
+              </div>
       `;
 
     const text1 = this.add
@@ -89,9 +115,9 @@ export default class EnterName extends Phaser.Scene {
 
     element.on("click", function (event) {
       if (event.target.name === "playButton") {
-        let inputText = this.getChildByName('nameField')
-        playerInitials = inputText.value
-        handleNamePost(scoreTime)
+        let inputText = this.getChildByName("nameField");
+        playerInitials = inputText.value;
+        handleNamePost(scoreTime);
 
         // getLeaderboard()
         // if(scores) {
@@ -100,14 +126,12 @@ export default class EnterName extends Phaser.Scene {
       }
     });
     function handleNamePost(time) {
-      const playerRef = collection(db, 'highscore')
+      const playerRef = collection(db, "highscore");
       setDoc(doc(playerRef), {
         name: playerInitials,
         score: time,
-      }).then(handleSceneChange(scenePasser, time))
+      }).then(handleSceneChange(scenePasser, time));
     }
-
-
   }
 
   update() {}
@@ -115,5 +139,4 @@ export default class EnterName extends Phaser.Scene {
   // handleSceneChange() {
   //   this.scene.start('leaderboard')
   // }
-
 }
