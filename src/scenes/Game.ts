@@ -965,16 +965,16 @@ export default class Game extends Phaser.Scene {
     obj1: Phaser.GameObjects.GameObject,
     obj2: Phaser.GameObjects.GameObject
   ) {
-
+    this.sound.stopAll();
     this.scene.stop("game-ui");
     this.scene.start("winner", { currentTime: currentTime }); //WINNER
   }
 
   update(t: number, dt: number) {
-    if (this.keyQ.isDown) {
-      this.scene.stop("game-ui");
-      this.scene.start("winner", { currentTime: currentTime }); //WINNER
-    }
+    // if (this.keyQ.isDown) {
+    //   // this.scene.stop("game-ui");
+    //   // this.scene.start("winner", { currentTime: currentTime }); //WINNER
+    // }
 
     if (this.faune) {
       this.faune.update(this.cursors);
@@ -982,6 +982,7 @@ export default class Game extends Phaser.Scene {
 
     if(this.faune.health <= 0) {
       mapCount = 0
+      this.sound.stopAll()
     }
 
     // This makes sure that the mouse x and y are accurate
