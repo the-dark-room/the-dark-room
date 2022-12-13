@@ -28,12 +28,10 @@ function getLeaderboard() {
   const q = query(scoreCollectionRef, orderBy("score", "desc"));
   onSnapshot(q, (snapshot) => {
     snapshot.docs.forEach((doc) => {
-      // console.log(doc.data())
       scores.push({ ...doc.data(), id: doc.id });
     });
   });
   return scores;
-  // console.log(scores);
 }
 
 // have to do this roundabout way of passing the scene around because Firestore expects to be using React,

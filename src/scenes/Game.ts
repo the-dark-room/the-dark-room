@@ -108,7 +108,6 @@ export default class Game extends Phaser.Scene {
      */
     function updateGameTime() {
       currentTime += 1;
-      // console.log(this.currentTime)
       sceneEvents.emit("gameTimer-changed", {
         MAXTIME: this.MAXTIME,
         currentTime: currentTime,
@@ -208,7 +207,6 @@ export default class Game extends Phaser.Scene {
     shape.objects.forEach((shapeObj) => {
       shapeArr.push(shapeObj);
     });
-    // console.log(shapeArr[0]);
 
     let please = [];
     for (let i = 0; i < shapeArr[0].polygon.length; i++) {
@@ -758,7 +756,6 @@ export default class Game extends Phaser.Scene {
     obj2.setInteractive()
     const objScene = this.scene
     obj2.on('pointerdown', function () {
-      console.log(obj2.lore);
       objScene.pause()
       objScene.launch('lore', {text: obj2.lore})
       obj2.removeInteractive()
@@ -1005,7 +1002,6 @@ export default class Game extends Phaser.Scene {
     }
 
     if(this.faune.health <= 0) {
-      console.log('reset the map because player died');
       mapCount = 0
     }
 
