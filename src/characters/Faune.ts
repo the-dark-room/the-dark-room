@@ -169,7 +169,7 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 			return
 		}
 
-		const knife = this.knives.get(this.x, this.y, 'knife') as Phaser.Physics.Arcade.Image
+		const knife = this.knives.get(this.x-5, this.y, 'knife') as Phaser.Physics.Arcade.Image
 		if (!knife){
 			return
 		}

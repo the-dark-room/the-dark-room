@@ -23,11 +23,15 @@ export default class Chrisp extends Phaser.Physics.Arcade.Sprite
 	// private direction = Direction.RIGHT
 	// private moveEvent: Phaser.Time.TimerEvent
 
-	private health = 200
+	private health = 50
 
 	constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string | number)
 	{
 		super(scene, x, y, texture, frame)
+
+		// this.scene.chrispSwingBox = this.scene.add.rectangle(0, 0, 40, 70, 0xffffff, 0) as unknown as Phaser.Types.Physics.Arcade.ImageWithDynamicBody
+		// this.scene.physics.add.existing(this.scene.chrispSwingBox)
+		// this.scene.chrispSwingBox.body.enable = false
 
 		this.anims.play('chrisp-walk')
 
@@ -44,14 +48,25 @@ export default class Chrisp extends Phaser.Physics.Arcade.Sprite
 
 	gotHit() {
     this.health--
+		this.scene.sound.play("chrisp-hurt", {
+      volume: 0.2,
+    });
 	// this.anims.play('chrisp-damage')
     if (this.health <= 0) { this.destroy() }
   }
 
 
-  swing() {
-	// this.anims.play('chrisp-swing')
-  }
+  // swing() {
+	// 	console.log('Chrisp swung')
+
+	// 	this.setSize(50,50)
+	// 	// this.scene.chrispSwingBox.body.enable = true
+
+	// 	// this.scene.chrispSwingBox!.y = this.y
+	// 	// this.scene.chrispSwingBox!.x = this.x
+
+	// 	// this.anims.play('chrisp-swing')
+  // }
 
 
   getHealth() {
@@ -61,7 +76,7 @@ export default class Chrisp extends Phaser.Physics.Arcade.Sprite
 	destroy(fromScene?: boolean)
 	{
 		// this.anims.play('chrisp-death')
-		
+
 		// this.moveEvent.destroy()
 
 		super.destroy(fromScene)

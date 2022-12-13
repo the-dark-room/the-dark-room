@@ -20,7 +20,6 @@ import { sceneEvents } from "../events/EventsCenter";
 import Chest from "../items/Chest";
 
 
-// let isChrispDead = false;
 let map;
 let mapCount = 0;
 let mapArr = [
@@ -41,6 +40,7 @@ export default class Game extends Phaser.Scene {
   private sword!: Phaser.Physics.Arcade.Sprite;
   private knives!: Phaser.Physics.Arcade.Group;
   private meleeHitbox!: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
+  // private chrispSwingBox: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
 
   private ghosts!: Phaser.Physics.Arcade.Group; //GHOST
   private bods!: Phaser.Physics.Arcade.Group; //BOD
@@ -54,9 +54,9 @@ export default class Game extends Phaser.Scene {
 
   private ghostTrackTimer; //TIMER TO UPDATE GHOST CHASING PLAYER
   private chrispTrackTimer;//TIMER TO UPDATE CHRISP CHASING PLAYER
-  private GHOSTSPEED = 4; //HOW MANY PIXELS PER SECOND THE GHOST MOVES
+  private GHOSTSPEED = 25; //HOW MANY PIXELS PER SECOND THE GHOST MOVES
   private GHOSTSTUN = 2000; //HOW OFTEN THE GHOST UPDATES ITS DIRECTION / ALSO IS STUN DURATION
-  private CHRISPEED = 10  //HOW MANY PIXELS PER SECOND THE CHRISPS MOVES
+  private CHRISPEED = 40  //HOW MANY PIXELS PER SECOND THE CHRISPS MOVES
 
   private playerGhostsCollider?: Phaser.Physics.Arcade.Collider;
   private playerBodsCollider?: Phaser.Physics.Arcade.Collider;
@@ -83,7 +83,6 @@ export default class Game extends Phaser.Scene {
   blackRectangle;
   mapWidth;
   mapHeight;
-  isChrispDead = false;
 
   /*
    ** GAME TIMER
@@ -168,7 +167,6 @@ export default class Game extends Phaser.Scene {
 
     // so we can replay the game
     if(!wallsLayer) {
-      this.isChrispDead = false;
       currentTime = 0;
       map.destroy(); // destroy the current map
       map = this.make.tilemap({ key: mapArr[0] }); // add a new one
@@ -196,7 +194,7 @@ export default class Game extends Phaser.Scene {
     });
     // chests.children.entries[0].lore = 'maybe?'
     // chests.children.entries[1].lore = '???????'
-    
+
     for(let i=0; i < chests.children.entries.length; i++) {
       chests.children.entries[i].lore = loreArr[i]
     }
@@ -231,15 +229,15 @@ export default class Game extends Phaser.Scene {
     stairUpGroup.name = stairUp.objects[0].name;
 
     // down stairs
-    // const stairDown = map.getObjectLayer("stairDown");
-    // const stairDownGroup = this.physics.add.staticGroup();
-    // stairDown.objects.forEach((stairObj) => {
-    //   stairDownGroup.get(
-    //     stairObj.x! + stairObj.width! * 0.5,
-    //     stairObj.y! - stairObj.height! * 0.5,
-    //     "stair-down"
-    //   );
-    // });
+    const stairDown = map.getObjectLayer("stairDown");
+    const stairDownGroup = this.physics.add.staticGroup();
+    stairDown.objects.forEach((stairObj) => {
+      stairDownGroup.get(
+        stairObj.x! + stairObj.width! * 0.5,
+        stairObj.y! - stairObj.height! * 0.5,
+        "stair-down"
+      );
+    });
 
     // exit door/staircase
     const exitDoor = map.getObjectLayer("exit");
@@ -441,7 +439,8 @@ export default class Game extends Phaser.Scene {
     if(chrispsLayer) {
       chrispsLayer.objects.forEach((e) => {
         this.chrisps.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, "chrisp")
-        .setSize(15, 15);
+        .setScale(3)
+        .setSize(20, 30);
       });
     }
 
@@ -495,7 +494,9 @@ export default class Game extends Phaser.Scene {
     function chrispTracker() {
       this.chrisps.children.entries.forEach((e) => {
       this.physics.moveToObject(e, this.faune, this.CHRISPEED);
-      });
+
+      // if (Math.abs( e.x - this.faune.x ) <= 20 || Math.abs( e.y - this.faune.y ) <= 20){ e.swing() }
+      })
     }
     /*
      ** CHRISP CHASING PLAYER
@@ -535,13 +536,13 @@ export default class Game extends Phaser.Scene {
       undefined,
       this
     );
-    // this.physics.add.collider(
-    //   this.faune,
-    //   stairDownGroup,
-    //   this.handleStairsDownCollision,
-    //   undefined,
-    //   this
-    // );
+    this.physics.add.collider(
+      this.faune,
+      stairDownGroup,
+      this.handleStairsDownCollision,
+      undefined,
+      this
+    );
     this.physics.add.collider(
       this.faune,
       exitDoorGroup,
@@ -703,6 +704,13 @@ export default class Game extends Phaser.Scene {
       undefined,
       this
     );
+    // this.chrispswingboxPlayerCollider = this.physics.add.collider(
+    //   this.chrispSwingBox,
+    //   this.faune,
+    //   this.handlePlayerEnemyCollision,
+    //   undefined,
+    //   this
+    // );
     this.playerCultistsCollider = this.physics.add.collider(
       this.cultists,
       this.faune,
@@ -748,10 +756,21 @@ export default class Game extends Phaser.Scene {
     obj2.setInteractive()
     const objScene = this.scene
     obj2.on('pointerdown', function () {
+      console.log(obj2.lore);
       objScene.pause()
       objScene.launch('lore', {text: obj2.lore})
       obj2.removeInteractive()
     })
+
+    // this.input.on('pointerdown', function (pointer) {
+    //   console.log('in pointerdown');
+		// 	if (pointer.leftButtonDown()){
+    //     this.scene.pause()
+    //     this.scene.launch('lore', {text: `Eat my socks`})
+    //   }
+    // }, this)
+
+
   }
 
   private handleKnifeWallCollision(
@@ -902,6 +921,8 @@ export default class Game extends Phaser.Scene {
     obj1: Phaser.GameObjects.GameObject,
     obj2: Phaser.GameObjects.GameObject
   ) {
+    if (this.faune.health <= 0) { return }
+
     const enemyX = Math.floor(obj2.x);
     const enemyY = Math.floor(obj2.y);
 
@@ -976,23 +997,12 @@ export default class Game extends Phaser.Scene {
     obj1: Phaser.GameObjects.GameObject,
     obj2: Phaser.GameObjects.GameObject
   ) {
-    if(this.isChrispDead === true) {
-      this.scene.stop("game-ui");
-      this.scene.start("winner", { currentTime: currentTime }); //WINNER
-    } else {
-      this.scene.pause();
-      this.scene.launch('exit')
-    }
+
+    this.scene.stop("game-ui");
+    this.scene.start("winner", { currentTime: currentTime }); //WINNER
   }
 
   update(t: number, dt: number) {
-    // only open the exit door if chrisp is dead
-    if(!this.chrisps.children.entries[0]) {
-      this.isChrispDead = true;
-    } else {
-      this.isChrispDead = false;
-    }
-
     if (this.keyQ.isDown) {
       this.scene.stop("game-ui");
       this.scene.start("winner", { currentTime: currentTime }); //WINNER
