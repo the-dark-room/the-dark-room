@@ -1,23 +1,3 @@
-<!--- Styling --->
-<style>
-  .credits img {
-    height: 70px;
-    width: 70px;
-    z-index: 999;
-    cursor: pointer;
-    -webkit-transition-property: all;
-    -webkit-transition-duration: 0.3s;
-    -webkit-transition-timing-function: ease;
-  }
-  .credits img:hover {
-    transform: scale(3);
-  }
-  .credits {
-    display: flex;
-    flex-wrap: wrap;
-  }
-</style>
-
 <!-- HEADER --->
 <h1 align="center">
   <a href="https://the-dark-room.github.io/the-dark-room/">The Dark Room</a>
@@ -60,21 +40,19 @@ The Dark Room was created using Typescipt, Node.js, Phaser.js, Tiled, and uses F
 
 ## Credits
 
-<div class="credits">
-<a href="https://ansimuz.itch.io/legend-of-faune">
-<img src="https://opengameart.org/sites/default/files/banner_6.png"></a>
-<a href="https://pixabay.com"><img src="https://freesvg.org/img/noun_project_928.png"></a>
-<a href="https://opengameart.org/content/pixel-dungeon-graphics-by-watabou"><img src="https://opengameart.org/sites/default/files/main_menu_0.png"></a>
-<a href="https://luizmelo.itch.io/evil-wizard"><img src="https://img.itch.zone/aW1hZ2UvNjEyNDQ1LzMyNTg2NDQuZ2lm/original/uewhDI.gif"></a>
-<a href="https://clembod.itch.io/bringer-of-death-free"><img src="https://img.itch.zone/aW1hZ2UvOTgwNzM4LzU1NzQxNDkuZ2lm/original/DS2EpW.gif"></a>
-<a href="https://stealthix.itch.io/animated-traps"><img src="https://img.itch.zone/aW1hZ2UvMzY4Njg4LzE4NDY3NDYuZ2lm/347x500/RlYTwO.gif"></a>
-<a href="https://astrobob.itch.io/animated-pixel-art-skeleton"><img src="https://img.itch.zone/aW1hZ2UvOTE0NjQ4LzUxNzA3ODYuZ2lm/original/XC1Rvz.gif"></a>
-<a href="https://mirquiso.itch.io/floating-ghost"><img src="https://img.itch.zone/aW1hZ2UvMTY2NzQ0NS85ODE3Nzc0LmdpZg==/original/ecKR7y.gif"></a>
-<a href="https://astr0cookie.itch.io/sword-with-animations"><img src="https://img.itch.zone/aW1hZ2UvMTI0ODk1OC83Mjc4NzUzLmdpZg==/original/OWVtdz.gif"></a>
-<a href=""><img src=""></a>
-<a href=""><img src=""></a>
-<a href=""><img src=""></a>
-</div>
+<ul>
+  <li><a href="https://ansimuz.itch.io/legend-of-faune">Main Character</a></li>
+  <li><a href="https://pixabay.com">Audio</a></li>
+  <li><a href="https://opengameart.org/content/pixel-dungeon-graphics-by-watabou">Dungeon Tile Assets</a></li>
+  <li><a href="https://luizmelo.itch.io/evil-wizard">Evil Wizard</a></li>
+  <li><a href="https://clembod.itch.io/bringer-of-death-free">Bringer of Death</a></li>
+  <li><a href="https://stealthix.itch.io/animated-traps">Traps</a></li>
+  <li><a href="https://astrobob.itch.io/animated-pixel-art-skeleton">Chris P. Bones</a></li>
+  <li><a href="https://mirquiso.itch.io/floating-ghost">Ghost</a></li>
+  <li><a href="https://astr0cookie.itch.io/sword-with-animations">Sword</a></li>
+</ul>
+<!---<a href=""><img src=""></a> --->
+
 
 <!-- VARS -->
 
