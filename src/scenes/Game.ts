@@ -229,15 +229,15 @@ export default class Game extends Phaser.Scene {
     stairUpGroup.name = stairUp.objects[0].name;
 
     // down stairs
-    const stairDown = map.getObjectLayer("stairDown");
-    const stairDownGroup = this.physics.add.staticGroup();
-    stairDown.objects.forEach((stairObj) => {
-      stairDownGroup.get(
-        stairObj.x! + stairObj.width! * 0.5,
-        stairObj.y! - stairObj.height! * 0.5,
-        "stair-down"
-      );
-    });
+    // const stairDown = map.getObjectLayer("stairDown");
+    // const stairDownGroup = this.physics.add.staticGroup();
+    // stairDown.objects.forEach((stairObj) => {
+    //   stairDownGroup.get(
+    //     stairObj.x! + stairObj.width! * 0.5,
+    //     stairObj.y! - stairObj.height! * 0.5,
+    //     "stair-down"
+    //   );
+    // });
 
     // exit door/staircase
     const exitDoor = map.getObjectLayer("exit");
@@ -536,13 +536,13 @@ export default class Game extends Phaser.Scene {
       undefined,
       this
     );
-    this.physics.add.collider(
-      this.faune,
-      stairDownGroup,
-      this.handleStairsDownCollision,
-      undefined,
-      this
-    );
+    // this.physics.add.collider(
+    //   this.faune,
+    //   stairDownGroup,
+    //   this.handleStairsDownCollision,
+    //   undefined,
+    //   this
+    // );
     this.physics.add.collider(
       this.faune,
       exitDoorGroup,
