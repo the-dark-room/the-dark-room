@@ -74,7 +74,6 @@ The Dark Room was created using Typescipt, Node.js, Phaser.js, Tiled, and uses F
 <a href=""><img src=""></a>
 <a href=""><img src=""></a>
 <a href=""><img src=""></a>
-<a href=""><img src=""></a>
 </div>
 
 <!-- VARS -->
