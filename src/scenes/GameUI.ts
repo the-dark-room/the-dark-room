@@ -18,6 +18,7 @@ export default class GameUI extends Phaser.Scene
 
 	create()
 	{
+		// For future use:
 		// this.add.image(6, 26, 'treasure', 'coin_anim_f0.png')
 		// const coinsLabel = this.add.text(12, 20, '0', {
 		// 	fontSize: '14'
@@ -94,19 +95,18 @@ export default class GameUI extends Phaser.Scene
 	private handleGameTimerChanged({MAXTIME, currentTime}){
 		const percentage = 1 - currentTime / MAXTIME
 		this.flashTimerWidth = this.FLASHTIMERWIDTH * percentage
-		// console.log(percentage)
 	}
 
 	update(){
 		this.flashTimer.clear()
-		
+
 		if(this.flashTimerWidth > 0.5){
-			
+
 			this.flashTimer = this.add.graphics();
 			this.flashTimer.fillStyle(0xffff00)
 			this.flashTimer.fillRect(63, 5, this.flashTimerWidth, 10)
 		}
-		
+
 	}
 
 	/*

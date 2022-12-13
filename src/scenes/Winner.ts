@@ -7,7 +7,6 @@ export default class Winner extends Phaser.Scene {
 
   constructor() {
     super("winner");
-    // console.log(this)
   }
 
   preload() {
@@ -30,7 +29,6 @@ export default class Winner extends Phaser.Scene {
       )
       .setOrigin(0.5);
     text1.setTint(0xff00ff, 0xffff00, 0x0000ff, 0xff0000);
-    // console.log(this.scene)
     setTimeout(() => {
       this.scene.start("entername", { currentTime: this.exitTime });
     }, 4000);
