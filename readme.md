@@ -36,7 +36,7 @@
 <a href="https://www.mapeditor.org/">
 <img src="https://www.mapeditor.org/img/tiled-logo-white.png" height="40" width="60"/></a>
 
-The Dark Room was created using Typescipt, Node.js, Phaser.js, Tiled, and uses Firebase for deployment, and Firestore for the database.
+The Dark Room was created using Typescipt, Node.js, Phaser.js, Tiled, and Firestore for the database.
 
 ## Credits
 
