@@ -41,7 +41,6 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 
 	private knives!: Phaser.Physics.Arcade.Group
 	private meleeHitbox!: Phaser.Types.Physics.Arcade.ImageWithDynamicBody
-	// private activeChest?: Chest
 
 	get health()
 	{
@@ -91,11 +90,6 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 		})
 	}
 
-	// setChest(chest: Chest)
-	// {
-	// 	this.activeChest = chest
-	// }
-
 	handleDamage(dir: Phaser.Math.Vector2) {
 		if (this._health <= 0){
 			return
@@ -108,7 +102,6 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 		--this._health
 
 		if (this._health <= 0){
-			// TODO: die
 			this.healthState = HealthState.DEAD
 			this.anims.play('faune-faint')
 			this.setVelocity(0, 0)
@@ -124,7 +117,6 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 	}
 
 	private swingSword(){
-	// TODO: create sword swing hit box
 		this.isAtacking = true
 		this.meleeHitbox.body.enable = true
 		this.scene.sword.setVisible(true)
@@ -251,14 +243,7 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 
 		this.scene.input.on('pointerdown', function (pointer) {
 			if (pointer.leftButtonDown()){
-				// if (this.activeChest){
-				// 	this.scene.scene.pause()
-				// 	this.scene.scene.launch('lore', {text: `Eat my socks`})
-				// }
-				// else //sword swing
-				// {
-					this.swingSword()
-				// }
+				this.swingSword()
 				return
 			}
 		}, this);
@@ -319,10 +304,6 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite
 			this.anims.play(parts.join('-'))
 			this.setVelocity(0, 0)
 		}
-
-		// if (leftDown || rightDown || upDown || downDown){
-		// 	this.activeChest = undefined
-		// }
 	}
 }
 

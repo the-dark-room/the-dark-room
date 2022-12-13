@@ -495,6 +495,8 @@ export default class Game extends Phaser.Scene {
       this.chrisps.children.entries.forEach((e) => {
       this.physics.moveToObject(e, this.faune, this.CHRISPEED);
 
+      // For future use:
+      // Chrisp would attack when it's a certain distance from player
       // if (Math.abs( e.x - this.faune.x ) <= 20 || Math.abs( e.y - this.faune.y ) <= 20){ e.swing() }
       })
     }
@@ -505,7 +507,6 @@ export default class Game extends Phaser.Scene {
     // Wall collisions
     this.physics.add.collider(this.faune, wallsLayer);
 
-    // this.physics.add.collider(this.ghosts, wallsLayer)  //GHOST
     this.physics.add.collider(this.bods, wallsLayer); //BOD
     this.physics.add.collider(this.frogs, wallsLayer); //FROG
     this.physics.add.collider(this.skeletons, wallsLayer); //SKELETON
@@ -704,6 +705,7 @@ export default class Game extends Phaser.Scene {
       undefined,
       this
     );
+    // For future use:
     // this.chrispswingboxPlayerCollider = this.physics.add.collider(
     //   this.chrispSwingBox,
     //   this.faune,
@@ -761,16 +763,6 @@ export default class Game extends Phaser.Scene {
       objScene.launch('lore', {text: obj2.lore})
       obj2.removeInteractive()
     })
-
-    // this.input.on('pointerdown', function (pointer) {
-    //   console.log('in pointerdown');
-		// 	if (pointer.leftButtonDown()){
-    //     this.scene.pause()
-    //     this.scene.launch('lore', {text: `Eat my socks`})
-    //   }
-    // }, this)
-
-
   }
 
   private handleKnifeWallCollision(
@@ -786,7 +778,6 @@ export default class Game extends Phaser.Scene {
   ) {
     obj1.destroy();
     obj2.destroy();
-    // this.lizards.remove(obj2) // removes the sprite from the group, rendering it harmless
   }
 
   private handleWeaponChrispCollision(
@@ -795,7 +786,8 @@ export default class Game extends Phaser.Scene {
   ) {
     if (obj1 === this.meleeHitbox) {
 
-      // MOVE FAUNE WHEN HITTING CRISP // TODO
+      // For future use:
+      // MOVE FAUNE WHEN HITTING CRISP
       // const enemyX = Math.floor(obj2.x);
       // const enemyY = Math.floor(obj2.y);
 
