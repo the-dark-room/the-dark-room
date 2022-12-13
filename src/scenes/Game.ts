@@ -1012,6 +1012,11 @@ export default class Game extends Phaser.Scene {
       this.faune.update(this.cursors);
     }
 
+    if(this.faune.health <= 0) {
+      console.log('reset the map because player died');
+      mapCount = 0
+    }
+
     // This makes sure that the mouse x and y are accurate
     const crosshairX =
       this.game.input.mousePointer.x +
