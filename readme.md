@@ -53,6 +53,20 @@ The Dark Room was created using Typescipt, Node.js, Phaser.js, Tiled, and uses F
 </ul>
 <!---<a href=""><img src=""></a> --->
 
+## Contact
+
+**Elijah Rhinehardt**
+| [linkedin.com/in/elijah-rhinehardt](https://www.linkedin.com/in/elijah-rhinehardt) | [github.com/thingung](https://github.com/thingung) |
+
+**Daniel Lukonis**
+| [linkedin.com/in/daniellukonis/](https://www.linkedin.com/in/daniellukonis/) | [github.com/daniellukonis](https://github.com/daniellukonis) |
+
+**James Johnson**
+| [linkedin.com/in/-jamesjohnson/](https://www.linkedin.com/in/-jamesjohnson/) | [github.com/james1q2w3e](https://github.com/james1q2w3e) |
+
+**Joaquin (Jake) Lim**
+| [linkedin.com/in/joaquin-lim/](https://www.linkedin.com/in/joaquin-lim/) | [github.com/Jake1748](https://github.com/Jake1748) |
+
 
 <!-- VARS -->
 
