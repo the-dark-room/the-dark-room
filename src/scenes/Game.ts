@@ -54,9 +54,9 @@ export default class Game extends Phaser.Scene {
 
   private ghostTrackTimer; //TIMER TO UPDATE GHOST CHASING PLAYER
   private chrispTrackTimer;//TIMER TO UPDATE CHRISP CHASING PLAYER
-  private GHOSTSPEED = 4; //HOW MANY PIXELS PER SECOND THE GHOST MOVES
+  private GHOSTSPEED = 25; //HOW MANY PIXELS PER SECOND THE GHOST MOVES
   private GHOSTSTUN = 2000; //HOW OFTEN THE GHOST UPDATES ITS DIRECTION / ALSO IS STUN DURATION
-  private CHRISPEED = 10  //HOW MANY PIXELS PER SECOND THE CHRISPS MOVES
+  private CHRISPEED = 40  //HOW MANY PIXELS PER SECOND THE CHRISPS MOVES
 
   private playerGhostsCollider?: Phaser.Physics.Arcade.Collider;
   private playerBodsCollider?: Phaser.Physics.Arcade.Collider;
@@ -439,7 +439,8 @@ export default class Game extends Phaser.Scene {
     if(chrispsLayer) {
       chrispsLayer.objects.forEach((e) => {
         this.chrisps.get(e.x! + e.width! * 0.5, e.y! - e.height! * 0.5, "chrisp")
-        .setSize(15, 15);
+        .setScale(3)
+        .setSize(20, 30);
       });
     }
 
@@ -494,8 +495,8 @@ export default class Game extends Phaser.Scene {
       this.chrisps.children.entries.forEach((e) => {
       this.physics.moveToObject(e, this.faune, this.CHRISPEED);
 
-      if (Math.abs( e.x - this.faune.x ) <= 20 || Math.abs( e.y - this.faune.y ) <= 20){ e.swing() }
-      });
+      // if (Math.abs( e.x - this.faune.x ) <= 20 || Math.abs( e.y - this.faune.y ) <= 20){ e.swing() }
+      })
     }
     /*
      ** CHRISP CHASING PLAYER
@@ -996,6 +997,7 @@ export default class Game extends Phaser.Scene {
     obj1: Phaser.GameObjects.GameObject,
     obj2: Phaser.GameObjects.GameObject
   ) {
+
     this.scene.stop("game-ui");
     this.scene.start("winner", { currentTime: currentTime }); //WINNER
   }

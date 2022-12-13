@@ -23,7 +23,7 @@ export default class Chrisp extends Phaser.Physics.Arcade.Sprite
 	// private direction = Direction.RIGHT
 	// private moveEvent: Phaser.Time.TimerEvent
 
-	private health = 200
+	private health = 50
 
 	constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string | number)
 	{
@@ -48,22 +48,25 @@ export default class Chrisp extends Phaser.Physics.Arcade.Sprite
 
 	gotHit() {
     this.health--
+		this.scene.sound.play("chrisp-hurt", {
+      volume: 0.2,
+    });
 	// this.anims.play('chrisp-damage')
     if (this.health <= 0) { this.destroy() }
   }
 
 
-  swing() {
-		console.log('Chrisp swung')
+  // swing() {
+	// 	console.log('Chrisp swung')
 
-		this.setSize(50,50)
-		// this.scene.chrispSwingBox.body.enable = true
+	// 	this.setSize(50,50)
+	// 	// this.scene.chrispSwingBox.body.enable = true
 
-		// this.scene.chrispSwingBox!.y = this.y
-		// this.scene.chrispSwingBox!.x = this.x
+	// 	// this.scene.chrispSwingBox!.y = this.y
+	// 	// this.scene.chrispSwingBox!.x = this.x
 
-		// this.anims.play('chrisp-swing')
-  }
+	// 	// this.anims.play('chrisp-swing')
+  // }
 
 
   getHealth() {
