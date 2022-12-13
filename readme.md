@@ -70,6 +70,10 @@ The Dark Room was created using Typescipt, Node.js, Phaser.js, Tiled, and uses F
 <a href="https://stealthix.itch.io/animated-traps"><img src="https://img.itch.zone/aW1hZ2UvMzY4Njg4LzE4NDY3NDYuZ2lm/347x500/RlYTwO.gif"></a>
 <a href="https://astrobob.itch.io/animated-pixel-art-skeleton"><img src="https://img.itch.zone/aW1hZ2UvOTE0NjQ4LzUxNzA3ODYuZ2lm/original/XC1Rvz.gif"></a>
 <a href="https://mirquiso.itch.io/floating-ghost"><img src="https://img.itch.zone/aW1hZ2UvMTY2NzQ0NS85ODE3Nzc0LmdpZg==/original/ecKR7y.gif"></a>
+<a href="https://astr0cookie.itch.io/sword-with-animations"><img src="https://img.itch.zone/aW1hZ2UvMTI0ODk1OC83Mjc4NzUzLmdpZg==/original/OWVtdz.gif"></a>
+<a href=""><img src=""></a>
+<a href=""><img src=""></a>
+<a href=""><img src=""></a>
 <a href=""><img src=""></a>
 </div>
 
