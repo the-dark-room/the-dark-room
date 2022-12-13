@@ -1,49 +1,14 @@
 import Phaser from 'phaser'
 
-// enum Direction
-// {
-// 	UP,
-// 	DOWN,
-// 	LEFT,
-// 	RIGHT
-// }
-
-// const randomDirection = (exclude: Direction) => {
-// 	let newDirection = Phaser.Math.Between(0, 3)
-// 	while (newDirection === exclude)
-// 	{
-// 		newDirection = Phaser.Math.Between(0, 3)
-// 	}
-
-// 	return newDirection
-// }
-
 export default class Chrisp extends Phaser.Physics.Arcade.Sprite
 {
-	// private direction = Direction.RIGHT
-	// private moveEvent: Phaser.Time.TimerEvent
-
 	private health = 50
 
 	constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string | number)
 	{
 		super(scene, x, y, texture, frame)
 
-		// this.scene.chrispSwingBox = this.scene.add.rectangle(0, 0, 40, 70, 0xffffff, 0) as unknown as Phaser.Types.Physics.Arcade.ImageWithDynamicBody
-		// this.scene.physics.add.existing(this.scene.chrispSwingBox)
-		// this.scene.chrispSwingBox.body.enable = false
-
 		this.anims.play('chrisp-walk')
-
-		// scene.physics.world.on(Phaser.Physics.Arcade.Events.TILE_COLLIDE, this.handleTileCollision, this)
-
-		// this.moveEvent = scene.time.addEvent({
-		// 	delay: Phaser.Math.Between(10000,12000),
-		// 	callback: () => {
-		// 		this.direction = randomDirection(this.direction)
-		// 	},
-		// 	loop: true
-		// })
 	}
 
 	gotHit() {
@@ -51,11 +16,12 @@ export default class Chrisp extends Phaser.Physics.Arcade.Sprite
 		this.scene.sound.play("chrisp-hurt", {
       volume: 0.2,
     });
-	// this.anims.play('chrisp-damage')
+		// For future use:
+		// this.anims.play('chrisp-damage')
     if (this.health <= 0) { this.destroy() }
   }
 
-
+	// For future use:
   // swing() {
 	// 	console.log('Chrisp swung')
 
@@ -75,13 +41,14 @@ export default class Chrisp extends Phaser.Physics.Arcade.Sprite
 
 	destroy(fromScene?: boolean)
 	{
+		// for future use:
 		// this.anims.play('chrisp-death')
 
 		// this.moveEvent.destroy()
 
 		super.destroy(fromScene)
 	}
-
+	// For future use:
 	// private handleTileCollision(go: Phaser.GameObjects.GameObject, tile: Phaser.Tilemaps.Tile)
 	// {
 	// 	if (go !== this)
