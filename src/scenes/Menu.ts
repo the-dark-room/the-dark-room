@@ -1,10 +1,8 @@
 import Phaser from "phaser";
-// import { createLizardAnims } from '../anims/EnemyAnims'
 import { createCharacterAnims } from "../anims/CharacterAnims";
 import { createChestAnims } from "../anims/TreasureAnims";
 import "../characters/Faune";
 import Faune from "../characters/Faune";
-// import Lizard from '../enemies/Lizard'
 import Chest from "../items/Chest";
 import { sceneEvents } from "../events/EventsCenter";
 
@@ -67,7 +65,6 @@ export default class Menu extends Phaser.Scene {
 
     // add the map and tileset
     const map = this.make.tilemap({ key: "menumap" });
-    // const tileset = map.addTilesetImage('tilesetformattedupdate1', 'menuTiles')
     const tileset = map.addTilesetImage(
       "watabou_pixel_dungeon_spritesheet",
       "tiles"
@@ -108,8 +105,5 @@ export default class Menu extends Phaser.Scene {
   }
 
   update(t: number, dt: number) {
-    // if (this.faune) {
-    // 	this.faune.update(this.cursors)
-    // }
   }
 }

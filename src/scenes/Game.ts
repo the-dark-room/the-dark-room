@@ -40,7 +40,6 @@ export default class Game extends Phaser.Scene {
   private sword!: Phaser.Physics.Arcade.Sprite;
   private knives!: Phaser.Physics.Arcade.Group;
   private meleeHitbox!: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
-  // private chrispSwingBox: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
 
   private ghosts!: Phaser.Physics.Arcade.Group; //GHOST
   private bods!: Phaser.Physics.Arcade.Group; //BOD
@@ -88,7 +87,7 @@ export default class Game extends Phaser.Scene {
    ** GAME TIMER
    */
   private gameTimer;
-  private MAXTIME = 600; //IN SECONDS
+  private MAXTIME = 400; //IN SECONDS
   private keyQ;
   /*
    ** GAME TIMER
@@ -120,18 +119,15 @@ export default class Game extends Phaser.Scene {
     this.gameTimer = this.time.addEvent({
       delay: 1000,
       callback: updateGameTime,
-      // repeat: 60,
       loop: true,
       callbackScope: this,
     });
 
-    this.keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
+    // Instant win button for developers
+    // this.keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
     /*
      ** GAME TIMER
      */
-
-    // zoom for testing walls
-    // this.cameras.main.setZoom(.2)
 
     // main music
     const thrillerMusic = this.sound.add("thriller-music", {
@@ -153,8 +149,6 @@ export default class Game extends Phaser.Scene {
     );
 
     map.createLayer("background", tileset);
-
-    // @ts-ignore
 
     //faune setup
     this.faune = this.add.faune(50, 50, "faune");
@@ -191,8 +185,6 @@ export default class Game extends Phaser.Scene {
       );
       loreArr.push(chestObj.properties[0].value)
     });
-    // chests.children.entries[0].lore = 'maybe?'
-    // chests.children.entries[1].lore = '???????'
 
     for(let i=0; i < chests.children.entries.length; i++) {
       chests.children.entries[i].lore = loreArr[i]
@@ -225,6 +217,9 @@ export default class Game extends Phaser.Scene {
     });
     // assigning names for map switching purposes
     stairUpGroup.name = stairUp.objects[0].name;
+
+    // For future use:
+    //  For if player wants to go back a level
 
     // down stairs
     // const stairDown = map.getObjectLayer("stairDown");
@@ -270,7 +265,6 @@ export default class Game extends Phaser.Scene {
         x: this.faune.x,
         y: this.faune.y,
       },
-      // detectionRange: 10,
     });
 
     //set ray cone size (angle)
@@ -326,20 +320,6 @@ export default class Game extends Phaser.Scene {
     // creating obstacles
     function createObstacles(scene) {
       let obstacle;
-
-      //create image obstacle
-      // obstacle = scene.add.image(800, 800, "mapImage");
-      // obstacles.add(obstacle, true);
-
-      // let t = chests.getChildren();
-      // t.forEach((chest) => {
-      //   obstacles.add(chest, true);
-      // });
-
-      // shapeArr.forEach((s) => {
-      // 	console.log(s);
-      // 	obstacles.add(s, true)
-      // })
 
       // draw in the polygon for the raycasting to interact with
       obstacle = scene.add
@@ -535,6 +515,7 @@ export default class Game extends Phaser.Scene {
       undefined,
       this
     );
+    // For future use:
     // this.physics.add.collider(
     //   this.faune,
     //   stairDownGroup,
@@ -936,8 +917,6 @@ export default class Game extends Phaser.Scene {
         deathSound.play();
         this.scene.start("loser", { currentTime: currentTime }); //LOSER
       }, 600);
-
-      // this.playerEnemiesCollider?.destroy()
     }
   }
 

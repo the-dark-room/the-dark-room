@@ -3,7 +3,6 @@
 
 // @ts-nocheck
 import Phaser from 'phaser'
-// import Chest from '../items/Chest'
 import LoreTemplate from '~/scenes/LoreTemplate'
 
 import { sceneEvents } from '../events/EventsCenter'

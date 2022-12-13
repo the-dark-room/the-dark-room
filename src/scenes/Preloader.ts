@@ -9,9 +9,6 @@ export default class Preloader extends Phaser.Scene
 
 	preload()
 	{
-		// this.load.image('tiles', 'tiles/dungeon_tiles_extruded.png')
-		// this.load.tilemapTiledJSON('dungeon', 'tiles/dungeon-01.json')
-
 		this.load.image('tiles', 'tiles/watabou_pixel_dungeon_spritesheet.png')
 		this.load.image('menuTiles', 'tiles/tilesetformattedupdate1.png')
 		this.load.tilemapTiledJSON('dungeon', 'tiles/dungeon.json')
@@ -64,7 +61,7 @@ export default class Preloader extends Phaser.Scene
       }
     });
 
-    /*to simulate a heavy load */
+    /* For future use: to simulate a heavy load */
     // for(let i = 0; i < 100; i++) {
     //   console.log("HEEELELEEO");
     //   this.load.spritesheet('cat' + i, './assets/cat.png', {
@@ -92,10 +89,8 @@ export default class Preloader extends Phaser.Scene
 		text1.setTint(0x000000);
 
     this.load.on("progress", (percent: number) => {
-    //   loadingBar.fillRect(0, this.game.renderer.height / 2, this.game.renderer.width * percent, 50)
 		loadingBar.fillCircle(this.game.renderer.width / 2, this.game.renderer.height / 2, this.game.renderer.width / 2 * percent )
     })
-
 
     this.load.on("load", (file: Phaser.Loader.File) => {
     })

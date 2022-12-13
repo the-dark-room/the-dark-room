@@ -46,6 +46,7 @@ export default class GameUI extends Phaser.Scene
 
 		this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
 			sceneEvents.off('player-health-changed', this.handlePlayerHealthChanged, this)
+			// For future use:
 			// sceneEvents.off('player-coins-changed')
 		})
 

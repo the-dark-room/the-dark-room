@@ -15,8 +15,6 @@ export default class Chest extends Phaser.Physics.Arcade.Sprite
 		{
 			return 0
 		}
-
-
 		return
 	}
 }

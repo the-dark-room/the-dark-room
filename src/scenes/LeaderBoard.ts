@@ -1,8 +1,8 @@
 import Phaser from "phaser";
 // firestore stuff
 import { db } from '../firebaseConfig'
-import { 
-  getFirestore, collection, onSnapshot, 
+import {
+  getFirestore, collection, onSnapshot,
   addDoc, deleteDoc, doc, setDoc,
   query, where,
   orderBy, serverTimestamp,
@@ -22,13 +22,6 @@ function getLeaderboard() {
   return scores;
 }
 
-// const leaderboardScores = (scene, screenX, screenY, scores) => {
-//   for(let i=0; i<11; i++) {
-//     scene.add.text(screenX, screenY, scores[i].name, scores[i].score)
-//       .setOrigin(i / 2)
-//   }
-// }
-
 
 export default class LeaderBoard extends Phaser.Scene {
   private exitTime = 0;
@@ -36,19 +29,6 @@ export default class LeaderBoard extends Phaser.Scene {
   constructor() {
     super("leaderboard");
   }
-
-  // preload() {
-  //   this.load.html("nameform", "nameForm.html");
-  //   getLeaderboard()
-  // }
-
-  // leaderboardScores(x, y, score) {
-  //   console.log(score)
-  //     for(let i=0; i<11; i++) {
-  //       this.add.text(x, y, score[i]?.name, score[i]?.score)
-  //         .setOrigin(i / 2)
-  //     }
-  //   }
 
   // Firestore stuff returns a promise, so we need async
   async create() {
@@ -73,7 +53,7 @@ export default class LeaderBoard extends Phaser.Scene {
       scores.push({ ...doc.data(), id: doc.id })
     })
 
-    // we only want at most 10 names to display on the board, so in the case that 10 names are not 
+    // we only want at most 10 names to display on the board, so in the case that 10 names are not
     // present, we'll just use the length of "scores" for the loop
     if(scores.length <= 10) {
       for(let i=0; i < scores.length; i++) {
@@ -96,7 +76,7 @@ export default class LeaderBoard extends Phaser.Scene {
         <button name="playAgainButton" style="font-size: 5%; color: #00e7ff; background-color:black"
         >Play Again?</button>
       `
-    
+
     let element = this.add
       .dom(screenCenterX, count+15)
       .createFromHTML(playAgainButton);

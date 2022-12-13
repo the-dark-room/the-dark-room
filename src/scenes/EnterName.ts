@@ -23,17 +23,6 @@ let playerInitials;
 
 let scores = [];
 
-function getLeaderboard() {
-  const scoreCollectionRef = collection(db, "highscore");
-  const q = query(scoreCollectionRef, orderBy("score", "desc"));
-  onSnapshot(q, (snapshot) => {
-    snapshot.docs.forEach((doc) => {
-      scores.push({ ...doc.data(), id: doc.id });
-    });
-  });
-  return scores;
-}
-
 // have to do this roundabout way of passing the scene around because Firestore expects to be using React,
 // so I'm tricking it (not really; just passing "this.scene" into the function so we can use it)
 const handleSceneChange = (scene, time) => {
@@ -49,7 +38,6 @@ export default class EnterName extends Phaser.Scene {
 
   preload() {
     this.load.html("nameform", "/nameForm.html");
-    // getLeaderboard()
   }
 
   create() {
@@ -61,8 +49,8 @@ export default class EnterName extends Phaser.Scene {
       this.cameras.main.worldView.y + this.cameras.main.height / 2;
 
     this.exitTime = this.scene.settings.data.currentTime;
-    // 600 = MAXTIME
-    let scoreTime = 600 - this.exitTime; // so we don't have "this" shadowing problems (just accept that we need this and then no touchie)
+    // 400 = MAXTIME
+    let scoreTime = 400 - this.exitTime; // so we don't have "this" shadowing problems (just accept that we need this and then no touchie)
 
     let form = `
               <style>
@@ -116,11 +104,6 @@ export default class EnterName extends Phaser.Scene {
         let inputText = this.getChildByName("nameField");
         playerInitials = inputText.value;
         handleNamePost(scoreTime);
-
-        // getLeaderboard()
-        // if(scores) {
-        // scores.forEach((score) => { console.log("AAA", score) })
-        // }
       }
     });
     function handleNamePost(time) {
@@ -133,8 +116,4 @@ export default class EnterName extends Phaser.Scene {
   }
 
   update() {}
-
-  // handleSceneChange() {
-  //   this.scene.start('leaderboard')
-  // }
 }

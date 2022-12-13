@@ -23,7 +23,6 @@ export default class Chrisp extends Phaser.Physics.Arcade.Sprite
 
 	// For future use:
   // swing() {
-	// 	console.log('Chrisp swung')
 
 	// 	this.setSize(50,50)
 	// 	// this.scene.chrispSwingBox.body.enable = true
@@ -44,48 +43,6 @@ export default class Chrisp extends Phaser.Physics.Arcade.Sprite
 		// for future use:
 		// this.anims.play('chrisp-death')
 
-		// this.moveEvent.destroy()
-
 		super.destroy(fromScene)
 	}
-	// For future use:
-	// private handleTileCollision(go: Phaser.GameObjects.GameObject, tile: Phaser.Tilemaps.Tile)
-	// {
-	// 	if (go !== this)
-	// 	{
-	// 		return
-	// 	}
-
-	// 	this.direction = randomDirection(this.direction)
-	// }
-
-	// preUpdate(t: number, dt: number)
-	// {
-	// 	super.preUpdate(t, dt)
-
-	// 	const speed = 10
-
-	// 	switch (this.direction)
-	// 	{
-	// 		case Direction.UP:
-	// 			this.setVelocity(0, -speed)
-	// 			break
-
-	// 		case Direction.DOWN:
-	// 			this.setVelocity(0, speed)
-	// 			break
-
-	// 		case Direction.LEFT:
-	// 			this.setVelocity(-speed, 0)
-	// 			this.scaleX = -1
-	// 			this.body.offset.x = 64
-	// 			break
-
-	// 		case Direction.RIGHT:
-	// 			this.setVelocity(speed, 0)
-	// 			this.scaleX = 1
-	// 			this.body.offset.x = 0
-	// 			break
-	// 	}
-	// }
 }
