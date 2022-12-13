@@ -1,6 +1,6 @@
 <!-- HEADER --->
 <h1 align="center">
-  <a href="https://the-dark-room.github.io/the-dark-room/">The Dark Room</a>
+  <a href="https://the-dark-room.onrender.com/">The Dark Room</a>
 </h1>
 
 <!-- BADGES -->
