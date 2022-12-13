@@ -1,6 +1,6 @@
 <!-- HEADER --->
 <h1 align="center">
-  <a href="https://the-dark-room.onrender.com/">The Dark Room</a>
+  <a href="https://the-dark-room.onrender.com/" target="_blank">The Dark Room</a>
 </h1>
 
 <!-- BADGES -->
@@ -20,7 +20,7 @@
 
 <!-- VIDEO LINK -->
 <div align="center">
-<a href="https://www.youtube.com/watch?v=GsCUH-DBmss" alt="video-demonstration">
+<a href="https://www.youtube.com/watch?v=GsCUH-DBmss" target="_blank" alt="video-demonstration">
 <b>📺 Video Demonstration</b>
 </a>
 </div>
