@@ -17,7 +17,6 @@ export default class Controls extends Phaser.Scene {
       this.cameras.main.worldView.y + this.cameras.main.height / 2;
 
     const html = this.about(width, height);
-    console.log(height, width);
 
     let element = this.add
       .dom(screenCenterX, screenCenterX)

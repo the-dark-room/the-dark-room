@@ -147,7 +147,7 @@ export default class Game extends Phaser.Scene {
 
     // adds the map and the tiles for it
     // we need it like this so we can optionally take in a new map when we change maps
-    map = map || this.make.tilemap({ key: "map_bigEmpty" });
+    map = map || this.make.tilemap({ key: "map_jail" });
     const tileset = map.addTilesetImage(
       "watabou_pixel_dungeon_spritesheet",
       "tiles"
