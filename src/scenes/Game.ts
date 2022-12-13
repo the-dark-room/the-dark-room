@@ -82,6 +82,7 @@ export default class Game extends Phaser.Scene {
   blackRectangle;
   mapWidth;
   mapHeight;
+  isChrispDead = false;
 
   /*
    ** GAME TIMER
@@ -142,7 +143,7 @@ export default class Game extends Phaser.Scene {
 
     // adds the map and the tiles for it
     // we need it like this so we can optionally take in a new map when we change maps
-    map = map || this.make.tilemap({ key: "map_jail" });
+    map = map || this.make.tilemap({ key: "map_bigEmpty" });
     const tileset = map.addTilesetImage(
       "watabou_pixel_dungeon_spritesheet",
       "tiles"
@@ -160,6 +161,7 @@ export default class Game extends Phaser.Scene {
 
     // so we can replay the game
     if(!wallsLayer) {
+      this.isChrispDead = false;
       currentTime = 0;
       map.destroy(); // destroy the current map
       map = this.make.tilemap({ key: mapArr[0] }); // add a new one
@@ -965,9 +967,14 @@ export default class Game extends Phaser.Scene {
     obj1: Phaser.GameObjects.GameObject,
     obj2: Phaser.GameObjects.GameObject
   ) {
-    this.sound.stopAll();
-    this.scene.stop("game-ui");
-    this.scene.start("winner", { currentTime: currentTime }); //WINNER
+    if(this.isChrispDead == true) {
+      this.sound.stopAll();
+      this.scene.stop("game-ui");
+      this.scene.start("winner", { currentTime: currentTime }); //WINNER
+    } else {
+      this.scene.pause();
+      this.scene.launch("exit")
+    }
   }
 
   update(t: number, dt: number) {
@@ -975,6 +982,12 @@ export default class Game extends Phaser.Scene {
     //   // this.scene.stop("game-ui");
     //   // this.scene.start("winner", { currentTime: currentTime }); //WINNER
     // }
+
+    if(!this.chrisps.children.entries[0]) {
+      this.isChrispDead = true;
+    } else {
+      this.isChrispDead = false;
+    }
 
     if (this.faune) {
       this.faune.update(this.cursors);
